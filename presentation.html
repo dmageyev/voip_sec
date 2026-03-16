@@ -1,0 +1,991 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Технології VoIP</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
+
+/* ===== SLIDESHOW CONTAINER ===== */
+.deck { width: 100vw; height: 100vh; position: relative; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 3.5vw 5vw;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease, transform .4s ease;
+  transform: translateX(60px);
+  overflow: hidden;
+}
+.slide.active  { opacity: 1; pointer-events: all; transform: translateX(0); }
+.slide.prev    { opacity: 0; transform: translateX(-60px); }
+.slide.center  { align-items: center; text-align: center; }
+
+/* ===== BACKGROUNDS ===== */
+.bg-dark   { background: radial-gradient(circle at 60% 40%, #003566 0%, #001d3d 55%, #000814 100%); }
+.bg-mid    { background: linear-gradient(135deg, #001d3d 0%, #003566 100%); }
+.bg-sec    { background: linear-gradient(135deg, #1a0000 0%, #3d0000 100%); }
+.bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
+.bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
+
+/* ===== TYPOGRAPHY ===== */
+h1 { font-size: clamp(1.8rem, 4vw, 3.2rem); color: #00b4d8; line-height: 1.15; }
+h2 { font-size: clamp(1.2rem, 2.5vw, 1.9rem); color: #48cae4;
+     border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
+h3 { font-size: clamp(.85rem, 1.5vw, 1.05rem); color: #fff; margin-bottom: .4em; }
+p, li { font-size: clamp(.72rem, 1.3vw, .92rem); line-height: 1.55; }
+ul { margin-left: 1.3em; }
+li { margin-bottom: .28em; }
+code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
+strong { color: #90e0ef; }
+
+/* ===== LAYOUT HELPERS ===== */
+.two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; width: 100%; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; width: 100%; }
+.w100 { width: 100%; }
+
+/* ===== CARDS ===== */
+.card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(0,180,216,.35);
+  border-radius: .5em; padding: .8em 1em;
+}
+.card h3 { color: #00b4d8; font-size: .92em; }
+
+/* ===== CALLOUT BOXES ===== */
+.hbox {
+  background: rgba(0,180,216,.13);
+  border-left: 4px solid #00b4d8;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: clamp(.68rem, 1.2vw, .85rem);
+}
+.wbox {
+  background: rgba(247,127,0,.13);
+  border-left: 4px solid #f77f00;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: clamp(.68rem, 1.2vw, .85rem);
+}
+
+/* ===== DIAGRAMS / PREFORMATTED ===== */
+pre.sip {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: clamp(.52rem, .95vw, .72rem);
+  background: #0d1117; border: 1px solid #00b4d8;
+  border-radius: .4em; padding: .7em 1em;
+  line-height: 1.45; white-space: pre; overflow: auto;
+  max-height: 42vh;
+}
+pre.diag {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: clamp(.5rem, .9vw, .7rem);
+  background: #0d1117; border: 1px solid #00b4d8;
+  border-radius: .4em; padding: .7em 1.2em;
+  line-height: 1.65; white-space: pre; width: 100%;
+}
+
+/* ===== TABLES ===== */
+table { width: 100%; border-collapse: collapse; font-size: clamp(.62rem, 1.1vw, .82rem); }
+th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .65em; text-align: left; }
+td { padding: .3em .65em; border-bottom: 1px solid rgba(255,255,255,.09); }
+tr:nth-child(even) td { background: rgba(255,255,255,.04); }
+
+/* ===== BADGE ===== */
+.badge { display: inline-block; background: #00b4d8; color: #000;
+  border-radius: .25em; padding: .05em .4em; font-size: .72em; font-weight: bold; }
+.m  { color: #00b4d8; font-weight: bold; }
+.ok { color: #52b788; }
+.er { color: #f77f00; }
+
+/* ===== NAVIGATION ===== */
+#nav {
+  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
+  display: flex; align-items: center; gap: .6em;
+}
+#nav button {
+  background: rgba(0,180,216,.18); border: 1px solid #00b4d8; color: #00b4d8;
+  border-radius: .35em; padding: .4em .9em; font-size: .85rem; cursor: pointer;
+  transition: background .2s;
+}
+#nav button:hover { background: rgba(0,180,216,.4); }
+#counter { color: #555; font-size: .78rem; min-width: 4em; text-align: center; }
+
+/* ===== PROGRESS BAR ===== */
+#prog { position: fixed; bottom: 0; left: 0; height: 3px; background: #00b4d8;
+        transition: width .35s ease; z-index: 200; }
+
+/* ===== KEYBOARD HINT ===== */
+#hint { position: fixed; top: 1vh; right: 1.5vw; font-size: .62rem; color: #333; z-index: 100; }
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="hint">← → | F — full screen</div>
+
+<div class="deck" id="deck">
+
+<!-- ==================== SLIDE 1 – Title ==================== -->
+<section class="slide bg-dark center active" id="s0">
+  <div>
+    <h1 style="font-size:clamp(2rem,5vw,3.8rem); margin-bottom:.4em;">Технології VoIP</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin-bottom:1.5em;">
+      Voice over Internet Protocol
+    </h3>
+    <p style="color:#aaa; font-size:clamp(.8rem,1.5vw,1rem);">Курс для студентів магістратури</p>
+    <p style="color:#444; font-size:clamp(.7rem,1.2vw,.88rem); margin-top:2.5em;">
+      Кафедра інформаційних технологій та кібербезпеки
+    </p>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 2 – Agenda ==================== -->
+<section class="slide bg-plain">
+  <h2>📋 План лекції</h2>
+  <div class="two-col">
+    <ul>
+      <li>Що таке VoIP? Коротка історія</li>
+      <li>Архітектура VoIP-систем</li>
+      <li>Огляд стеку протоколів</li>
+      <li>SIP — глибоке занурення</li>
+      <li>Компоненти SIP-мережі</li>
+      <li>SIP URI та адресація</li>
+      <li>Методи і коди відповідей SIP</li>
+    </ul>
+    <ul>
+      <li>Формат SIP-повідомлення</li>
+      <li>SIP Call Flow</li>
+      <li>RTP / RTCP / SDP</li>
+      <li>Аудіо-кодеки та QoS</li>
+      <li>NAT traversal: STUN / TURN / ICE</li>
+      <li>Безпека VoIP та SRTP</li>
+      <li>WebRTC та сучасні системи</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3 – What is VoIP ==================== -->
+<section class="slide bg-plain">
+  <h2>🔊 Що таке VoIP?</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>VoIP (Voice over Internet Protocol)</strong> — технологія передачі голосу у реальному часі через IP-мережі замість традиційних телефонних ліній (PSTN).
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Традиційна телефонія (PSTN)</h3>
+      <ul>
+        <li>Комутація каналів (<em>circuit switching</em>)</li>
+        <li>Виділений фізичний канал на час розмови</li>
+        <li>64 кбіт/с на виклик (G.711)</li>
+        <li>Висока надійність, фіксована затримка</li>
+        <li>Висока вартість міжнародних дзвінків</li>
+      </ul>
+    </div>
+    <div>
+      <h3>VoIP</h3>
+      <ul>
+        <li>Комутація пакетів (<em>packet switching</em>)</li>
+        <li>Спільне використання смуги пропускання</li>
+        <li>8–100+ кбіт/с залежно від кодека</li>
+        <li>Змінна затримка (jitter), потрібен QoS</li>
+        <li>Значно нижча вартість, гнучкість</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4 – History ==================== -->
+<section class="slide bg-plain">
+  <h2>📅 Коротка історія VoIP</h2>
+  <table>
+    <tr><th>Рік</th><th>Подія</th></tr>
+    <tr><td>1973</td><td>ARPANET — перший голосовий пакет, протокол NVP</td></tr>
+    <tr><td>1995</td><td>VocalTec — перше комерційне VoIP-застосування <em>Internet Phone</em></td></tr>
+    <tr><td>1996</td><td>ITU-T затверджує <strong>H.323</strong> — стандарт мультимедійних конференцій</td></tr>
+    <tr><td>1999</td><td>IETF публікує <strong>RFC 2543 — SIP</strong> (Session Initiation Protocol)</td></tr>
+    <tr><td>2002</td><td><strong>RFC 3261</strong> — оновлена специфікація SIP (чинна до сьогодні)</td></tr>
+    <tr><td>2003</td><td>Skype виходить на ринок — P2P VoIP стає масовим явищем</td></tr>
+    <tr><td>2004</td><td>Asterisk (open-source IP PBX) набуває широкої популярності</td></tr>
+    <tr><td>2011</td><td>W3C/IETF — стандартизація <strong>WebRTC</strong></td></tr>
+    <tr><td>2013+</td><td>Хмарна телефонія, UCaaS: Microsoft Teams, Zoom, Webex</td></tr>
+    <tr><td>Сьогодні</td><td>VoIP/WebRTC обслуговують мільярди дзвінків на добу</td></tr>
+  </table>
+</section>
+
+<!-- ==================== SLIDE 5 – Architecture ==================== -->
+<section class="slide bg-plain">
+  <h2>🏗️ Архітектура VoIP-системи</h2>
+  <pre class="diag">
+┌──────────────┐        ┌───────────────────┐        ┌──────────────┐
+│  IP Phone /  │  SIP   │   SIP Proxy /     │  SIP   │  IP Phone /  │
+│  Softphone   │◄──────►│   B2BUA / PBX     │◄──────►│  Softphone   │
+│  (UA)        │        │                   │        │  (UA)        │
+└──────┬───────┘        └─────────┬─────────┘        └──────┬───────┘
+       │ RTP/RTCP                 │                          │ RTP/RTCP
+       │  (media)                 │ PSTN GW                  │
+       └──────────────────────────┼──────────────────────────┘
+                                  ▼
+                          ┌────────────────┐
+                          │  PSTN Gateway  │
+                          │  (PSTN ↔ VoIP) │
+                          └────────────────┘
+  </pre>
+  <ul style="margin-top:.5em;">
+    <li><strong>UA (User Agent)</strong> — кінцевий пристрій (IP-телефон, softphone, браузер)</li>
+    <li><strong>SIP Proxy / PBX</strong> — маршрутизація та обробка сесій</li>
+    <li><strong>PSTN Gateway</strong> — інтерфейс між IP-мережею і традиційною телефонією</li>
+  </ul>
+</section>
+
+<!-- ==================== SLIDE 6 – Protocol Overview ==================== -->
+<section class="slide bg-plain">
+  <h2>📡 Стек протоколів VoIP</h2>
+  <div class="three-col">
+    <div class="card">
+      <h3>Сигналізація</h3>
+      <ul>
+        <li><strong>SIP</strong> — RFC 3261</li>
+        <li>H.323 — ITU-T</li>
+        <li>MGCP — RFC 3435</li>
+        <li>H.248/Megaco</li>
+        <li>XMPP/Jingle</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Медіа-транспорт</h3>
+      <ul>
+        <li><strong>RTP</strong> — RFC 3550</li>
+        <li><strong>RTCP</strong> — RFC 3550</li>
+        <li>SRTP — RFC 3711</li>
+        <li>ZRTP — RFC 6189</li>
+        <li>WebRTC DTLS-SRTP</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Опис сесії / NAT</h3>
+      <ul>
+        <li><strong>SDP</strong> — RFC 4566</li>
+        <li>ICE — RFC 8445</li>
+        <li>STUN — RFC 8489</li>
+        <li>TURN — RFC 8656</li>
+        <li>Кодеки: G.711, Opus…</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:.9em;">
+    Сучасний стек: <strong>SIP + RTP/SRTP + SDP + ICE/STUN/TURN</strong> — де-факто стандарт корпоративної телефонії та WebRTC.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 7 – SIP Introduction ==================== -->
+<section class="slide bg-mid">
+  <h2>🔵 SIP — Session Initiation Protocol</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>SIP (RFC 3261, 2002)</strong> — текстовий протокол сигналізації рівня застосунків для встановлення, модифікації та завершення мультимедійних сесій.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Ключові характеристики</h3>
+      <ul>
+        <li>Базується на HTTP/SMTP-семантиці</li>
+        <li>Транспорт: <strong>UDP / TCP / TLS / SCTP</strong></li>
+        <li>Порт за замовчуванням: <strong>5060</strong> (UDP/TCP), <strong>5061</strong> (TLS)</li>
+        <li>Текстовий формат — легко читати і налагоджувати</li>
+        <li>Розширюваний: SUBSCRIBE, NOTIFY, REFER…</li>
+        <li>Незалежний від медіа (лише сигналізація)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Функції SIP</h3>
+      <ul>
+        <li>Реєстрація UA (REGISTER)</li>
+        <li>Встановлення виклику (INVITE)</li>
+        <li>Локалізація кінцевого пристрою</li>
+        <li>Визначення медіа-можливостей (SDP)</li>
+        <li>Управління сесією (hold, transfer, conference)</li>
+        <li>Завершення сесії (BYE)</li>
+        <li>Миттєві повідомлення (MESSAGE)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 8 – SIP Components ==================== -->
+<section class="slide bg-plain">
+  <h2>🧩 Компоненти SIP-мережі</h2>
+  <div class="two-col">
+    <div>
+      <div class="card" style="margin-bottom:.7em;">
+        <h3>👤 User Agent (UA)</h3>
+        <ul>
+          <li><strong>UAC</strong> (Client) — ініціює запити</li>
+          <li><strong>UAS</strong> (Server) — приймає та відповідає</li>
+          <li>Приклади: Zoiper, Linphone, Cisco IP Phone</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🔀 Proxy Server</h3>
+        <ul>
+          <li>Маршрутизує SIP-запити від UAC до UAS</li>
+          <li>Stateful / Stateless</li>
+          <li>Може розгалужувати виклик (forking)</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:.7em;">
+        <h3>📋 Registrar Server</h3>
+        <ul>
+          <li>Обробляє REGISTER-запити</li>
+          <li>Зберігає прив'язки AOR → контакт (IP)</li>
+          <li>AOR = <code>sip:user@domain</code></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🔁 Redirect Server</h3>
+        <ul>
+          <li>Відповідає кодом <strong>3xx</strong></li>
+          <li>Вказує UA новий URI для запиту</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:.6em;">
+    <strong>B2BUA (Back-to-Back User Agent)</strong> — одночасно є UAS і UAC; типовий для IP PBX (Asterisk, FreePBX, 3CX). Повністю контролює сесію.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 9 – SIP URI ==================== -->
+<section class="slide bg-plain">
+  <h2>🔗 SIP URI та адресація</h2>
+  <pre class="diag">sip:alice@atlanta.com               ← базовий URI
+sip:alice@192.0.2.4:5060           ← IP + порт
+sip:alice@atlanta.com;transport=tcp ← параметр транспорту
+sips:alice@atlanta.com             ← захищений TLS URI
+tel:+380441234567                   ← номерний URI (RFC 3966)</pre>
+  <div class="two-col" style="margin-top:.7em;">
+    <div>
+      <h3>Заголовки адресації</h3>
+      <ul>
+        <li><code>From:</code> — адреса відправника</li>
+        <li><code>To:</code> — адреса одержувача</li>
+        <li><code>Contact:</code> — поточна IP-адреса UA</li>
+        <li><code>Via:</code> — шлях запиту (hop-by-hop)</li>
+        <li><code>Route / Record-Route:</code> — примусова маршрутизація</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Ідентифікація діалогу</h3>
+      <ul>
+        <li><code>Call-ID:</code> — унікальний ID сесії</li>
+        <li><code>CSeq:</code> — порядковий номер запиту</li>
+        <li><code>branch</code> у Via — ідентифікатор транзакції</li>
+        <li><code>tag</code> у From/To — ідентифікатор діалогу</li>
+        <li>Діалог = Call-ID + From-tag + To-tag</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 10 – SIP Methods ==================== -->
+<section class="slide bg-plain">
+  <h2>📨 Методи SIP (Requests)</h2>
+  <table>
+    <tr><th>Метод</th><th>Призначення</th><th>RFC</th></tr>
+    <tr><td><span class="m">INVITE</span></td><td>Ініціює або оновлює сесію (містить SDP)</td><td>3261</td></tr>
+    <tr><td><span class="m">ACK</span></td><td>Підтверджує отримання фінальної відповіді на INVITE</td><td>3261</td></tr>
+    <tr><td><span class="m">BYE</span></td><td>Завершує встановлену сесію</td><td>3261</td></tr>
+    <tr><td><span class="m">CANCEL</span></td><td>Скасовує запит, що ще обробляється</td><td>3261</td></tr>
+    <tr><td><span class="m">REGISTER</span></td><td>Реєструє UA у Registrar Server</td><td>3261</td></tr>
+    <tr><td><span class="m">OPTIONS</span></td><td>Запитує можливості сервера або UA</td><td>3261</td></tr>
+    <tr><td><span class="m">SUBSCRIBE</span></td><td>Підписка на події (BLF, presence…)</td><td>3265</td></tr>
+    <tr><td><span class="m">NOTIFY</span></td><td>Сповіщення про подію підписнику</td><td>3265</td></tr>
+    <tr><td><span class="m">REFER</span></td><td>Переадресація виклику (transfer)</td><td>3515</td></tr>
+    <tr><td><span class="m">MESSAGE</span></td><td>Миттєві повідомлення (Instant Messaging)</td><td>3428</td></tr>
+    <tr><td><span class="m">UPDATE</span></td><td>Оновлення сесії без повного re-INVITE</td><td>3311</td></tr>
+    <tr><td><span class="m">INFO</span></td><td>Передача інформації в рамках сесії (DTMF)</td><td>6086</td></tr>
+  </table>
+</section>
+
+<!-- ==================== SLIDE 11 – SIP Responses ==================== -->
+<section class="slide bg-plain">
+  <h2>📬 Відповіді SIP (Response Codes)</h2>
+  <div class="two-col">
+    <div>
+      <table>
+        <tr><th>Клас</th><th>Призначення</th></tr>
+        <tr><td><span class="ok">1xx</span></td><td>Інформаційні (Trying, Ringing…)</td></tr>
+        <tr><td><span class="ok">2xx</span></td><td>Успішно (200 OK, 202 Accepted)</td></tr>
+        <tr><td>3xx</td><td>Переадресація (301, 302)</td></tr>
+        <tr><td><span class="er">4xx</span></td><td>Помилка клієнта</td></tr>
+        <tr><td><span class="er">5xx</span></td><td>Помилка сервера</td></tr>
+        <tr><td><span class="er">6xx</span></td><td>Глобальна помилка</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th>Код</th><th>Опис</th></tr>
+        <tr><td><span class="ok">100</span></td><td>Trying</td></tr>
+        <tr><td><span class="ok">180</span></td><td>Ringing</td></tr>
+        <tr><td><span class="ok">183</span></td><td>Session Progress</td></tr>
+        <tr><td><span class="ok">200</span></td><td>OK</td></tr>
+        <tr><td><span class="er">401</span></td><td>Unauthorized</td></tr>
+        <tr><td><span class="er">403</span></td><td>Forbidden</td></tr>
+        <tr><td><span class="er">404</span></td><td>Not Found</td></tr>
+        <tr><td><span class="er">480</span></td><td>Temporarily Unavailable</td></tr>
+        <tr><td><span class="er">486</span></td><td>Busy Here</td></tr>
+        <tr><td><span class="er">503</span></td><td>Service Unavailable</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 12 – SIP Message Format ==================== -->
+<section class="slide bg-plain">
+  <h2>📄 Формат SIP-повідомлення</h2>
+  <div class="two-col">
+    <div>
+      <h3>INVITE-запит</h3>
+      <pre class="sip">INVITE sip:bob@biloxi.com SIP/2.0
+Via: SIP/2.0/UDP pc33.atlanta.com;
+  branch=z9hG4bK776asdhds
+Max-Forwards: 70
+To: Bob &lt;sip:bob@biloxi.com&gt;
+From: Alice &lt;sip:alice@atlanta.com&gt;;
+  tag=1928301774
+Call-ID: a84b4c76e66710@pc33.atlanta.com
+CSeq: 314159 INVITE
+Contact: &lt;sip:alice@pc33.atlanta.com&gt;
+Content-Type: application/sdp
+Content-Length: 142
+
+v=0
+o=alice 2890844526 2890844526 IN IP4 pc33.atlanta.com
+s=VoIP Call
+c=IN IP4 pc33.atlanta.com
+t=0 0
+m=audio 49172 RTP/AVP 0 8
+a=rtpmap:0 PCMU/8000
+a=rtpmap:8 PCMA/8000</pre>
+    </div>
+    <div>
+      <h3>200 OK-відповідь</h3>
+      <pre class="sip">SIP/2.0 200 OK
+Via: SIP/2.0/UDP pc33.atlanta.com;
+  branch=z9hG4bK776asdhds
+To: Bob &lt;sip:bob@biloxi.com&gt;;
+  tag=a48s
+From: Alice &lt;sip:alice@atlanta.com&gt;;
+  tag=1928301774
+Call-ID: a84b4c76e66710@pc33.atlanta.com
+CSeq: 314159 INVITE
+Contact: &lt;sip:bob@192.0.2.4&gt;
+Content-Type: application/sdp
+Content-Length: 131
+
+v=0
+o=bob 2890844730 2890844730 IN IP4 192.0.2.4
+s=VoIP Call
+c=IN IP4 192.0.2.4
+t=0 0
+m=audio 3456 RTP/AVP 0
+a=rtpmap:0 PCMU/8000</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 13 – SIP Call Flow ==================== -->
+<section class="slide bg-plain">
+  <h2>📞 SIP Call Flow — базовий дзвінок</h2>
+  <pre class="diag">
+  Alice (UAC)         SIP Proxy          Bob (UAS)
+      │                   │                  │
+      │─── INVITE ────────►│                  │
+      │                   │─── INVITE ───────►│
+      │◄── 100 Trying ────│◄── 100 Trying ───│
+      │◄── 180 Ringing ───│◄── 180 Ringing ──│   🔔 дзвінок у Bob
+      │                   │◄── 200 OK ───────│   ✅ Bob підняв трубку
+      │◄── 200 OK ────────│                  │
+      │─── ACK ───────────────────────────►│   підтвердження
+      │                                      │
+      │◄══════════════ RTP Media ════════════►│   🎤 двостороннє аудіо
+      │                                      │
+      │─── BYE ───────────────────────────►│   завершення розмови
+      │◄── 200 OK ────────────────────────│
+  </pre>
+  <div class="hbox" style="margin-top:.5em;">
+    Сигналізація (SIP) і медіа (RTP) передаються <strong>незалежно</strong>. INVITE містить SDP-пропозицію (<em>offer</em>), 200&nbsp;OK — SDP-відповідь (<em>answer</em>).
+  </div>
+</section>
+
+<!-- ==================== SLIDE 14 – SIP Registration ==================== -->
+<section class="slide bg-plain">
+  <h2>📝 Реєстрація SIP UA (REGISTER)</h2>
+  <pre class="diag">
+  Alice UA                     Registrar Server
+      │                               │
+      │─── REGISTER ─────────────────►│
+      │    From: sip:alice@domain.com  │
+      │    To:   sip:alice@domain.com  │
+      │    Contact: sip:alice@10.0.0.5 │
+      │    Expires: 3600               │
+      │                               │
+      │◄── 401 Unauthorized ──────────│  WWW-Authenticate: Digest realm=...
+      │                               │
+      │─── REGISTER ─────────────────►│  Authorization: Digest response=...
+      │                               │
+      │◄── 200 OK ────────────────────│  ✅ зареєстровано
+  </pre>
+  <div class="hbox" style="margin-top:.6em;">
+    <strong>Digest Authentication (RFC 3261 §22)</strong>: сервер надсилає <em>nonce</em>, клієнт відповідає хешем <code>MD5(HA1:nonce:HA2)</code>. У сучасних системах рекомендується <strong>SHA-256</strong> (RFC 7616). Для надійного захисту реєстрацію слід виконувати по <strong>TLS</strong>.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 15 – RTP/RTCP ==================== -->
+<section class="slide bg-plain">
+  <h2>🎵 RTP та RTCP (RFC 3550)</h2>
+  <div class="two-col">
+    <div>
+      <div class="card">
+        <h3>RTP — Real-time Transport Protocol</h3>
+        <ul>
+          <li>Передача аудіо/відео пакетів у реальному часі</li>
+          <li>Транспорт: <strong>UDP</strong> (парні порти)</li>
+          <li>Заголовок: payload type, sequence number, timestamp, SSRC</li>
+          <li>Не гарантує доставку або порядок</li>
+          <li>SRTP (RFC 3711) — шифрована версія</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>RTCP — RTP Control Protocol</h3>
+        <ul>
+          <li>Статистика сесії: втрати, jitter, RTT</li>
+          <li>Порт = RTP-порт + 1</li>
+          <li><strong>SR</strong> (Sender Report) / <strong>RR</strong> (Receiver Report)</li>
+          <li>SDES — опис джерела (CNAME)</li>
+          <li>Основа для адаптивного бітрейту</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <pre class="diag" style="margin-top:.7em;">
+RTP Fixed Header (12 байт):
+ 0               1               2               3
+ 0 1 2 3 4 5 6 7 0 1 2 3 4 5 6 7 0 1 2 3 4 5 6 7 0 1 2 3 4 5 6 7
+├─┬─┬─┬───┬─┬───────┼───────────────────────────────────────────┤
+│V│P│X│ CC│M│  PT   │           Sequence Number                 │
+├─┴─┴─┴───┴─┴───────┴───────────────────────────────────────────┤
+│                         Timestamp                              │
+├───────────────────────────────────────────────────────────────┤
+│                  SSRC (Sync Source Identifier)                 │
+└───────────────────────────────────────────────────────────────┘</pre>
+</section>
+
+<!-- ==================== SLIDE 16 – SDP ==================== -->
+<section class="slide bg-plain">
+  <h2>📋 SDP — Session Description Protocol (RFC 4566)</h2>
+  <div class="two-col">
+    <div>
+      <h3>Структура SDP</h3>
+      <pre class="sip">v=0                          ← версія
+o=alice 123 456 IN IP4 10.0.0.1 ← автор/сесія
+s=VoIP Call                  ← назва сесії
+c=IN IP4 10.0.0.1            ← з'єднання
+t=0 0                        ← час
+
+m=audio 49170 RTP/AVP 0 8 97 ← медіа-рядок
+a=rtpmap:0 PCMU/8000         ← G.711 µ-law
+a=rtpmap:8 PCMA/8000         ← G.711 A-law
+a=rtpmap:97 iLBC/8000        ← iLBC кодек
+a=sendrecv                   ← двосторонній режим
+
+m=video 51372 RTP/AVP 96
+a=rtpmap:96 H264/90000
+a=fmtp:96 profile-level-id=42e01f</pre>
+    </div>
+    <div>
+      <h3>Offer / Answer модель (RFC 3264)</h3>
+      <ul>
+        <li><strong>Offer</strong>: INVITE містить список підтримуваних кодеків</li>
+        <li><strong>Answer</strong>: 200 OK — вибирає один або кілька</li>
+        <li>Визначає IP-адресу та порт для RTP</li>
+        <li>ICE-кандидати для NAT traversal</li>
+        <li>Режими: sendrecv, sendonly, recvonly, inactive</li>
+      </ul>
+      <div class="hbox" style="margin-top:.7em;">
+        SDP описує <em>що</em> передавати і <em>куди</em>.<br>
+        RTP виконує фактичну передачу медіа.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 17 – Codecs ==================== -->
+<section class="slide bg-plain">
+  <h2>🎼 Аудіо-кодеки VoIP</h2>
+  <table>
+    <tr><th>Кодек</th><th>Бітрейт</th><th>Частота дискр.</th><th>MOS</th><th>Використання</th></tr>
+    <tr><td><strong>G.711 µ/A</strong></td><td>64 кбіт/с</td><td>8 кГц</td><td>4.1–4.4</td><td>PSTN, PBX, legacy</td></tr>
+    <tr><td><strong>G.729A</strong></td><td>8 кбіт/с</td><td>8 кГц</td><td>3.8–4.0</td><td>Корпоративна телефонія</td></tr>
+    <tr><td><strong>G.722</strong></td><td>48–64 кбіт/с</td><td>16 кГц (HD)</td><td>4.5</td><td>HD Voice, конференції</td></tr>
+    <tr><td><strong>Opus</strong></td><td>6–510 кбіт/с</td><td>8–48 кГц</td><td>4.5+</td><td>WebRTC, месенджери</td></tr>
+    <tr><td>G.722.2 (AMR-WB)</td><td>6.6–23.85 кбіт/с</td><td>16 кГц</td><td>4.3</td><td>Mobile VoIP, 3GPP</td></tr>
+    <tr><td>G.723.1</td><td>5.3/6.3 кбіт/с</td><td>8 кГц</td><td>3.5–3.9</td><td>Вузькосмугові канали</td></tr>
+    <tr><td>iLBC</td><td>13.3/15.2 кбіт/с</td><td>8 кГц</td><td>4.1</td><td>Мережі з втратами</td></tr>
+  </table>
+  <div class="hbox" style="margin-top:.6em;">
+    <strong>MOS (Mean Opinion Score)</strong> — суб'єктивна оцінка якості голосу: 1 (поганий) → 5 (відмінний). Прийнятна якість: MOS ≥ 3.5. <strong>Opus</strong> — найгнучкіший: адаптує бітрейт і частоту дискретизації в реальному часі.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 18 – NAT Traversal ==================== -->
+<section class="slide bg-plain">
+  <h2>🌐 NAT Traversal: STUN / TURN / ICE</h2>
+  <div class="three-col">
+    <div class="card">
+      <h3>STUN (RFC 8489)</h3>
+      <ul>
+        <li>UA дізнається свою публічну IP:port</li>
+        <li>Легкий протокол, низька затримка</li>
+        <li>Не вирішує <em>symmetric NAT</em></li>
+        <li>Типово: Google STUN, Coturn</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>TURN (RFC 8656)</h3>
+      <ul>
+        <li>Relay-сервер ретранслює медіа</li>
+        <li>Вирішує <strong>всі</strong> типи NAT</li>
+        <li>Вища затримка, навантаження на сервер</li>
+        <li>Резервний варіант за ICE</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>ICE (RFC 8445)</h3>
+      <ul>
+        <li>Комбінує STUN та TURN</li>
+        <li>Збирає host / srflx / relay кандидати</li>
+        <li>Connectivity checks (STUN binding)</li>
+        <li>Вибирає найкращий шлях</li>
+      </ul>
+    </div>
+  </div>
+  <pre class="diag" style="margin-top:.7em;">
+  UA (private)          STUN/TURN Server         UA (private)
+  10.0.0.5:49170   ──► 203.0.113.1:3478 ◄──   192.168.1.10:51234
+       │                      │                       │
+       └─── ICE: перевірка кандидатів ────────────────┘
+            1. host:  10.0.0.5:49170
+            2. srflx: 198.51.100.2:12345  (через STUN)
+            3. relay: 203.0.113.1:40000   (через TURN)</pre>
+</section>
+
+<!-- ==================== SLIDE 19 – QoS ==================== -->
+<section class="slide bg-plain">
+  <h2>⚡ Якість обслуговування (QoS)</h2>
+  <div class="two-col">
+    <div>
+      <h3>Ключові параметри</h3>
+      <ul>
+        <li><strong>Затримка (latency)</strong>: &lt; 150 мс one-way (рек. ITU G.114)</li>
+        <li><strong>Jitter</strong>: &lt; 30 мс (згладжується jitter buffer)</li>
+        <li><strong>Втрати пакетів</strong>: &lt; 1% для задовільної якості</li>
+        <li><strong>Пропускна здатність</strong>: 8–100 кбіт/с на виклик</li>
+      </ul>
+      <div class="wbox" style="margin-top:.6em;">
+        Затримка &gt; 300 мс суттєво погіршує розбірливість мови та заважає природній розмові.
+      </div>
+    </div>
+    <div>
+      <h3>Механізми QoS</h3>
+      <ul>
+        <li><strong>DSCP/DiffServ</strong>: маркування пакетів (EF = 46 для голосу)</li>
+        <li><strong>802.1p CoS</strong>: пріоритизація на рівні L2</li>
+        <li><strong>VLAN</strong>: ізольована голосова мережа</li>
+        <li><strong>Traffic policing/shaping</strong></li>
+        <li><strong>Jitter buffer</strong>: adaptive / fixed</li>
+        <li><strong>PLC (Packet Loss Concealment)</strong>: приховування втрат</li>
+        <li><strong>AEC</strong>: придушення акустичного відлуння</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 20 – VoIP Security ==================== -->
+<section class="slide bg-sec">
+  <h2>🔒 Безпека VoIP</h2>
+  <div class="two-col">
+    <div>
+      <h3>Основні загрози</h3>
+      <ul>
+        <li><strong>Toll fraud</strong> — несанкціоновані дзвінки</li>
+        <li><strong>Eavesdropping</strong> — прослуховування RTP</li>
+        <li><strong>SIP flooding / DoS</strong></li>
+        <li><strong>Registration hijacking</strong></li>
+        <li><strong>SPIT</strong> — спам через IP-телефонію</li>
+        <li><strong>Man-in-the-Middle</strong></li>
+        <li><strong>Replay attacks</strong></li>
+        <li><strong>Vishing</strong> — голосовий фішинг</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Захисні заходи</h3>
+      <ul>
+        <li><strong>TLS</strong> для сигналізації SIP (порт 5061)</li>
+        <li><strong>SRTP/ZRTP</strong> для шифрування медіа</li>
+        <li><strong>SIP Digest Auth</strong> + SHA-256 (RFC 7616)</li>
+        <li><strong>SBC</strong> (Session Border Controller)</li>
+        <li><strong>Fail2ban</strong> + IP filtering</li>
+        <li><strong>VPN</strong> для корпоративних з'єднань</li>
+        <li><strong>STIR/SHAKEN</strong> — верифікація CLI (RFC 8226)</li>
+        <li><strong>Rate limiting</strong> REGISTER/INVITE</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wbox" style="margin-top:.6em;">
+    <strong>SBC (Session Border Controller)</strong> — ключовий елемент захисту: topology hiding, rate limiting, TLS/SRTP termination, DoS-захист, нормалізація SIP.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 21 – SRTP ==================== -->
+<section class="slide bg-plain">
+  <h2>🛡️ SRTP — Secure RTP (RFC 3711)</h2>
+  <div class="two-col">
+    <div>
+      <h3>Особливості SRTP</h3>
+      <ul>
+        <li>Шифрування: <strong>AES-CTR</strong> (128 або 256 біт)</li>
+        <li>Аутентифікація: <strong>HMAC-SHA1</strong></li>
+        <li>Захист від відтворення (replay protection)</li>
+        <li>Мінімальні накладні витрати (~10 байт)</li>
+        <li>Управління ключами: <strong>SDES</strong>, <strong>DTLS-SRTP</strong></li>
+      </ul>
+      <div class="hbox" style="margin-top:.6em;">
+        <strong>DTLS-SRTP</strong> (RFC 5764) — рекомендований метод обміну ключами у WebRTC. Забезпечує Perfect Forward Secrecy (PFS).
+      </div>
+    </div>
+    <div>
+      <h3>RTP vs SRTP</h3>
+      <table>
+        <tr><th>Властивість</th><th>RTP</th><th>SRTP</th></tr>
+        <tr><td>Шифрування</td><td>❌</td><td>✅ AES</td></tr>
+        <tr><td>Аутентифікація</td><td>❌</td><td>✅ HMAC</td></tr>
+        <tr><td>Replay захист</td><td>❌</td><td>✅</td></tr>
+        <tr><td>Накладні витрати</td><td>Мінімум</td><td>+~10 байт</td></tr>
+        <tr><td>Підтримка</td><td>Широка</td><td>Сучасні UA</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 22 – WebRTC ==================== -->
+<section class="slide bg-mid">
+  <h2>🌍 WebRTC та сучасний VoIP-стек</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>WebRTC</strong> — відкритий стандарт W3C/IETF для браузерних медіа-комунікацій без плагінів (Chrome, Firefox, Safari, Edge).
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Протокольний стек WebRTC</h3>
+      <ul>
+        <li><strong>Сигналізація</strong>: не стандартизована (SIP/WebSocket/proprietary)</li>
+        <li><strong>JSEP</strong>: JavaScript Session Establishment Protocol</li>
+        <li><strong>ICE/STUN/TURN</strong>: NAT traversal</li>
+        <li><strong>DTLS</strong>: обмін ключами (PFS)</li>
+        <li><strong>SRTP</strong>: шифрування медіа</li>
+        <li><strong>SCTP over DTLS</strong>: DataChannel</li>
+        <li><strong>Opus / VP8/VP9/H.264/AV1</strong>: кодеки</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Застосування</h3>
+      <ul>
+        <li>Google Meet, Microsoft Teams</li>
+        <li>Discord, Zoom (WebRTC-режим)</li>
+        <li>WhatsApp Web, Telegram Web</li>
+        <li>Браузерні контакт-центри</li>
+        <li>IoT голосові пристрої</li>
+      </ul>
+      <div class="hbox" style="margin-top:.5em;">
+        <strong>SIP over WebSocket</strong> (RFC 7118) — SIP UA у браузері без встановлення застосунку.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 23 – Modern Systems ==================== -->
+<section class="slide bg-plain">
+  <h2>🚀 Сучасні VoIP-системи</h2>
+  <div class="three-col">
+    <div class="card">
+      <h3>Open Source</h3>
+      <ul>
+        <li><strong>Asterisk</strong> — IP PBX №1</li>
+        <li><strong>FreeSWITCH</strong> — media server</li>
+        <li><strong>Kamailio</strong> — SIP proxy/router</li>
+        <li><strong>OpenSIPS</strong> — SIP server</li>
+        <li><strong>PJSIP</strong> — бібліотека</li>
+        <li>Linphone, Baresip</li>
+        <li>Janus WebRTC gateway</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Комерційні UCaaS</h3>
+      <ul>
+        <li>Microsoft Teams Phone</li>
+        <li>Cisco Webex Calling</li>
+        <li>RingCentral MVP</li>
+        <li>Zoom Phone</li>
+        <li>8x8, Vonage, Dialpad</li>
+        <li>3CX Phone System</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Хмарні тренди</h3>
+      <ul>
+        <li>CPaaS (Twilio, Vonage API)</li>
+        <li>SIP Trunking (хмарний PSTN)</li>
+        <li>Direct Routing (MS Teams)</li>
+        <li>AI-транскрипція в реальному часі</li>
+        <li>Contact Center as a Service</li>
+        <li>5G VoNR (Voice over NR)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 24 – Troubleshooting ==================== -->
+<section class="slide bg-plain">
+  <h2>🔧 Діагностика VoIP</h2>
+  <div class="two-col">
+    <div>
+      <h3>Інструменти</h3>
+      <ul>
+        <li><strong>Wireshark</strong> — аналіз SIP/RTP пакетів</li>
+        <li><strong>sngrep</strong> — консольний SIP-монітор</li>
+        <li><strong>SIPp</strong> — генератор навантаження SIP</li>
+        <li><strong>Homer SIPCapture</strong> — корпоративний моніторинг</li>
+        <li><strong>VoIPmonitor</strong> — аналіз MOS у реальному часі</li>
+        <li><strong>tcpdump + pcap</strong> — захоплення трафіку</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Типові проблеми та рішення</h3>
+      <table>
+        <tr><th>Проблема</th><th>Причина</th></tr>
+        <tr><td>Одностороннє аудіо</td><td>NAT, неправильний SDP/Contact</td></tr>
+        <tr><td>Відлуння (echo)</td><td>Відсутній AEC, висока затримка</td></tr>
+        <tr><td>Переривання голосу</td><td>Втрати пакетів, jitter</td></tr>
+        <tr><td>Виклик не встановлюється</td><td>Firewall, routing, auth</td></tr>
+        <tr><td>Роботизований голос</td><td>Несумісний кодек</td></tr>
+        <tr><td>Затримка &gt; 300 мс</td><td>Дальні маршрути, QoS відсутній</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 25 – Summary ==================== -->
+<section class="slide bg-dark">
+  <h2>📌 Підсумки</h2>
+  <div class="two-col">
+    <div>
+      <ul>
+        <li>VoIP замінює PSTN завдяки економічності та гнучкості</li>
+        <li><strong>SIP</strong> (RFC 3261) — домінуючий протокол сигналізації</li>
+        <li>Чіткий поділ: <em>сигналізація</em> (SIP) ↔ <em>медіа</em> (RTP)</li>
+        <li><strong>SDP</strong> описує медіа-параметри (offer/answer)</li>
+        <li>ICE/STUN/TURN вирішують проблему NAT</li>
+        <li><strong>TLS + SRTP</strong> — обов'язковий мінімум безпеки</li>
+        <li>QoS критичний: затримка &lt; 150 мс, jitter &lt; 30 мс</li>
+        <li>WebRTC виносить VoIP у будь-який браузер</li>
+      </ul>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:.7em; justify-content:center;">
+      <div class="hbox">
+        <strong>Ключові RFC для вивчення:</strong><br>
+        RFC&nbsp;3261 (SIP) · RFC&nbsp;3550 (RTP/RTCP)<br>
+        RFC&nbsp;4566 (SDP) · RFC&nbsp;3711 (SRTP)<br>
+        RFC&nbsp;8445 (ICE) · RFC&nbsp;8489 (STUN) · RFC&nbsp;8656 (TURN)
+      </div>
+      <div class="hbox">
+        <strong>Практичні інструменти:</strong><br>
+        Asterisk / FreeSWITCH · Kamailio<br>
+        Wireshark / sngrep · SIPp · Linphone
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 26 – Q&A ==================== -->
+<section class="slide bg-end center">
+  <div>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem); color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin: 1em 0;">
+      Запитання?
+    </h3>
+    <p style="color:#666; margin-top:2.5em; font-size:clamp(.65rem,1.1vw,.85rem);">
+      RFC: 3261 · 3550 · 4566 · 3711 · 8445 · 8489 · 8656
+    </p>
+    <p style="color:#333; margin-top:.8em; font-size:clamp(.6rem,1vw,.78rem);">
+      Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
+    </p>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- NAV CONTROLS -->
+<div id="nav">
+  <button onclick="move(-1)">&#8592;</button>
+  <span id="counter"></span>
+  <button onclick="move(1)">&#8594;</button>
+</div>
+
+<script>
+(function () {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let cur = 0;
+
+  function goto(n) {
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('prev');
+    cur = (n + total) % total;
+    slides[cur].classList.remove('prev');
+    slides[cur].classList.add('active');
+    // remove prev class after transition
+    const prev = slides[(cur - 1 + total) % total];
+    setTimeout(() => prev.classList.remove('prev'), 420);
+    document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
+    document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+  }
+
+  function move(dir) { goto(cur + dir); }
+  window.move = move;
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { move(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { move(-1); e.preventDefault(); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  // touch swipe
+  let sx = 0;
+  document.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function (e) {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+  });
+
+  goto(0);
+})();
+</script>
+</body>
+</html>
