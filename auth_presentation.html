@@ -1,0 +1,1198 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Механізми автентифікації та захисту сигналізації</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
+
+/* ===== SLIDESHOW CONTAINER ===== */
+.deck { width: 100vw; height: 100vh; position: relative; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 3.5vw 5vw;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease, transform .4s ease;
+  transform: translateX(60px);
+  overflow: hidden;
+}
+.slide.active  { opacity: 1; pointer-events: all; transform: translateX(0); }
+.slide.prev    { opacity: 0; transform: translateX(-60px); }
+.slide.center  { align-items: center; text-align: center; }
+
+/* ===== BACKGROUNDS ===== */
+.bg-dark   { background: radial-gradient(circle at 60% 40%, #003566 0%, #001d3d 55%, #000814 100%); }
+.bg-mid    { background: linear-gradient(135deg, #001d3d 0%, #003566 100%); }
+.bg-sec    { background: linear-gradient(135deg, #1a0000 0%, #3d0000 100%); }
+.bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
+.bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
+
+/* ===== TYPOGRAPHY ===== */
+h1 { font-size: clamp(1.8rem, 4vw, 3.2rem); color: #00b4d8; line-height: 1.15; }
+h2 { font-size: clamp(1.2rem, 2.5vw, 1.9rem); color: #48cae4;
+     border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
+h3 { font-size: clamp(.85rem, 1.5vw, 1.05rem); color: #fff; margin-bottom: .4em; }
+p, li { font-size: clamp(.72rem, 1.3vw, .92rem); line-height: 1.55; }
+ul { margin-left: 1.3em; }
+li { margin-bottom: .28em; }
+code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
+strong { color: #90e0ef; }
+
+/* ===== LAYOUT HELPERS ===== */
+.two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; width: 100%; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; width: 100%; }
+.w100 { width: 100%; }
+
+/* ===== CARDS ===== */
+.card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(0,180,216,.35);
+  border-radius: .5em; padding: .8em 1em;
+}
+.card h3 { color: #00b4d8; font-size: .92em; }
+
+/* ===== CALLOUT BOXES ===== */
+.hbox {
+  background: rgba(0,180,216,.13);
+  border-left: 4px solid #00b4d8;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: clamp(.68rem, 1.2vw, .85rem);
+}
+.wbox {
+  background: rgba(247,127,0,.13);
+  border-left: 4px solid #f77f00;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: clamp(.68rem, 1.2vw, .85rem);
+}
+.gbox {
+  background: rgba(82,183,136,.13);
+  border-left: 4px solid #52b788;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: clamp(.68rem, 1.2vw, .85rem);
+}
+
+/* ===== DIAGRAMS / PREFORMATTED ===== */
+pre.sip {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: clamp(.52rem, .95vw, .72rem);
+  background: #0d1117; border: 1px solid #00b4d8;
+  border-radius: .4em; padding: .7em 1em;
+  line-height: 1.45; white-space: pre; overflow: auto;
+  max-height: 42vh;
+}
+pre.diag {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: clamp(.5rem, .9vw, .7rem);
+  background: #0d1117; border: 1px solid #00b4d8;
+  border-radius: .4em; padding: .7em 1.2em;
+  line-height: 1.65; white-space: pre; width: 100%;
+}
+
+/* ===== TABLES ===== */
+table { width: 100%; border-collapse: collapse; font-size: clamp(.62rem, 1.1vw, .82rem); }
+th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .65em; text-align: left; }
+td { padding: .3em .65em; border-bottom: 1px solid rgba(255,255,255,.09); }
+tr:nth-child(even) td { background: rgba(255,255,255,.04); }
+
+/* ===== BADGE ===== */
+.badge { display: inline-block; background: #00b4d8; color: #000;
+  border-radius: .25em; padding: .05em .4em; font-size: .72em; font-weight: bold; }
+.m  { color: #00b4d8; font-weight: bold; }
+.ok { color: #52b788; }
+.er { color: #f77f00; }
+
+/* ===== NAVIGATION ===== */
+#nav {
+  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
+  display: flex; align-items: center; gap: .6em;
+}
+#nav button {
+  background: rgba(0,180,216,.18); border: 1px solid #00b4d8; color: #00b4d8;
+  border-radius: .35em; padding: .4em .9em; font-size: .85rem; cursor: pointer;
+  transition: background .2s;
+}
+#nav button:hover { background: rgba(0,180,216,.4); }
+#counter { color: #555; font-size: .78rem; min-width: 4em; text-align: center; }
+
+/* ===== PROGRESS BAR ===== */
+#prog { position: fixed; bottom: 0; left: 0; height: 3px; background: #00b4d8;
+        transition: width .35s ease; z-index: 200; }
+
+/* ===== KEYBOARD HINT ===== */
+#hint { position: fixed; top: 1vh; right: 1.5vw; font-size: .62rem; color: #333; z-index: 100; }
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="hint">← → | F — full screen</div>
+
+<div class="deck" id="deck">
+
+<!-- ==================== SLIDE 1 – Title ==================== -->
+<section class="slide bg-dark center active" id="s0">
+  <div>
+    <h1 style="font-size:clamp(1.6rem,4vw,3rem); margin-bottom:.4em;">Механізми автентифікації<br>та захисту сигналізації</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin-bottom:1.5em;">
+      Безпека протоколів VoIP-сигналізації
+    </h3>
+    <p style="color:#aaa; font-size:clamp(.8rem,1.5vw,1rem);">Курс «Безпека VoIP» · Напрям «Кібербезпека»</p>
+    <p style="color:#444; font-size:clamp(.7rem,1.2vw,.88rem); margin-top:2.5em;">
+      Кафедра інформаційних технологій та кібербезпеки
+    </p>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 2 – Agenda ==================== -->
+<section class="slide bg-plain">
+  <h2>📋 План лекції</h2>
+  <div class="two-col">
+    <ul>
+      <li>Загрози автентифікації у VoIP</li>
+      <li>Моделі автентифікації: огляд</li>
+      <li>SIP Digest-автентифікація (RFC 3261)</li>
+      <li>Розрахунок Digest-відповіді</li>
+      <li>Обмеження Digest та атаки</li>
+      <li>TLS для захисту SIP-сигналізації</li>
+      <li>SIPS URI та безпечна маршрутизація</li>
+      <li>S/MIME у SIP (RFC 3261 §23)</li>
+      <li>SRTP — захист медіапотоків</li>
+      <li>ZRTP — обмін ключами (RFC 6189)</li>
+      <li>DTLS-SRTP (RFC 5763)</li>
+      <li>WebRTC та DTLS-SRTP</li>
+      <li>H.235 — безпека в H.323</li>
+    </ul>
+    <ul>
+      <li>Стверджена ідентичність: P-Asserted-Identity</li>
+      <li>STIR — Secure Telephony Identity Revisited</li>
+      <li>SHAKEN — розгортання STIR в операторів</li>
+      <li>OAuth 2.0 у SIP (RFC 8898)</li>
+      <li>Атаки на автентифікацію: реєстраційне викрадення</li>
+      <li>Атаки: повторне відтворення та перебір паролів</li>
+      <li>Атаки: MITM на сигналізацію</li>
+      <li>Session Border Controller (SBC)</li>
+      <li>IPSec для VoIP-інфраструктури</li>
+      <li>PKI та управління сертифікатами</li>
+      <li>Практичні рекомендації та чеклист</li>
+      <li>Підсумок</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3 – Threat Landscape ==================== -->
+<section class="slide bg-plain">
+  <h2>⚠️ Загрози автентифікації у VoIP</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    Сигналізація VoIP передається відкритими мережами. Без надійної автентифікації зловмисник може видавати себе за законного учасника, перехоплювати виклики та обходити тарифікацію.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Основні вектори атак</h3>
+      <ul>
+        <li><strong>Реєстраційне викрадення</strong> — перехоплення реєстрації SIP</li>
+        <li><strong>Toll Fraud</strong> — несанкціонована тарифікація</li>
+        <li><strong>Caller ID Spoofing</strong> — підміна номера</li>
+        <li><strong>MITM</strong> — підміна SIP-проксі</li>
+        <li><strong>Replay Attack</strong> — повторне відтворення повідомлень</li>
+        <li><strong>Brute Force</strong> — перебір SIP-паролів</li>
+        <li><strong>Unauthorized Call Forwarding</strong></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Наслідки компрометації</h3>
+      <ul>
+        <li>Прослуховування переговорів</li>
+        <li>Фінансові збитки (toll fraud)</li>
+        <li>Порушення конфіденційності</li>
+        <li>Репутаційні ризики (спуфінг ідентичності)</li>
+        <li>Відмова в обслуговуванні (DoS)</li>
+        <li>Витік корпоративних даних</li>
+        <li>Правові наслідки (GDPR, закони про перехоплення)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4 – Auth Models Overview ==================== -->
+<section class="slide bg-plain">
+  <h2>🔐 Моделі автентифікації: огляд</h2>
+  <div class="three-col" style="margin-bottom:.8em;">
+    <div class="card">
+      <h3>🔑 Знання (Something you know)</h3>
+      <ul>
+        <li>Пароль / PIN</li>
+        <li>SIP Digest (MD5 / SHA-256)</li>
+        <li>Shared secret</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🪪 Власність (Something you have)</h3>
+      <ul>
+        <li>X.509 сертифікат</li>
+        <li>SIM-картка</li>
+        <li>OAuth токен</li>
+        <li>Hardware token / FIDO2</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🌐 Контекст (Something you are)</h3>
+      <ul>
+        <li>IP-адреса (мережевий контроль)</li>
+        <li>Біометрія (голос)</li>
+        <li>P-Asserted-Identity (оператор)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox">
+    <strong>У VoIP</strong> найширше застосовуються: <strong>SIP Digest</strong> (пароль), <strong>TLS + сертифікати</strong> (PKI) і <strong>STIR/SHAKEN</strong> (ланцюг довіри оператора). OAuth 2.0 — новий стандарт для федеративних сценаріїв.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 5 – SIP Digest Auth ==================== -->
+<section class="slide bg-plain">
+  <h2>🔏 SIP Digest-автентифікація (RFC 3261)</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    SIP запозичив механізм <strong>HTTP Digest Authentication</strong> (RFC 7616). Пароль ніколи не передається у відкритому вигляді — передається лише хеш-відповідь.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Схема виклику-відповіді</h3>
+      <pre class="diag">UAC                   SIP Server
+ |                        |
+ |--- REGISTER ---------->|
+ |                        |
+ |<-- 401 Unauthorized ---|
+ |    WWW-Authenticate:   |
+ |    Digest realm=...,   |
+ |    nonce="abc123",     |
+ |    algorithm=MD5       |
+ |                        |
+ |--- REGISTER ---------->|
+ |    Authorization:      |
+ |    Digest username=.., |
+ |    response="hash"     |
+ |                        |
+ |<-- 200 OK -------------|</pre>
+    </div>
+    <div>
+      <h3>Параметри WWW-Authenticate</h3>
+      <ul>
+        <li><code>realm</code> — домен автентифікації</li>
+        <li><code>nonce</code> — одноразове значення сервера</li>
+        <li><code>algorithm</code> — MD5 або SHA-256</li>
+        <li><code>qop</code> — якість захисту (auth / auth-int)</li>
+        <li><code>opaque</code> — непрозорі дані сервера</li>
+        <li><code>stale</code> — ознака застарілого nonce</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        <strong>Увага:</strong> MD5 офіційно вилучено з RFC 7616. Рекомендується <strong>SHA-256</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 6 – Digest Calculation ==================== -->
+<section class="slide bg-plain">
+  <h2>🧮 Розрахунок Digest-відповіді</h2>
+  <div class="two-col">
+    <div>
+      <h3>Алгоритм (qop=auth)</h3>
+      <pre class="diag">HA1 = MD5(username:realm:password)
+
+HA2 = MD5(method:digestURI)
+
+response = MD5(
+  HA1 : nonce : nc :
+  cnonce : qop : HA2
+)</pre>
+      <div class="hbox" style="margin-top:.5em;">
+        <strong>cnonce</strong> — клієнтський nonce (захист від replay)<br>
+        <strong>nc</strong> — лічильник запитів (nonce count)
+      </div>
+    </div>
+    <div>
+      <h3>Приклад Authorization-заголовка</h3>
+      <pre class="sip">Authorization: Digest
+  username="alice",
+  realm="atlanta.example.com",
+  nonce="84a4cc6f3082121f32b42a2187831a9e",
+  uri="sip:atlanta.example.com",
+  qop=auth,
+  nc=00000001,
+  cnonce="0a4f113b",
+  response="6629fae49393a05397450978507c4ef1",
+  algorithm=MD5</pre>
+    </div>
+  </div>
+  <div class="wbox">
+    <strong>Обмеження:</strong> MD5-хеш уразливий до офлайн-атак перебором. Перехоплений 401+REGISTER дозволяє зловмиснику відновити пароль без взаємодії з сервером.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 7 – Digest Weaknesses & Attacks ==================== -->
+<section class="slide bg-sec">
+  <h2>💀 Обмеження Digest та атаки</h2>
+  <div class="two-col">
+    <div>
+      <h3>Слабкі місця Digest</h3>
+      <ul>
+        <li>Не забезпечує конфіденційність сигналізації</li>
+        <li>Не захищає від MITM (без TLS)</li>
+        <li>MD5: хмарний перебір за секунди</li>
+        <li>Одностороння автентифікація (клієнт → сервер)</li>
+        <li>Відсутній захист цілісності заголовків SIP</li>
+        <li>Nonce-флудинг — DoS-вектор</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Відомі атаки</h3>
+      <ul>
+        <li><strong>SIPVicious / svcrack</strong> — сканування та злом SIP-паролів</li>
+        <li><strong>Hashcat / John the Ripper</strong> — офлайн перебір MD5</li>
+        <li><strong>Nonce replay</strong> — повторне використання nonce</li>
+        <li><strong>Downgrade attack</strong> — примус до MD5 замість SHA-256</li>
+        <li><strong>Registration hijacking</strong> — підміна Contact-заголовка</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        Реальний приклад: злом SIP-акаунту корпоративного PBX → toll fraud на $50 000 за вихідні.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 8 – TLS for SIP ==================== -->
+<section class="slide bg-plain">
+  <h2>🔒 TLS для захисту SIP-сигналізації</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>TLS (Transport Layer Security)</strong> шифрує SIP-трафік на транспортному рівні, захищаючи від прослуховування та MITM. SIP over TLS = <strong>SIPS</strong>.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Характеристики SIP/TLS</h3>
+      <ul>
+        <li>Порт <strong>5061/TCP</strong> (vs 5060 для UDP/TCP)</li>
+        <li>Двостороння автентифікація (mutual TLS)</li>
+        <li>TLS 1.2 / TLS 1.3 (RFC 8446)</li>
+        <li>Шифрування: AES-128-GCM, ChaCha20-Poly1305</li>
+        <li>Захист цілісності та конфіденційності</li>
+        <li>X.509-сертифікати для ідентифікації</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Модель довіри TLS у SIP</h3>
+      <pre class="diag">UAC ──[TLS]──► Proxy A ──[TLS]──► Proxy B ──[TLS]──► UAS
+      ↑                                               ↑
+ cert verify                                    cert verify
+
+Hop-by-hop: кожен сегмент шифрується окремо
+End-to-end: потрібен S/MIME або SRTP</pre>
+      <div class="wbox" style="margin-top:.4em;">
+        TLS захищає лише <em>hop-by-hop</em>. Проміжні проксі бачать SIP-заголовки у відкритому вигляді.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 9 – SIPS URI ==================== -->
+<section class="slide bg-plain">
+  <h2>🔗 SIPS URI та безпечна маршрутизація</h2>
+  <div class="two-col">
+    <div>
+      <h3>Синтаксис та семантика</h3>
+      <pre class="diag">SIP URI:  sip:alice@atlanta.com
+SIPS URI: sips:alice@atlanta.com
+            ↑
+     Вимагає TLS на всьому шляху</pre>
+      <ul style="margin-top:.5em;">
+        <li>SIPS вимагає TLS на <strong>кожному hop</strong></li>
+        <li>Проксі зобов'язаний відхилити виклик, якщо TLS недоступний</li>
+        <li>Поширюється на Contact-, Record-Route- та Route-заголовки</li>
+        <li>Використовується у Request-URI та To/From-заголовках</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Алгоритм перевірки маршруту</h3>
+      <ul>
+        <li>Проксі отримує INVITE з SIPS Request-URI</li>
+        <li>Знаходить наступний hop через DNS NAPTR/SRV</li>
+        <li>Переконується, що запис вказує на TLS-транспорт</li>
+        <li>Якщо TLS недоступний → <code>502 Bad Gateway</code></li>
+        <li>Зберігає SIPS у Record-Route</li>
+      </ul>
+      <div class="hbox" style="margin-top:.5em;">
+        <strong>RFC 3261 §19.1:</strong> SIPS — це зобов'язання забезпечити end-to-end захист сигналізаційного шляху.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 10 – S/MIME in SIP ==================== -->
+<section class="slide bg-plain">
+  <h2>✉️ S/MIME у SIP (RFC 3261 §23)</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>S/MIME</strong> забезпечує <em>end-to-end</em> захист тіла SIP-повідомлення (SDP, MIME-контент). На відміну від TLS, S/MIME шифрує тіло наскрізно — проміжні проксі не можуть його прочитати.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Можливості S/MIME</h3>
+      <ul>
+        <li><strong>Підпис</strong> — цілісність і автентифікація відправника</li>
+        <li><strong>Шифрування</strong> — конфіденційність SDP</li>
+        <li><strong>Обидва разом</strong> — максимальний захист</li>
+        <li>Content-Type: <code>application/pkcs7-mime</code></li>
+        <li>Content-Type: <code>multipart/signed</code></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Обмеження S/MIME у SIP</h3>
+      <ul>
+        <li>Потребує PKI-інфраструктури (CA, сертифікати)</li>
+        <li>Ускладнює роботу проміжних B2BUA</li>
+        <li>Шифрування SDP ускладнює медіа NAT traversal</li>
+        <li>Слабка підтримка у телефонних клієнтах</li>
+        <li>На практиці рідко застосовується</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        S/MIME у SIP — теоретично ідеальний, практично рідко реалізований підхід.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 11 – SRTP ==================== -->
+<section class="slide bg-plain">
+  <h2>🎙️ SRTP — захист медіапотоків (RFC 3711)</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>SRTP (Secure RTP)</strong> — розширення RTP з шифруванням, автентифікацією та захистом від відтворення медіапотоків. Узгоджується через SDP <code>m=audio ... RTP/SAVP</code>.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Захисні механізми SRTP</h3>
+      <ul>
+        <li><strong>Шифрування:</strong> AES Counter Mode (128/256 біт)</li>
+        <li><strong>Автентифікація:</strong> HMAC-SHA1 (80-бітний тег)</li>
+        <li><strong>Replay Window:</strong> захист від повторного відтворення</li>
+        <li><strong>MKI (Master Key Identifier):</strong> ротація ключів</li>
+        <li>Мінімальний накладний трафік (~10 байт/пакет)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Управління ключами SRTP</h3>
+      <ul>
+        <li><strong>SDES (RFC 4568):</strong> ключі у SDP в Base64 — потрібен TLS!</li>
+        <li><strong>ZRTP (RFC 6189):</strong> DH-обмін у медіаплощині</li>
+        <li><strong>DTLS-SRTP (RFC 5763):</strong> TLS поверх UDP для WebRTC</li>
+        <li><strong>MIKEY (RFC 3830):</strong> мультимедійний обмін ключами</li>
+      </ul>
+      <div class="wbox" style="margin-top:.4em;">
+        <strong>SDES без TLS</strong> — критична вразливість: ключі SRTP передаються у відкритому вигляді в SDP.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 12 – ZRTP ==================== -->
+<section class="slide bg-plain">
+  <h2>🔑 ZRTP — обмін ключами (RFC 6189)</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>ZRTP</strong> — протокол Філіпа Ціммермана (автора PGP) для узгодження ключів SRTP безпосередньо у медіаплощині без залежності від PKI чи SIP-сигналізації.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Принцип роботи ZRTP</h3>
+      <pre class="diag">Alice               Bob
+  |--- Hello -------->|
+  |<-- HelloACK ------|
+  |--- Commit ------->|
+  |<-- DHPart1 -------|
+  |--- DHPart2 ------>|
+  |<-- Confirm1 ------|
+  |--- Confirm2 ----->|
+  |<-- Conf2ACK ------|
+  |  [SRTP активовано]|
+  |   SAS: "zorbix"   | ← вербальна верифікація</pre>
+    </div>
+    <div>
+      <h3>Ключові особливості</h3>
+      <ul>
+        <li><strong>DH (Diffie-Hellman)</strong> — Perfect Forward Secrecy</li>
+        <li><strong>SAS (Short Authentication String)</strong> — захист від MITM: користувачі вголос порівнюють 4-буквений рядок</li>
+        <li>Не потребує PKI та сертифікатів</li>
+        <li>Зберігає <em>rs1/rs2</em> для верифікації майбутніх дзвінків</li>
+        <li>Підтримується Linphone, Jitsi, csipsimple</li>
+      </ul>
+      <div class="gbox" style="margin-top:.4em;">
+        ZRTP забезпечує справжній end-to-end захист без довіри до SIP-сервера.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 13 – DTLS-SRTP ==================== -->
+<section class="slide bg-plain">
+  <h2>🌐 DTLS-SRTP (RFC 5763) та WebRTC</h2>
+  <div class="two-col">
+    <div>
+      <h3>DTLS-SRTP</h3>
+      <ul>
+        <li><strong>DTLS</strong> = TLS поверх UDP (RFC 6347)</li>
+        <li>Handshake виконується у медіаплощині (порт RTP)</li>
+        <li>SDP містить відбиток сертифіката (<code>a=fingerprint</code>)</li>
+        <li>Генеруються майстер-ключі для SRTP</li>
+        <li>Захист: шифрування + автентифікація + PFS</li>
+      </ul>
+      <pre class="diag" style="margin-top:.4em;">SDP:
+a=fingerprint:sha-256 4A:AD:B9:B1:...
+a=setup:actpass
+m=audio 49170 UDP/TLS/RTP/SAVPF 0</pre>
+    </div>
+    <div>
+      <h3>WebRTC та безпека</h3>
+      <ul>
+        <li>WebRTC <strong>обов'язково</strong> використовує DTLS-SRTP</li>
+        <li>Сигналізація через WebSocket + TLS</li>
+        <li>ICE для NAT traversal (STUN/TURN)</li>
+        <li>Браузери перевіряють відбитки сертифікатів</li>
+      </ul>
+      <div class="hbox" style="margin-top:.5em;">
+        <strong>RFC 8827:</strong> WebRTC Security Architecture вимагає DTLS 1.2+ та забороняє SDES без TLS.
+      </div>
+      <div class="gbox" style="margin-top:.3em;">
+        DTLS-SRTP — стандарт de facto для сучасних браузерних VoIP-рішень.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 14 – H.235 ==================== -->
+<section class="slide bg-plain">
+  <h2>🛡️ H.235 — безпека в H.323</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>H.235</strong> — стандарт ITU-T для забезпечення автентифікації, цілісності та конфіденційності в H.323-мережах. Визначає набір <em>профілів безпеки</em>.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Профілі H.235</h3>
+      <table>
+        <tr><th>Профіль</th><th>Призначення</th></tr>
+        <tr><td><strong>H.235.1</strong></td><td>Базова автентифікація (пароль)</td></tr>
+        <tr><td><strong>H.235.2</strong></td><td>Підпис (сигнатура), PKI</td></tr>
+        <tr><td><strong>H.235.3</strong></td><td>Гібридна безпека (пароль + PKI)</td></tr>
+        <tr><td><strong>H.235.6</strong></td><td>Голосове шифрування (AES)</td></tr>
+        <tr><td><strong>H.235.7</strong></td><td>TLS/IPSec транспорт</td></tr>
+        <tr><td><strong>H.235.8</strong></td><td>SRTP ключовий матеріал</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>H.235.1 — автентифікація паролем</h3>
+      <ul>
+        <li>Використовує <code>ClearToken</code> та <code>CryptoH323Token</code></li>
+        <li>Вбудовується у RAS та H.225-повідомлення</li>
+        <li>HMAC-SHA1 або MD5 хеш паролю</li>
+        <li>Timestamp-захист від replay-атак</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        Більшість реалізацій H.323 підтримують лише H.235.1 (пароль). Повна PKI-інфраструктура (H.235.2) зустрічається рідко.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 15 – P-Asserted-Identity ==================== -->
+<section class="slide bg-plain">
+  <h2>🪪 Стверджена ідентичність: P-Asserted-Identity</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>P-Asserted-Identity (PAI)</strong> (RFC 3325) — заголовок SIP, яким довірений SIP-проксі стверджує автентифіковану ідентичність абонента. Використовується в мережах операторів.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Схема роботи PAI</h3>
+      <pre class="diag">UAC ──REGISTER──► Proxy (Trust Domain)
+                    │ автентифікація Digest/TLS
+                    │ перевірка ідентичності
+                    ▼
+               INVITE з:
+  P-Asserted-Identity: "Alice" &lt;sip:alice@carrier.ua&gt;
+  P-Preferred-Identity: &lt;sip:alice@example.com&gt;
+                    │
+                    ▼
+              Зовнішня мережа</pre>
+    </div>
+    <div>
+      <h3>Privacy та обмеження</h3>
+      <ul>
+        <li><code>Privacy: id</code> — UAC просить приховати PAI від кінцевого отримувача</li>
+        <li>PAI передається лише між довіреними проксі</li>
+        <li>Видаляється на межі довіреної зони</li>
+        <li>Не забезпечує end-to-end верифікацію</li>
+        <li><strong>Вразливість:</strong> зловмисний проксі може вставити довільний PAI</li>
+      </ul>
+      <div class="wbox" style="margin-top:.4em;">
+        PAI — рішення для мереж одного оператора. Для міжмережевої верифікації потрібен <strong>STIR/SHAKEN</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 16 – STIR ==================== -->
+<section class="slide bg-plain">
+  <h2>📜 STIR — Secure Telephony Identity Revisited</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>STIR (RFC 8224, RFC 8225)</strong> — стандарт криптографічного підпису SIP-ідентичності на основі JWT-токенів та PKI. Мета: боротьба з caller ID spoofing.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Архітектура STIR</h3>
+      <pre class="diag">Originating SP          Terminating SP
+    │                         │
+    │  INVITE                 │
+    │  Identity: eyJ...       │  ← PASSporT (JWT)
+    │  ──────────────────────►│
+    │                    перевірка підпису
+    │                    через HTTPS (cert URL)
+    │                    ОК → довірений
+    │                    FAIL → підозрілий</pre>
+    </div>
+    <div>
+      <h3>PASSporT — структура токена</h3>
+      <pre class="sip">Header:
+{ "alg": "ES256", "typ": "passport",
+  "ppt": "shaken", "x5u": "https://cert.ca/cert.pem" }
+
+Payload:
+{ "orig": {"tn": "380441234567"},
+  "dest": {"tn": ["380679876543"]},
+  "iat": 1711880000,
+  "attest": "A" }</pre>
+      <div class="hbox" style="margin-top:.4em;">
+        <strong>attest</strong>: A = повна атестація (CP авторизований для номера), B = часткова, C = маршрутна
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 17 – SHAKEN ==================== -->
+<section class="slide bg-plain">
+  <h2>🤝 SHAKEN — розгортання STIR у операторів</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>SHAKEN</strong> (Signature-based Handling of Asserted information using toKENs) — операційна система для розгортання STIR у телефонних мережах. Розроблена ATIS/SIP Forum, обов'язкова у США (TRACED Act, 2021).
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Компоненти SHAKEN</h3>
+      <ul>
+        <li><strong>STI-CA</strong> — Certification Authority для SP-сертифікатів</li>
+        <li><strong>STI-PA</strong> — Policy Administrator (ATIS у США)</li>
+        <li><strong>STI-AS</strong> — Authentication Service (підписує виклики)</li>
+        <li><strong>STI-VS</strong> — Verification Service (перевіряє підписи)</li>
+        <li><strong>STI-CR</strong> — Certificate Repository (HTTPS)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Рівні атестації та відображення</h3>
+      <table>
+        <tr><th>Рівень</th><th>Значення</th><th>Відображення</th></tr>
+        <tr><td class="ok"><strong>A</strong></td><td>Повна атестація</td><td>✅ Підтверджений</td></tr>
+        <tr><td style="color:#f77f00;"><strong>B</strong></td><td>Часткова</td><td>⚠️ Частково</td></tr>
+        <tr><td class="er"><strong>C</strong></td><td>Маршрутна</td><td>❓ Невідомий</td></tr>
+        <tr><td style="color:#888;"><strong>—</strong></td><td>Без підпису</td><td>🚫 Підозрілий</td></tr>
+      </table>
+      <div class="wbox" style="margin-top:.4em;">
+        В Україні STIR/SHAKEN перебуває на етапі обговорення в НКРЗІ.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 18 – OAuth 2.0 in SIP ==================== -->
+<section class="slide bg-plain">
+  <h2>🎫 OAuth 2.0 у SIP (RFC 8898)</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>RFC 8898</strong> стандартизує використання OAuth 2.0 токенів (JWT Bearer) для автентифікації SIP-агентів. Забезпечує федерацію та делеговану авторизацію.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Схема потоку OAuth у SIP</h3>
+      <pre class="diag">UAC ──────────────────────► Authorization Server
+                              (Keycloak, Azure AD...)
+UAC ◄── access_token (JWT) ──
+
+UAC ──── REGISTER ──────────► SIP Registrar
+         Authorization:
+         Bearer eyJ...
+
+SIP Registrar ─── introspect/JWKS ──► AS
+SIP Registrar ◄── valid ───────────
+
+SIP Registrar ──── 200 OK ─────────► UAC</pre>
+    </div>
+    <div>
+      <h3>Переваги OAuth у SIP</h3>
+      <ul>
+        <li>Централізоване управління ідентичністю (SSO)</li>
+        <li>Коротко-живі токени (exp claim)</li>
+        <li>Scopes для тонкого контролю доступу</li>
+        <li>Підтримка MFA на рівні AS</li>
+        <li>Інтеграція з корпоративним IdP</li>
+      </ul>
+      <div class="hbox" style="margin-top:.5em;">
+        Microsoft Teams, Cisco Webex та RingCentral використовують OAuth/OIDC для автентифікації SIP-клієнтів.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 19 – Registration Hijacking ==================== -->
+<section class="slide bg-sec">
+  <h2>🕵️ Атака: Реєстраційне викрадення</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>Registration hijacking</strong> — зловмисник надсилає REGISTER із легітимним From/To, але підміненим Contact, перенаправляючи вхідні виклики на свій UA.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Вектори атаки</h3>
+      <pre class="diag">Легітимний REGISTER:
+From: &lt;sip:alice@example.com&gt;
+Contact: &lt;sip:alice@192.168.1.10&gt;
+Expires: 3600
+
+Атака: перехоплення/підробка
+From: &lt;sip:alice@example.com&gt;
+Contact: &lt;sip:attacker@10.0.0.5&gt;
+Expires: 3600
+Authorization: Digest ... (злом)</pre>
+    </div>
+    <div>
+      <h3>Заходи захисту</h3>
+      <ul>
+        <li><strong>TLS</strong> — захист від перехоплення REGISTER</li>
+        <li><strong>SIP AOR binding</strong> — прив'язка до IP/мережі</li>
+        <li><strong>Аномалія-детекція</strong> — зміна Contact з нового IP</li>
+        <li><strong>Max-Forwards обмеження</strong></li>
+        <li><strong>Short registration interval</strong> — зменшення вікна атаки</li>
+        <li><strong>Admin сповіщення</strong> при зміні Contact</li>
+        <li>RFC 5626 — SIP Outbound (постійне з'єднання)</li>
+      </ul>
+      <div class="wbox" style="margin-top:.4em;">
+        Компрометація Digest + MITM → повний захоплення облікового запису SIP.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 20 – Replay & Brute Force ==================== -->
+<section class="slide bg-sec">
+  <h2>🔁 Атаки: Replay та Brute Force</h2>
+  <div class="two-col">
+    <div>
+      <h3>Replay Attack</h3>
+      <ul>
+        <li>Зловмисник перехоплює автентифіковане повідомлення</li>
+        <li>Повторно відправляє його пізніше</li>
+        <li>Захисти від replay у SIP Digest:</li>
+        <ul>
+          <li><code>nonce</code> — одноразове значення сервера</li>
+          <li><code>nc</code> — лічильник, зростає монотонно</li>
+          <li><code>cnonce</code> — клієнтський nonce</li>
+        </ul>
+        <li>Якщо nonce не валідується → replay проходить</li>
+        <li>H.235: timestamp у токені (±5 хвилин)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Brute Force на SIP Digest</h3>
+      <ul>
+        <li>Перехоплений 401 + повторний REGISTER → offline атака</li>
+        <li><strong>Hashcat:</strong> <code>-m 11400</code> (SIP Digest MD5)</li>
+        <li>GPU: ~1 млрд MD5/с → слабкий пароль за секунди</li>
+        <li><strong>SIPVicious svcrack:</strong> online перебір</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        <strong>Захист:</strong><br>
+        • Мінімум 12+ символів, складні паролі<br>
+        • Account lockout після N спроб<br>
+        • Fail2Ban / SBC rate limiting<br>
+        • TLS (ускладнює перехоплення для offline атаки)<br>
+        • SHA-256 замість MD5
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 21 – MITM on Signaling ==================== -->
+<section class="slide bg-sec">
+  <h2>🕸️ Атака: MITM на сигналізацію</h2>
+  <div class="two-col">
+    <div>
+      <h3>Схема MITM-атаки</h3>
+      <pre class="diag">Alice                  Attacker              SIP Server
+  │── INVITE ──────────►│                        │
+  │                      │── INVITE (modified) ──►│
+  │                      │◄── 200 OK ─────────────│
+  │◄── 200 OK ───────────│                        │
+  │  (modified SDP:      │                        │
+  │   media → attacker)  │                        │
+  │                      │                        │
+[RTP Alice → Attacker → Server] (прослуховування)</pre>
+    </div>
+    <div>
+      <h3>Вектори та захист</h3>
+      <ul>
+        <li><strong>ARP Spoofing + SIP intercept</strong> — в локальній мережі</li>
+        <li><strong>Rogue SIP Proxy</strong> — підроблений проксі</li>
+        <li><strong>DNS Spoofing</strong> — підміна SRV-запису SIP</li>
+      </ul>
+      <div class="hbox" style="margin-top:.5em;">
+        <strong>Захист:</strong><br>
+        • TLS + верифікація сертифіката (mutual TLS)<br>
+        • HSTS-аналог для SIP: SIPS URI<br>
+        • ZRTP SAS верифікація (end-to-end)<br>
+        • SRTP — навіть при MITM сигналізації медіа зашифровано<br>
+        • SBC з валідацією топології
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 22 – SBC ==================== -->
+<section class="slide bg-plain">
+  <h2>🚧 Session Border Controller (SBC)</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>SBC</strong> — прикордонний елемент VoIP-мережі, що виконує функції security gateway, NAT traversal, topology hiding та policy enforcement для SIP-трафіку.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Функції безпеки SBC</h3>
+      <ul>
+        <li><strong>TLS termination</strong> — розшифрування/перешифрування SIP</li>
+        <li><strong>Topology hiding</strong> — приховування внутрішньої топології</li>
+        <li><strong>DoS/DDoS protection</strong> — rate limiting, blacklisting</li>
+        <li><strong>SIP anomaly detection</strong> — аномальні повідомлення</li>
+        <li><strong>Toll fraud prevention</strong> — обмеження на напрямки</li>
+        <li><strong>SRTP relay</strong> — перешифрування медіа</li>
+        <li><strong>Regulatory compliance</strong> — CALEA/SORM</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Місце SBC в архітектурі</h3>
+      <pre class="diag">Інтернет / Зовнішня мережа
+         │
+         ▼
+   ┌─────────────┐
+   │     SBC     │ ← TLS termination
+   │  (border)   │   topology hiding
+   └──────┬──────┘   DoS mitigation
+          │
+    Внутрішня мережа (TLS або plaintext)
+          │
+   ┌──────┴──────────────────┐
+   │  SIP Proxy / Registrar  │
+   └─────────────────────────┘</pre>
+      <div class="gbox" style="margin-top:.4em;">
+        Приклади: Cisco CUBE, AudioCodes, Ribbon (GENBAND), Kamailio+RTPEngine.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 23 – IPSec for VoIP ==================== -->
+<section class="slide bg-plain">
+  <h2>🔐 IPSec для VoIP-інфраструктури</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>IPSec</strong> може захищати VoIP на мережевому рівні, особливо у сегментах між операторськими вузлами (SBC ↔ SoftSwitch, SBC ↔ Media Gateway).
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Режими IPSec у VoIP</h3>
+      <ul>
+        <li><strong>Transport mode</strong> — між двома хостами (захист лише корисного навантаження)</li>
+        <li><strong>Tunnel mode</strong> — VPN між майданчиками (захист усього пакета)</li>
+        <li><strong>IKEv2</strong> (RFC 7296) — обмін ключами</li>
+        <li><strong>ESP</strong> — шифрування + автентифікація</li>
+        <li><strong>AH</strong> — лише автентифікація (не рекомендується для NAT)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Переваги та обмеження</h3>
+      <table>
+        <tr><th>Перевага</th><th>Обмеження</th></tr>
+        <tr><td class="ok">Прозорий для додатків</td><td class="er">NAT traversal проблеми</td></tr>
+        <tr><td class="ok">Захищає усі протоколи</td><td class="er">Накладні витрати на QoS</td></tr>
+        <tr><td class="ok">Стандарт для операторів</td><td class="er">Складна конфігурація</td></tr>
+        <tr><td class="ok">Взаємна автентифікація</td><td class="er">Погана масштабованість клієнтів</td></tr>
+      </table>
+      <div class="wbox" style="margin-top:.4em;">
+        IPSec між UA та проксі потребує ESP NAT-T (RFC 3948) для роботи через NAT.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 24 – PKI & Certificate Management ==================== -->
+<section class="slide bg-plain">
+  <h2>📋 PKI та управління сертифікатами</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    PKI є фундаментом для TLS, STIR/SHAKEN, S/MIME та mTLS у VoIP-мережах. Правильне управління сертифікатами критично для безпеки.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Типи сертифікатів у VoIP</h3>
+      <ul>
+        <li><strong>SIP-сервер:</strong> CN = FQDN проксі (напр. <code>sip.example.com</code>)</li>
+        <li><strong>SIP UA:</strong> SAN = SIP URI (<code>sip:alice@example.com</code>) (RFC 5922)</li>
+        <li><strong>STIR:</strong> TN Authorization List (RFC 8226)</li>
+        <li><strong>WebRTC:</strong> самопідписані (перевірка по fingerprint)</li>
+      </ul>
+      <h3 style="margin-top:.6em;">Критичні вимоги</h3>
+      <ul>
+        <li>Перевіряти CN/SAN і ланцюг CA</li>
+        <li>OCSP/CRL для перевірки статусу</li>
+        <li>Автоматична ротація (ACME / Let's Encrypt)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Типові помилки PKI у VoIP</h3>
+      <table>
+        <tr><th>Помилка</th><th>Наслідок</th></tr>
+        <tr><td>Самопідписані без верифікації</td><td class="er">MITM без сигналу</td></tr>
+        <tr><td>Відключена перевірка CN</td><td class="er">Підміна сервера</td></tr>
+        <tr><td>Прострочені сертифікати</td><td class="er">Відмова сервісу</td></tr>
+        <tr><td>Слабкий ключ RSA-1024</td><td class="er">Компрометація</td></tr>
+        <tr><td>Відсутній CRL/OCSP</td><td class="er">Revocation не спрацьовує</td></tr>
+      </table>
+      <div class="gbox" style="margin-top:.4em;">
+        Рекомендація: RSA 2048+ або ECDSA P-256, SHA-256, термін дії ≤ 1 рік.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 25 – Порівняльна таблиця методів ==================== -->
+<section class="slide bg-plain">
+  <h2>📊 Порівняння механізмів автентифікації</h2>
+  <table>
+    <tr>
+      <th>Механізм</th>
+      <th>Протокол</th>
+      <th>Автентифікація</th>
+      <th>Конфіденційність</th>
+      <th>E2E</th>
+      <th>PKI потрібен</th>
+    </tr>
+    <tr>
+      <td><strong>SIP Digest MD5</strong></td><td>SIP</td>
+      <td class="er">Одностороння</td><td class="er">Ні</td><td class="er">Ні</td><td class="ok">Ні</td>
+    </tr>
+    <tr>
+      <td><strong>SIP Digest SHA-256</strong></td><td>SIP</td>
+      <td style="color:#f77f00;">Одностороння</td><td class="er">Ні</td><td class="er">Ні</td><td class="ok">Ні</td>
+    </tr>
+    <tr>
+      <td><strong>TLS (SIP)</strong></td><td>SIP</td>
+      <td class="ok">Двостороння</td><td class="ok">Hop-by-hop</td><td class="er">Ні</td><td class="ok">Так</td>
+    </tr>
+    <tr>
+      <td><strong>SDES-SRTP</strong></td><td>SIP+RTP</td>
+      <td style="color:#f77f00;">Непряма</td><td class="ok">Медіа</td><td class="er">Ні</td><td class="ok">Ні</td>
+    </tr>
+    <tr>
+      <td><strong>ZRTP</strong></td><td>RTP</td>
+      <td class="ok">Двостороння DH</td><td class="ok">Медіа E2E</td><td class="ok">Так</td><td class="ok">Ні</td>
+    </tr>
+    <tr>
+      <td><strong>DTLS-SRTP</strong></td><td>RTP/DTLS</td>
+      <td class="ok">Двостороння</td><td class="ok">Медіа E2E</td><td class="ok">Так</td><td class="ok">Так</td>
+    </tr>
+    <tr>
+      <td><strong>STIR/SHAKEN</strong></td><td>SIP</td>
+      <td class="ok">Ідентичність CP</td><td class="er">Ні</td><td class="er">Ні</td><td class="ok">Так</td>
+    </tr>
+    <tr>
+      <td><strong>OAuth 2.0 Bearer</strong></td><td>SIP</td>
+      <td class="ok">Федеративна</td><td class="er">Ні</td><td class="er">Ні</td><td class="ok">Так</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ==================== SLIDE 26 – Security Architecture ==================== -->
+<section class="slide bg-plain">
+  <h2>🏗️ Рекомендована архітектура безпеки</h2>
+  <pre class="diag">
+  INTERNET
+     │
+     │  [TLS 1.3]  [SRTP/DTLS]
+     ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    SBC / Security Gateway                    │
+│  • TLS termination  • DoS mitigation  • Topology hiding     │
+│  • STIR verification                  • Rate limiting        │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ [TLS / IPSec]
+          ┌─────────────────┼──────────────────┐
+          │                 │                  │
+          ▼                 ▼                  ▼
+   SIP Proxy/         Media Server       SIP Registrar
+   Registrar          (RTPEngine)        • Digest SHA-256
+   • OAuth 2.0        • SRTP relay       • Account lockout
+   • STIR-AS/VS       • DTLS-SRTP        • Anomaly detection
+          │
+          │ [TLS]
+          ▼
+     IP-PBX / UC Server
+     • Internal TLS  • SRTP  • Audit logs
+  </pre>
+</section>
+
+<!-- ==================== SLIDE 27 – Best Practices Checklist ==================== -->
+<section class="slide bg-plain">
+  <h2>✅ Практичні рекомендації та чеклист</h2>
+  <div class="three-col">
+    <div class="card">
+      <h3>🔒 Сигналізація</h3>
+      <ul>
+        <li>TLS 1.2+ на всіх SIP-з'єднаннях</li>
+        <li>SHA-256 замість MD5 у Digest</li>
+        <li>Mutual TLS (mTLS) між серверами</li>
+        <li>SIPS URI для чутливих потоків</li>
+        <li>Перевірка CN/SAN сертифікатів</li>
+        <li>Вимкнути незашифровані UDP/TCP назовні</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎙️ Медіа</h3>
+      <ul>
+        <li>SRTP обов'язково (заборонити RTP)</li>
+        <li>DTLS-SRTP для WebRTC</li>
+        <li>SDES лише з TLS-захистом SDP</li>
+        <li>ZRTP для кінцевих точок high-sec</li>
+        <li>AES-256-GCM де підтримується</li>
+        <li>Заборонити SDES без TLS</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🛡️ Інфраструктура</h3>
+      <ul>
+        <li>SBC на межі мережі</li>
+        <li>Fail2Ban / rate limiting</li>
+        <li>Сильні паролі (12+, складні)</li>
+        <li>Account lockout після 5 спроб</li>
+        <li>STIR/SHAKEN для міжмережевих дзвінків</li>
+        <li>OAuth 2.0 для enterprise SSO</li>
+        <li>Audit log усіх REGISTER / INVITE</li>
+        <li>Регулярний аудит безпеки</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 28 – Summary ==================== -->
+<section class="slide bg-mid">
+  <h2>📝 Підсумок лекції</h2>
+  <div class="two-col">
+    <div>
+      <h3>Ключові механізми автентифікації</h3>
+      <ul>
+        <li><strong>SIP Digest</strong> — базовий рівень (SHA-256, qop=auth)</li>
+        <li><strong>TLS / mTLS</strong> — транспортна безпека та PKI-автентифікація</li>
+        <li><strong>STIR/SHAKEN</strong> — верифікація ідентичності між операторами</li>
+        <li><strong>OAuth 2.0</strong> — федеративна автентифікація в enterprise</li>
+        <li><strong>H.235</strong> — профілі безпеки для H.323-мереж</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Ключові механізми захисту сигналізації</h3>
+      <ul>
+        <li><strong>SIPS URI</strong> — примусовий TLS по всьому маршруту</li>
+        <li><strong>SRTP + DTLS</strong> — захист медіапотоків</li>
+        <li><strong>ZRTP</strong> — end-to-end без PKI</li>
+        <li><strong>SBC</strong> — граничний захист та DoS-митигація</li>
+        <li><strong>IPSec</strong> — мережевий рівень між операторськими вузлами</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:1em;">
+    <strong>Головний принцип:</strong> Defense-in-depth — жоден одиночний механізм не забезпечує повний захист. Необхідно поєднувати автентифікацію, шифрування сигналізації, шифрування медіа та моніторинг.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 29 – Q&A ==================== -->
+<section class="slide bg-end center">
+  <div>
+    <h1 style="font-size:clamp(2.5rem,6vw,4.5rem); margin-bottom:.4em;">❓</h1>
+    <h1 style="font-size:clamp(1.6rem,3.5vw,2.8rem); margin-bottom:.6em;">Питання?</h1>
+    <p style="color:#48cae4; font-size:clamp(.9rem,1.8vw,1.2rem); margin-bottom:1.8em;">
+      Механізми автентифікації та захисту сигналізації
+    </p>
+    <div style="display:flex; gap:1.5em; justify-content:center; flex-wrap:wrap; font-size:clamp(.68rem,1.2vw,.85rem);">
+      <span class="badge">RFC 3261</span>
+      <span class="badge">RFC 7616</span>
+      <span class="badge">RFC 3711</span>
+      <span class="badge">RFC 6189</span>
+      <span class="badge">RFC 5763</span>
+      <span class="badge">RFC 8224</span>
+      <span class="badge">RFC 8225</span>
+      <span class="badge">RFC 8898</span>
+      <span class="badge">H.235</span>
+      <span class="badge">TLS 1.3</span>
+    </div>
+    <p style="color:#333; margin-top:.8em; font-size:clamp(.6rem,1vw,.78rem);">
+      Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
+    </p>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- NAV CONTROLS -->
+<div id="nav">
+  <button onclick="move(-1)">&#8592;</button>
+  <span id="counter"></span>
+  <button onclick="move(1)">&#8594;</button>
+</div>
+
+<script>
+(function () {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let cur = 0;
+
+  function goto(n) {
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('prev');
+    cur = (n + total) % total;
+    slides[cur].classList.remove('prev');
+    slides[cur].classList.add('active');
+    const prev = slides[(cur - 1 + total) % total];
+    setTimeout(() => prev.classList.remove('prev'), 420);
+    document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
+    document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+  }
+
+  function move(dir) { goto(cur + dir); }
+  window.move = move;
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { move(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { move(-1); e.preventDefault(); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  let sx = 0;
+  document.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function (e) {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+  });
+
+  goto(0);
+})();
+</script>
+</body>
+</html>
