@@ -1,0 +1,1137 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Класифікація та аналіз атак на мультимедійні сервіси</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
+
+/* ===== SLIDESHOW CONTAINER ===== */
+.deck { width: 100vw; height: 100vh; position: relative; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+  padding: 3.5vw 5vw;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease, transform .4s ease;
+  transform: translateX(60px);
+  overflow: hidden;
+}
+.slide.active  { opacity: 1; pointer-events: all; transform: translateX(0); }
+.slide.prev    { opacity: 0; transform: translateX(-60px); }
+.slide.center  { align-items: center; text-align: center; }
+
+/* ===== BACKGROUNDS ===== */
+.bg-dark   { background: radial-gradient(circle at 60% 40%, #003566 0%, #001d3d 55%, #000814 100%); }
+.bg-mid    { background: linear-gradient(135deg, #001d3d 0%, #003566 100%); }
+.bg-sec    { background: linear-gradient(135deg, #1a0000 0%, #3d0000 100%); }
+.bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
+.bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
+.bg-threat { background: linear-gradient(135deg, #1a0a00 0%, #2d1200 100%); }
+
+/* ===== TYPOGRAPHY ===== */
+h1 { font-size: clamp(1.8rem, 4vw, 3.2rem); color: #00b4d8; line-height: 1.15; }
+h2 { font-size: clamp(1.2rem, 2.5vw, 1.9rem); color: #48cae4;
+     border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
+h3 { font-size: clamp(.85rem, 1.5vw, 1.05rem); color: #fff; margin-bottom: .4em; }
+p, li { font-size: clamp(.72rem, 1.3vw, .92rem); line-height: 1.55; }
+ul { margin-left: 1.3em; }
+li { margin-bottom: .28em; }
+code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
+strong { color: #90e0ef; }
+
+/* ===== LAYOUT HELPERS ===== */
+.two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; width: 100%; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; width: 100%; }
+.w100 { width: 100%; }
+
+/* ===== CARDS ===== */
+.card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(0,180,216,.35);
+  border-radius: .5em; padding: .8em 1em;
+}
+.card h3 { color: #00b4d8; font-size: .92em; }
+
+/* ===== CALLOUT BOXES ===== */
+.hbox {
+  background: rgba(0,180,216,.13);
+  border-left: 4px solid #00b4d8;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: clamp(.68rem, 1.2vw, .85rem);
+}
+.wbox {
+  background: rgba(247,127,0,.13);
+  border-left: 4px solid #f77f00;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: clamp(.68rem, 1.2vw, .85rem);
+}
+.rbox {
+  background: rgba(220,50,47,.13);
+  border-left: 4px solid #dc322f;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: clamp(.68rem, 1.2vw, .85rem);
+}
+
+/* ===== DIAGRAMS / PREFORMATTED ===== */
+pre.sip {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: clamp(.52rem, .95vw, .72rem);
+  background: #0d1117; border: 1px solid #00b4d8;
+  border-radius: .4em; padding: .7em 1em;
+  line-height: 1.45; white-space: pre; overflow: auto;
+  max-height: 42vh;
+}
+pre.diag {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: clamp(.5rem, .9vw, .7rem);
+  background: #0d1117; border: 1px solid #00b4d8;
+  border-radius: .4em; padding: .7em 1.2em;
+  line-height: 1.65; white-space: pre; width: 100%;
+}
+
+/* ===== TABLES ===== */
+table { width: 100%; border-collapse: collapse; font-size: clamp(.62rem, 1.1vw, .82rem); }
+th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .65em; text-align: left; }
+td { padding: .3em .65em; border-bottom: 1px solid rgba(255,255,255,.09); }
+tr:nth-child(even) td { background: rgba(255,255,255,.04); }
+
+/* ===== BADGE ===== */
+.badge { display: inline-block; background: #00b4d8; color: #000;
+  border-radius: .25em; padding: .05em .4em; font-size: .72em; font-weight: bold; }
+.m  { color: #00b4d8; font-weight: bold; }
+.ok { color: #52b788; }
+.er { color: #f77f00; }
+.rd { color: #dc322f; }
+
+/* ===== NAVIGATION ===== */
+#nav {
+  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
+  display: flex; align-items: center; gap: .6em;
+}
+#nav button {
+  background: rgba(0,180,216,.18); border: 1px solid #00b4d8; color: #00b4d8;
+  border-radius: .35em; padding: .4em .9em; font-size: .85rem; cursor: pointer;
+  transition: background .2s;
+}
+#nav button:hover { background: rgba(0,180,216,.4); }
+#counter { color: #555; font-size: .78rem; min-width: 4em; text-align: center; }
+
+/* ===== PROGRESS BAR ===== */
+#prog { position: fixed; bottom: 0; left: 0; height: 3px; background: #00b4d8;
+        transition: width .35s ease; z-index: 200; }
+
+/* ===== KEYBOARD HINT ===== */
+#hint { position: fixed; top: 1vh; right: 1.5vw; font-size: .62rem; color: #333; z-index: 100; }
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="hint">← → | F — full screen</div>
+
+<div class="deck" id="deck">
+
+<!-- ==================== SLIDE 1 – Title ==================== -->
+<section class="slide bg-dark center active" id="s0">
+  <div>
+    <h1 style="font-size:clamp(1.6rem,4vw,3rem); margin-bottom:.4em;">Класифікація та аналіз атак<br>на мультимедійні сервіси</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin-bottom:1.5em;">
+      Курс «Безпека VoIP» · Напрям «Кібербезпека»
+    </h3>
+    <p style="color:#aaa; font-size:clamp(.8rem,1.5vw,1rem);">Курс для студентів магістратури</p>
+    <p style="color:#444; font-size:clamp(.7rem,1.2vw,.88rem); margin-top:2.5em;">
+      Кафедра інформаційних технологій та кібербезпеки
+    </p>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 2 – Agenda ==================== -->
+<section class="slide bg-plain">
+  <h2>📋 План лекції</h2>
+  <div class="two-col">
+    <ul>
+      <li>Загрози мультимедійним сервісам: огляд</li>
+      <li>Таксономія атак на VoIP</li>
+      <li>DoS/DDoS: переповнення сигнальних каналів</li>
+      <li>SIP Flood — типи та механізми</li>
+      <li>Атаки на ресурси медіа-серверів</li>
+      <li>DDoS-ампліфікація у VoIP-середовищі</li>
+      <li>Засоби захисту від DoS/DDoS</li>
+    </ul>
+    <ul>
+      <li>SPIT: масові небажані дзвінки</li>
+      <li>Механізми виявлення та протидії SPIT</li>
+      <li>Toll Fraud: класифікація та схеми</li>
+      <li>Компрометація транків та IRSF</li>
+      <li>Захист від телефонного фроду</li>
+      <li>Eavesdropping та MitM атаки</li>
+      <li>Захист: SRTP, ZRTP, TLS/SIPS</li>
+      <li>Стратегія глибинного захисту</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3 – Threat Landscape ==================== -->
+<section class="slide bg-plain">
+  <h2>🌐 Загрози мультимедійним сервісам</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    VoIP/UC-системи поєднують риси веб-застосунків, мережевих протоколів та телефонії — і успадковують вразливості всіх трьох рівнів.
+  </div>
+  <div class="three-col">
+    <div class="card">
+      <h3>🔴 Доступність</h3>
+      <ul>
+        <li>DoS / DDoS</li>
+        <li>SIP flood</li>
+        <li>Resource exhaustion</li>
+        <li>Fuzzing / malformed packets</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🟡 Фінансові</h3>
+      <ul>
+        <li>Toll Fraud / IRSF</li>
+        <li>Компрометація транків</li>
+        <li>SPIT (небажані дзвінки)</li>
+        <li>Викрадення послуг зв'язку</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🔵 Конфіденційність</h3>
+      <ul>
+        <li>Eavesdropping (прослуховування)</li>
+        <li>Man-in-the-Middle (MitM)</li>
+        <li>Розкриття метаданих</li>
+        <li>Злам реєстрації SIP</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wbox" style="margin-top:.7em;">
+    <strong>За даними ENISA (звіт 2023 р.):</strong> щорічні збитки від телефонного фроду у світі — понад <strong>40 млрд USD</strong>; DDoS на VoIP-оператори зростають на ~30% щороку (дані можуть бути оновлені у нових звітах).
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4 – Attack Taxonomy ==================== -->
+<section class="slide bg-plain">
+  <h2>🗂️ Таксономія атак на VoIP</h2>
+  <table>
+    <tr><th>Категорія</th><th>Атака</th><th>Цільовий рівень</th><th>Наслідок</th></tr>
+    <tr><td><strong>Відмова в обслуговуванні</strong></td><td>SIP INVITE flood, RTP flood, Slowloris SIP</td><td>Сигналізація / Медіа</td><td>Недоступність сервісу</td></tr>
+    <tr><td><strong>SPIT</strong></td><td>Масові автоматичні дзвінки, Robocall</td><td>Застосунок</td><td>Спам, навантаження</td></tr>
+    <tr><td><strong>Toll Fraud</strong></td><td>IRSF, компрометація PBX, транкінг</td><td>Застосунок / Мережа</td><td>Фінансові збитки</td></tr>
+    <tr><td><strong>Прослуховування</strong></td><td>Capture RTP, SIP sniffing</td><td>Мережа / Транспорт</td><td>Витік конфіденційності</td></tr>
+    <tr><td><strong>MitM</strong></td><td>ARP spoofing, RTP hijacking, Re-INVITE</td><td>Мережа / Сесія</td><td>Маніпуляція медіа</td></tr>
+    <tr><td><strong>Реєстраційні атаки</strong></td><td>Registration hijacking, SIP brute-force</td><td>Сигналізація</td><td>Захоплення ідентичності</td></tr>
+    <tr><td><strong>Fuzzing</strong></td><td>Malformed SIP/SDP, oversized headers</td><td>Сигналізація</td><td>Збій сервера, RCE</td></tr>
+  </table>
+</section>
+
+<!-- ==================== SLIDE 5 – DoS/DDoS Overview ==================== -->
+<section class="slide bg-sec">
+  <h2>💥 DoS / DDoS — Огляд</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>Мета:</strong> зробити VoIP-сервіс недоступним для легітимних користувачів шляхом виснаження обчислювальних, мережевих або сигнальних ресурсів.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Типи атак</h3>
+      <ul>
+        <li><strong>Volumetric</strong> — переповнення каналу (UDP/ICMP flood)</li>
+        <li><strong>Protocol</strong> — експлуатація вразливостей протоколу (SYN flood, SIP flood)</li>
+        <li><strong>Application-layer</strong> — виснаження ресурсів застосунку (INVITE flood, REGISTER flood)</li>
+        <li><strong>Resource exhaustion</strong> — переповнення чергів, пам'яті, CPU медіа-сервера</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Особливості VoIP-середовища</h3>
+      <ul>
+        <li>SIP — текстовий, легко генерувати запити</li>
+        <li>UDP — без рукостискання → ефективний спуфінг</li>
+        <li>Stateful сервери (proxy, B2BUA) — вразливі до state exhaustion</li>
+        <li>Медіа-сервери (RTP mixer, transcoder) — обмежені CPU/пам'ять</li>
+        <li>Жорсткі вимоги до затримки (&lt;150 мс) → навіть 30% падіння = відмова</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 6 – SIP Flood Types ==================== -->
+<section class="slide bg-plain">
+  <h2>📨 SIP Flood — Типи та механізми</h2>
+  <div class="two-col">
+    <div>
+      <div class="card" style="margin-bottom:.6em;">
+        <h3>INVITE Flood</h3>
+        <ul>
+          <li>Масова відправка <code>INVITE</code>-запитів на proxy/PBX</li>
+          <li>Сервер виділяє стан транзакції для кожного запиту</li>
+          <li>Відповіді <code>100 Trying</code> → виснаження пам'яті</li>
+          <li>Типово 10 000+ INVITE/сек вистачає для збою Asterisk на стандартному сервері (реальне значення залежить від версії, апаратного забезпечення та конфігурації)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>REGISTER Flood</h3>
+        <ul>
+          <li>Лавинна реєстрація фіктивних UA</li>
+          <li>Виснаження бази даних реєстрацій</li>
+          <li>Блокування легітимних REGISTER-запитів</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:.6em;">
+        <h3>OPTIONS / NOTIFY Flood</h3>
+        <ul>
+          <li><code>OPTIONS</code> — keep-alive метод, легко генерувати</li>
+          <li><code>NOTIFY</code> flood — атака на підписки (SUBSCRIBE)</li>
+          <li>Не потребують попередньої сесії</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Malformed SIP</h3>
+        <ul>
+          <li>Надмірно великі заголовки (Via, Contact)</li>
+          <li>Некоректний SDP body</li>
+          <li>Мета: crash / buffer overflow сервера</li>
+          <li>Fuzzing: SIPp, Peach, custom scripts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 7 – SIP Flood Technical ==================== -->
+<section class="slide bg-plain">
+  <h2>🔬 SIP INVITE Flood — технічні деталі</h2>
+  <pre class="sip">
+;; Приклад мінімального INVITE для flood-атаки (генерується тисячами)
+INVITE sip:100@192.168.1.10 SIP/2.0
+Via: SIP/2.0/UDP 10.0.0.1:5060;branch=z9hG4bK-<RANDOM>
+From: &lt;sip:attacker@evil.com&gt;;tag=&lt;RANDOM&gt;
+To: &lt;sip:100@192.168.1.10&gt;
+Call-ID: &lt;RANDOM&gt;@10.0.0.1
+CSeq: 1 INVITE
+Content-Type: application/sdp
+Content-Length: 135
+
+v=0
+o=attacker 0 0 IN IP4 10.0.0.1
+s=-
+c=IN IP4 10.0.0.1
+t=0 0
+m=audio 10000 RTP/AVP 0
+a=rtpmap:0 PCMU/8000</pre>
+  <div class="two-col" style="margin-top:.5em;">
+    <div class="hbox">
+      <strong>Що відбувається на сервері:</strong> кожен INVITE → нова транзакція у стані <em>Proceeding</em> → виділення пам'яті (~5–20 КБ) → таймер B (32 с) → виснаження RAM/CPU
+    </div>
+    <div class="wbox">
+      <strong>Інструменти атаки:</strong> <code>SIPp</code> (-sn uac), <code>inviteflood</code>, <code>sipsak</code>, <code>sipflood</code> (Python), Metasploit <em>sip_invite_spoof</em>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 8 – Media Server Attacks ==================== -->
+<section class="slide bg-plain">
+  <h2>🎙️ Атаки на ресурси медіа-серверів</h2>
+  <div class="two-col">
+    <div>
+      <h3>RTP Flood</h3>
+      <ul>
+        <li>Лавинна відправка UDP-пакетів на медіа-порти (динамічні, 10000–65535)</li>
+        <li>Медіа-сервер обробляє кожен пакет → CPU overload</li>
+        <li>Mix/transcoding pipeline зупиняється</li>
+        <li>Наслідок: хрипи, розриви, відключення активних дзвінків</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        RTP не має автентифікації → будь-який хост може надсилати потік на відкритий порт
+      </div>
+    </div>
+    <div>
+      <h3>Інші вектори</h3>
+      <div class="card" style="margin-bottom:.5em;">
+        <h3>Conferencing exhaustion</h3>
+        <ul>
+          <li>Масове приєднання до конференц-бриджів</li>
+          <li>Виснаження ліцензій та потоків мікшування</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Transcoding CPU Attack</h3>
+        <ul>
+          <li>Примусовий транскодинг (G.711 ↔ Opus, SILK)</li>
+          <li>CPU-інтенсивна операція × 1000 потоків = відмова</li>
+          <li>Актуально для WebRTC-шлюзів</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 9 – DDoS Amplification ==================== -->
+<section class="slide bg-plain">
+  <h2>📡 DDoS-ампліфікація у VoIP-середовищі</h2>
+  <pre class="diag">
+Зловмисник                   Відкритий SIP Proxy          Жертва
+    │                                │                        │
+    │  OPTIONS sip:victim@proxy      │                        │
+    │  (src IP = IP_жертви, спуфінг) │                        │
+    │───────────────────────────────►│                        │
+    │                                │  200 OK (більший пакет)│
+    │                                │───────────────────────►│
+    │   × 10 000 запитів/сек         │  × 10 000 відповідей   │
+    │                                │  (ампліфікація ~3–8x)  │</pre>
+  <div class="two-col" style="margin-top:.6em;">
+    <div>
+      <h3>SIP-ампліфікація</h3>
+      <ul>
+        <li>Відкриті SIP proxy відповідають більшим пакетом ніж запит</li>
+        <li>Коефіцієнт ампліфікації: <strong>3–8x</strong> (відношення розміру відповіді до розміру запиту)</li>
+        <li>Мільйони відкритих SIP proxy у мережі Інтернет (Shodan)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>DNS/NTP ампліфікація проти VoIP</h3>
+      <ul>
+        <li>Класичні ампліфікатори (DNS ×50, NTP ×556) направляються на VoIP-інфраструктуру</li>
+        <li>SIP-сервер не може відрізнити від легітимного UDP-трафіку</li>
+        <li>Захист: BCP38, rate limiting, anycast</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 10 – DoS Countermeasures ==================== -->
+<section class="slide bg-mid">
+  <h2>🛡️ Захист від DoS/DDoS атак</h2>
+  <div class="two-col">
+    <div>
+      <h3>На рівні SIP proxy / PBX</h3>
+      <ul>
+        <li><strong>Rate limiting</strong> — обмеження INVITE/REGISTER per IP/user (fail2ban, Kamailio pike)</li>
+        <li><strong>Stateless ACK</strong> — мінімальний стан для незавершених транзакцій</li>
+        <li><strong>SIP TLS / digest auth</strong> — відфільтровує анонімних атакуючих</li>
+        <li><strong>IP whitelist</strong> — дозволяти лише відомі SBC/trunk</li>
+        <li><strong>Regex-фільтрація</strong> заголовків (malformed SIP)</li>
+        <li><strong>SIP SBC (Session Border Controller)</strong> — перший рубіж оборони</li>
+      </ul>
+    </div>
+    <div>
+      <h3>На мережевому рівні</h3>
+      <ul>
+        <li><strong>Anti-spoofing (BCP38/BCP84)</strong> — блокування підроблених джерел</li>
+        <li><strong>Scrubbing center / Cloud DDoS mitigation</strong></li>
+        <li><strong>QoS + DSCP marking</strong> — пріоритет реальних медіа-потоків</li>
+        <li><strong>Firewall + stateful inspection</strong> для SIP/RTP</li>
+        <li><strong>RTCP feedback</strong> — моніторинг аномалій потоку</li>
+        <li><strong>Anomaly detection (ML)</strong> — відхилення від baseline</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:.6em;">
+    <strong>Ключовий інструмент:</strong> Session Border Controller (SBC) — єдина точка входу, яка реалізує rate limiting, TLS termination, topology hiding та SIP normalization.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 11 – SPIT Introduction ==================== -->
+<section class="slide bg-sec">
+  <h2>📞 SPIT — Spam over IP Telephony</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>SPIT</strong> — масове автоматичне надсилання небажаних голосових дзвінків через VoIP-мережі. Аналог email-спаму, але в телефонії.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Чому SPIT — реальна загроза?</h3>
+      <ul>
+        <li>Собівартість VoIP-дзвінка близька до нуля</li>
+        <li>Один сервер може генерувати <strong>тисячі дзвінків/хв</strong></li>
+        <li>SIP не вимагає автентифікації відправника</li>
+        <li>Caller ID легко підробляється (spoofing)</li>
+        <li>Обходить PSTN-засоби захисту</li>
+        <li>Складно фільтрувати: голос = реальний час</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Сценарії використання</h3>
+      <ul>
+        <li><strong>Комерційний SPIT</strong> — рекламні дзвінки, robocalls</li>
+        <li><strong>Vishing</strong> — телефонний фішинг (банки, держ. установи)</li>
+        <li><strong>Wangiri</strong> — дзвінки на 1 гудок (перетворення дзвінка у toll fraud)</li>
+        <li><strong>Political robocall</strong> — масова агітація</li>
+        <li><strong>DoS через SPIT</strong> — перевантаження call-центрів</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 12 – SPIT Mechanisms ==================== -->
+<section class="slide bg-plain">
+  <h2>⚙️ Механізми масових небажаних дзвінків</h2>
+  <pre class="diag">
+ SPIT-Ботнет / VoIP-сервер зловмисника
+         │
+         │  INVITE (підроблений Caller ID = "+380(XX) банк")
+         ▼
+  SIP Proxy жертви / оператора
+         │
+         │  INVITE → UA Жертви
+         ▼
+  ┌────────────┐      Жертва піднімає трубку
+  │  UA Жертви │ ◄── відтворюється записане повідомлення
+  └────────────┘      або живий шахрай (vishing)</pre>
+  <div class="two-col" style="margin-top:.5em;">
+    <div>
+      <h3>Технічна реалізація SPIT</h3>
+      <ul>
+        <li>Asterisk / FreeSWITCH + скрипт dialplan</li>
+        <li>SIP trunk з дешевим VoIP-провайдером</li>
+        <li>Підробка <code>From:</code> та <code>P-Asserted-Identity</code></li>
+        <li>Автодозвон зі списку номерів</li>
+        <li>TTS або заздалегідь записане аудіо</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Масштаб атаки</h3>
+      <ul>
+        <li>1 Asterisk-сервер → ~200–500 паралельних дзвінків</li>
+        <li>Ботнет з 100 серверів → 20 000–50 000 одночасних дзвінків</li>
+        <li>За добу — мільйони абонентів</li>
+        <li>Wangiri: дзвінок 1–2 сек → жертва перетелефоновує на платний номер</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 13 – SPIT Detection ==================== -->
+<section class="slide bg-plain">
+  <h2>🔍 Виявлення SPIT</h2>
+  <div class="three-col">
+    <div class="card">
+      <h3>Поведінковий аналіз</h3>
+      <ul>
+        <li>Висока частота коротких дзвінків</li>
+        <li>Низький показник відповідей (call completion rate)</li>
+        <li>Незвичні години активності</li>
+        <li>Однаковий CDR-шаблон</li>
+        <li>Аномальна кількість унікальних одержувачів</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Аналіз сигналізації</h3>
+      <ul>
+        <li>Повторюваний <code>User-Agent</code></li>
+        <li>Відсутність <code>P-Asserted-Identity</code></li>
+        <li>Незареєстрований <code>From:</code></li>
+        <li>Незмінний <code>Contact:</code> IP</li>
+        <li>Низька варіативність <code>Call-ID</code></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Репутаційні системи</h3>
+      <ul>
+        <li><strong>STIR/SHAKEN</strong> — криптографічна атестація Caller ID</li>
+        <li>Blacklist/whitelist баз номерів</li>
+        <li>Community-based reputation (Hiya, YouMail)</li>
+        <li>ML-класифікація за CDR патернами</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:.7em;">
+    <strong>STIR/SHAKEN (RFC 8224, RFC 8226):</strong> оператор підписує <code>Identity</code>-заголовок SIP за допомогою сертифіката — одержувач може перевірити справжність номера відправника.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 14 – SPIT Countermeasures ==================== -->
+<section class="slide bg-mid">
+  <h2>🛡️ Методи протидії SPIT</h2>
+  <div class="two-col">
+    <div>
+      <h3>Мережевий / протокольний рівень</h3>
+      <ul>
+        <li><strong>Обов'язкова SIP-автентифікація</strong> (digest, TLS клієнтський сертифікат)</li>
+        <li><strong>Rate limiting</strong> дзвінків per source IP/user</li>
+        <li><strong>CAPTCHA / Turing test</strong> для нових UA (IVR challenge)</li>
+        <li><strong>STIR/SHAKEN</strong> — верифікація Caller ID через PKI</li>
+        <li><strong>Грейлістинг</strong> — затримка першого дзвінку з нового джерела</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Рівень застосунку / оператора</h3>
+      <ul>
+        <li><strong>Consent-based calling</strong> — дзвінки лише до підтверджених абонентів</li>
+        <li><strong>Blacklist/Whitelist</strong> на рівні SBC та PBX</li>
+        <li><strong>Call analytics</strong> — виявлення аномальних шаблонів CDR</li>
+        <li><strong>Spam score</strong> — ML-модель оцінки ризику до підняття трубки</li>
+        <li><strong>Legal/regulatory</strong> — реєстрація robocall-відправників</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wbox" style="margin-top:.6em;">
+    Повного захисту від SPIT не існує — ефективний захист потребує комбінації автентифікації, репутаційних систем та поведінкового аналізу.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 15 – Toll Fraud Introduction ==================== -->
+<section class="slide bg-sec">
+  <h2>💰 Toll Fraud — Вступ</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>Toll Fraud</strong> — незаконне використання телекомунікаційних послуг за рахунок жертви: підприємства, оператора або абонента.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Масштаб проблеми</h3>
+      <ul>
+        <li>CFCA (Communications Fraud Control Association, звіт 2023 р.): <strong>~$40 млрд/рік</strong></li>
+        <li>Найпоширеніший вид телеком-злочину</li>
+        <li>Часто виявляється лише після виставлення рахунку</li>
+        <li>За кілька годин можуть бути здійснені дзвінки на <strong>$10 000+</strong></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Основні схеми</h3>
+      <ul>
+        <li><strong>IRSF</strong> — International Revenue Share Fraud</li>
+        <li><strong>PBX Hacking</strong> — злам корпоративної АТС</li>
+        <li><strong>Trunk Hijacking</strong> — компрометація SIP-транку</li>
+        <li><strong>Subscription Fraud</strong> — реєстрація послуг на підставні особи</li>
+        <li><strong>Wangiri</strong> — зворотній дзвінок на Premium Rate</li>
+        <li><strong>SIM Boxing</strong> — арбітраж VoIP ↔ PSTN</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 16 – IRSF ==================== -->
+<section class="slide bg-plain">
+  <h2>🌍 IRSF — International Revenue Share Fraud</h2>
+  <pre class="diag">
+ Зловмисник                 Оператор жертви               Партнерський оператор
+     │                             │                         (Premium Rate Numbers)
+     │  Злам PBX / SIP-облікових   │                                │
+     │  даних жертви               │                                │
+     │                             │                                │
+     │  INVITE → +88216XXXXXXX    │                                │
+     │  (преміум номер Vanuatu,    │                                │
+     │   Diego Garcia і т.д.)      │                                │
+     │────────────────────────────►│──────────────────────────────►│
+     │                             │  Оплата тарифу                 │
+     │                             │  ($1–5/хв) жертвою            │ Revenue share
+     │                             │                                │ → зловмисник</pre>
+  <div class="two-col" style="margin-top:.5em;">
+    <div class="hbox">
+      <strong>Механізм:</strong> зловмисник отримує Premium Rate Number у екзотичній юрисдикції, зламує PBX жертви, генерує трафік → частка тарифу повертається зловмиснику
+    </div>
+    <div class="wbox">
+      <strong>Типові напрямки IRSF:</strong> Vanuatu (+678), Sao Tome (+239), Diego Garcia (+246), Latvia Premium (+371 9XX), Satellite числа
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 17 – Trunk Hijacking & PBX Compromise ==================== -->
+<section class="slide bg-plain">
+  <h2>🔓 Компрометація транків та PBX</h2>
+  <div class="two-col">
+    <div>
+      <h3>Вектори атаки на SIP-транк</h3>
+      <ul>
+        <li><strong>Brute-force SIP credentials</strong> — перебір логін/пароль реєстрації</li>
+        <li><strong>Default credentials</strong> — стандартні паролі IP PBX (admin/admin, 1234)</li>
+        <li><strong>Слабкий digest auth</strong> — MD5 rainbow tables</li>
+        <li><strong>SIP trunk без автентифікації</strong> (тільки IP ACL)</li>
+        <li><strong>Web UI RCE</strong> — атака на адмін-панель Asterisk, FreePBX, 3CX</li>
+        <li><strong>Phishing адміністратора</strong> — зміна паролю транку</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Після компрометації</h3>
+      <div class="card" style="margin-bottom:.5em;">
+        <h3>Що робить зловмисник</h3>
+        <ul>
+          <li>Генерує IRSF-трафік через транк жертви</li>
+          <li>Встановлює backdoor у dialplan</li>
+          <li>Перенаправляє вхідні дзвінки (eavesdropping)</li>
+          <li>Використовує PBX як плацдарм для SPIT</li>
+        </ul>
+      </div>
+      <div class="rbox">
+        Інструменти: <code>SIPVicious</code> (svcrack, svmap), <code>Hydra</code>, <code>sipcrack</code>, Metasploit SIP modules
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 18 – Toll Fraud Countermeasures ==================== -->
+<section class="slide bg-mid">
+  <h2>🛡️ Захист від Toll Fraud</h2>
+  <div class="two-col">
+    <div>
+      <h3>Технічні заходи</h3>
+      <ul>
+        <li><strong>Надійні паролі SIP</strong> — мінімум 16 символів, rotate щоквартально</li>
+        <li><strong>IP ACL</strong> — дозволяти транк лише з IP провайдера</li>
+        <li><strong>TLS/SIPS</strong> — захист credentials від перехоплення</li>
+        <li><strong>Обмеження напрямків</strong> — блокувати Premium Rate, міжнародні на рівні dialplan</li>
+        <li><strong>Call limit per extension</strong> — максимум паралельних дзвінків</li>
+        <li><strong>Fail2ban для SIP</strong> — блокування після N невдалих спроб авт.</li>
+        <li><strong>Моніторинг CDR</strong> у реальному часі + alert</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Організаційні заходи</h3>
+      <ul>
+        <li><strong>Fraud Management System (FMS)</strong> оператора — автоматичне відключення</li>
+        <li><strong>Ліміти витрат</strong> на акаунт/транк</li>
+        <li><strong>Регулярний аудит</strong> dialplan та users</li>
+        <li><strong>Оновлення ПЗ</strong> PBX — патчі вразливостей</li>
+        <li><strong>Розмежування мереж</strong> — PBX в окремому VLAN</li>
+        <li><strong>IRSF blacklist</strong> — міжнародні бази підозрілих номерів (i3forum)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 19 – Eavesdropping Overview ==================== -->
+<section class="slide bg-sec">
+  <h2>👂 Eavesdropping — Прослуховування</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>Eavesdropping</strong> — несанкціонований перехват сигналізації та/або медіа-потоків VoIP-комунікацій.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Що може бути перехоплено</h3>
+      <ul>
+        <li><strong>SIP-сигналізація</strong> — INVITE, BYE, облікові дані (digest)</li>
+        <li><strong>SDP</strong> — порти та кодеки медіа</li>
+        <li><strong>RTP-потоки</strong> — голос/відео у відкритому вигляді</li>
+        <li><strong>DTMF</strong> — PIN-коди, паролі IVR</li>
+        <li><strong>Метадані</strong> — хто, коли, куди, тривалість</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Умови для перехоплення</h3>
+      <ul>
+        <li>Зловмисник у тому ж <strong>мережевому сегменті</strong> (LAN, VLAN)</li>
+        <li>Відсутність шифрування (plain SIP, plain RTP)</li>
+        <li>Незахищений WiFi (<strong>eavesdropping у корпоративній WiFi</strong>)</li>
+        <li>Компрометований маршрутизатор/комутатор</li>
+        <li>BGP hijacking / DNS hijacking (великий масштаб)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 20 – SIP Interception ==================== -->
+<section class="slide bg-plain">
+  <h2>📡 Перехоплення SIP-сигналізації</h2>
+  <div class="two-col">
+    <div>
+      <pre class="diag">
+;; SIP REGISTER — перехоплений (Wireshark)
+REGISTER sip:pbx.company.com SIP/2.0
+Via: SIP/2.0/UDP 192.168.1.100:5060
+From: &lt;sip:alice@company.com&gt;
+To: &lt;sip:alice@company.com&gt;
+Authorization: Digest
+  username="alice",
+  realm="pbx.company.com",
+  nonce="abc123",
+  uri="sip:pbx.company.com",
+  response="d8b9f3a4..."
+
+;; Зловмисник отримує:
+;;  - логін: alice
+;;  - realm: pbx.company.com
+;;  - nonce + response → offline crack MD5</pre>
+    </div>
+    <div>
+      <h3>Інструменти перехоплення SIP</h3>
+      <ul>
+        <li><strong>Wireshark</strong> + SIP dissector + RTP playback</li>
+        <li><strong>sngrep</strong> — консольний SIP-аналізатор</li>
+        <li><strong>tcpdump</strong> → PCAP → аналіз</li>
+        <li><strong>SIPp</strong> — record mode</li>
+      </ul>
+      <div class="wbox" style="margin-top:.6em;">
+        SIP digest (MD5) — не є стійким шифруванням. Зловмисник може виконати офлайн-атаку на перехоплений <code>Authorization</code> заголовок за допомогою <strong>hashcat</strong> або <strong>sipcrack</strong>.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 21 – RTP Interception ==================== -->
+<section class="slide bg-plain">
+  <h2>🎵 Перехоплення RTP медіа-потоків</h2>
+  <pre class="diag">
+Alice ──── RTP (UDP, plain G.711) ────► PBX/Gateway ────► Bob
+                    │
+            Зловмисник (ARP spoof / port mirror)
+                    │
+            Wireshark → "Telephony → RTP → Play Streams"
+                    │
+            Прослуховує розмову у реальному часі
+            або зберігає WAV-файл</pre>
+  <div class="two-col" style="margin-top:.6em;">
+    <div>
+      <h3>Технічна деталь</h3>
+      <ul>
+        <li>RTP без SRTP = <strong>голос у відкритому тексті</strong></li>
+        <li>Wireshark автоматично збирає та відтворює RTP-потоки</li>
+        <li>SDP містить порти → зловмисник точно знає куди слухати</li>
+        <li>G.711 (PCMU/PCMA) — найпростіший для відтворення, без розкодування</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Перехоплення DTMF (PIN-коди)</h3>
+      <ul>
+        <li><strong>DTMF in-band</strong> (аудіо) — відтворюється разом із голосом</li>
+        <li><strong>RFC 2833 / RFC 4733</strong> — окремі RTP події, легко парсити</li>
+        <li><strong>SIP INFO</strong> — DTMF у SIP-повідомленні → перехоплюється разом із SIP</li>
+        <li>Загроза: PIN банківського IVR, паролі автосекретаря</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 22 – MitM Overview ==================== -->
+<section class="slide bg-sec">
+  <h2>🕵️ Man-in-the-Middle (MitM) атаки</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>MitM у VoIP</strong> — зловмисник вставляє себе між двома учасниками комунікації, перехоплюючи та/або модифікуючи сигналізацію і медіа.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Методи встановлення MitM</h3>
+      <ul>
+        <li><strong>ARP Spoofing</strong> — підміна MAC у локальній мережі</li>
+        <li><strong>DNS Spoofing</strong> — підміна A/SRV записів SIP-домену</li>
+        <li><strong>DHCP Spoofing</strong> — видача підробленого default gateway</li>
+        <li><strong>Rogue SIP Proxy</strong> — підроблений проксі у локальній мережі</li>
+        <li><strong>BGP hijacking</strong> — перехоплення трафіку на рівні AS</li>
+        <li><strong>SSL stripping</strong> — зниження TLS до plain SIP</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Що може зробити зловмисник</h3>
+      <ul>
+        <li><strong>Прослуховування</strong> — перехоплення SIP+RTP</li>
+        <li><strong>Модифікація</strong> — зміна SDP (підміна RTP-портів)</li>
+        <li><strong>Re-INVITE атака</strong> — перенаправлення медіа на власний хост</li>
+        <li><strong>Call hijacking</strong> — захоплення активного дзвінку</li>
+        <li><strong>Toll fraud</strong> — зміна номера в INVITE</li>
+        <li><strong>Ін'єкція голосу</strong> — вставка аудіо у розмову</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 23 – ARP Spoofing in VoIP ==================== -->
+<section class="slide bg-plain">
+  <h2>🔀 ARP Spoofing у VoIP-мережі</h2>
+  <pre class="diag">
+Нормальний стан:
+  Alice (192.168.1.10) ──────────────────── PBX (192.168.1.1)
+      MAC: AA:BB:CC:DD:EE:01              MAC: 11:22:33:44:55:01
+
+Після ARP Spoofing:
+  Alice              Зловмисник (192.168.1.99)           PBX
+  │                  MAC: FF:FF:FF:FF:FF:FF               │
+  │ Надсилає трафік  │ "Я — PBX"   "Я — Alice"            │
+  │─────────────────►│◄──────────────────────────────────►│
+  │                  │                                     │
+  │  SIP INVITE ──►  │  Перехоплює, читає,      ──► INVITE│
+  │  RTP ──────────► │  ретранслює (або модифікує)── RTP ►│</pre>
+  <div class="two-col" style="margin-top:.5em;">
+    <div class="wbox">
+      <strong>Інструменти:</strong> arpspoof (dsniff), Ettercap, Bettercap, scapy. Виявлення: arping, dynamic ARP inspection (DAI) на комутаторах.
+    </div>
+    <div class="hbox">
+      <strong>Захист:</strong> Dynamic ARP Inspection (DAI) на L2 комутаторах, 802.1X автентифікація портів, VLAN сегрегація VoIP трафіку
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 24 – SRTP & ZRTP ==================== -->
+<section class="slide bg-mid">
+  <h2>🔐 Захист медіа: SRTP та ZRTP</h2>
+  <div class="two-col">
+    <div>
+      <h3>SRTP — Secure RTP (RFC 3711)</h3>
+      <ul>
+        <li>Шифрування: <strong>AES-128/256-CTR</strong></li>
+        <li>Автентифікація: <strong>HMAC-SHA1</strong></li>
+        <li>Захист від replay-атак (sequence number)</li>
+        <li>Ключі погоджуються через <strong>SDES</strong> (у SDP) або <strong>DTLS-SRTP</strong></li>
+        <li>SDES передає ключ у SDP — вразливий якщо SIP не захищений</li>
+        <li>DTLS-SRTP (WebRTC) — ключі погоджуються безпосередньо між UA</li>
+      </ul>
+    </div>
+    <div>
+      <h3>ZRTP — Z Real-time Transport Protocol (RFC 6189)</h3>
+      <ul>
+        <li>Автор: Філіп Циммерман (творець PGP)</li>
+        <li>Обмін ключами <strong>Diffie-Hellman</strong> у медіа-каналі</li>
+        <li>Не залежить від PKI та сигналізації</li>
+        <li><strong>SAS (Short Authentication String)</strong> — голосова верифікація</li>
+        <li>Захист від MitM без сертифікатів</li>
+        <li>Використовується: Signal, Linphone, Twinkle</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:.6em;">
+    <strong>Правило:</strong> SRTP без TLS для сигналізації не вирішує проблему — ключ у SDP може бути перехоплений. Повний захист = <strong>TLS (SIP) + DTLS-SRTP (медіа)</strong> або <strong>ZRTP</strong>.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 25 – TLS/SIPS Protection ==================== -->
+<section class="slide bg-plain">
+  <h2>🔒 Захист сигналізації: TLS / SIPS</h2>
+  <div class="two-col">
+    <div>
+      <h3>SIP over TLS (SIPS)</h3>
+      <ul>
+        <li>Порт <strong>5061/TCP</strong></li>
+        <li>URI: <code>sips:alice@atlanta.com</code></li>
+        <li>Шифрування: TLS 1.2 / TLS 1.3</li>
+        <li>Автентифікація сервера через <strong>X.509</strong></li>
+        <li>Захищає SIP-заголовки, SDP, credentials</li>
+        <li>Запобігає перехопленню та модифікації</li>
+      </ul>
+      <div class="hbox" style="margin-top:.5em;">
+        TLS не захищає hop-by-hop якщо проміжні proxy в мережі не використовують TLS між собою.
+      </div>
+    </div>
+    <div>
+      <h3>Типові помилки конфігурації TLS</h3>
+      <div class="card" style="margin-bottom:.5em;">
+        <h3>❌ Часті вразливості</h3>
+        <ul>
+          <li>Самопідписані сертифікати без перевірки</li>
+          <li>TLS 1.0/1.1 — вразливі (POODLE, BEAST)</li>
+          <li>Weak cipher suites (RC4, 3DES)</li>
+          <li>Відключена перевірка сертифіката UA</li>
+          <li>Змішані TLS/non-TLS hop на шляху</li>
+        </ul>
+      </div>
+      <div class="wbox">
+        <strong>Рекомендація:</strong> TLS 1.3 + ECDSA/RSA-2048+ + перевірка CN/SAN + HSTS для веб-UI
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 26 – Attack Summary Table ==================== -->
+<section class="slide bg-plain">
+  <h2>📊 Зведена таблиця атак та захисту</h2>
+  <table>
+    <tr><th>Атака</th><th>Протокол/рівень</th><th>Інструменти</th><th>Захист</th></tr>
+    <tr><td><strong>SIP INVITE Flood</strong></td><td>SIP / UDP</td><td>SIPp, inviteflood</td><td>Rate limit, SBC, auth</td></tr>
+    <tr><td><strong>RTP Flood</strong></td><td>RTP / UDP</td><td>hping3, scapy</td><td>IP ACL, RTCP монітор</td></tr>
+    <tr><td><strong>SPIT / Robocall</strong></td><td>SIP / Застосунок</td><td>Asterisk dialplan</td><td>STIR/SHAKEN, rate limit</td></tr>
+    <tr><td><strong>SIP Brute-force</strong></td><td>SIP digest</td><td>SIPVicious, sipcrack</td><td>Fail2ban, TLS, strong pass</td></tr>
+    <tr><td><strong>IRSF / Trunk fraud</strong></td><td>SIP транк</td><td>Ручний / автоматизований</td><td>CDR моніторинг, ліміти</td></tr>
+    <tr><td><strong>ARP Spoofing</strong></td><td>L2 / Ethernet</td><td>Ettercap, Bettercap</td><td>DAI, 802.1X, VLAN</td></tr>
+    <tr><td><strong>RTP Eavesdropping</strong></td><td>RTP / UDP</td><td>Wireshark, rtpdump</td><td>SRTP, ZRTP, DTLS-SRTP</td></tr>
+    <tr><td><strong>SIP Interception</strong></td><td>SIP / TCP/UDP</td><td>Wireshark, sngrep</td><td>TLS/SIPS</td></tr>
+    <tr><td><strong>Re-INVITE MitM</strong></td><td>SIP / сесія</td><td>Сustom proxy</td><td>SIP Identity, TLS + SRTP</td></tr>
+  </table>
+</section>
+
+<!-- ==================== SLIDE 27 – Real Incidents ==================== -->
+<section class="slide bg-plain">
+  <h2>📰 Реальні інциденти</h2>
+  <div class="two-col">
+    <div>
+      <div class="card" style="margin-bottom:.6em;">
+        <h3>🔴 DDoS на Vonage / VoIP-оператори (2016)</h3>
+        <ul>
+          <li>Botnet Mirai → SIP UDP flood на VoIP-інфраструктуру</li>
+          <li>~1.1 Тбіт/с пікове навантаження (сумарно по всіх цілях Mirai у 2016 р.)</li>
+          <li>Перебої зв'язку для мільйонів абонентів</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🟡 FreePBX масовий злам (2019–2022)</h3>
+        <ul>
+          <li>Сканування Shodan → знаходження відкритих FreePBX</li>
+          <li>Default credentials / CVE в веб-панелі</li>
+          <li>Генерація IRSF: $50 000–$200 000 за вікенд</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:.6em;">
+        <h3>🔵 3CX Supply Chain + VoIP (2023)</h3>
+        <ul>
+          <li>Скомпрометований інсталятор 3CX Desktop App</li>
+          <li>Зловмисники отримали доступ до корпоративних PBX</li>
+          <li>Eavesdropping + credentials theft</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🟠 Vishing-кампанія (2020–дотепер)</h3>
+        <ul>
+          <li>COVID-19 → масові атаки на корпоративні softphone</li>
+          <li>Зловмисники видають себе за IT-підтримку</li>
+          <li>Ціль: корпоративні облікові дані через голос</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 28 – Defense in Depth ==================== -->
+<section class="slide bg-mid">
+  <h2>🏰 Стратегія глибинного захисту VoIP</h2>
+  <div class="three-col">
+    <div class="card">
+      <h3>🌐 Периметр</h3>
+      <ul>
+        <li>SBC — єдина точка входу</li>
+        <li>Anti-DDoS (scrubbing)</li>
+        <li>Firewall: SIP ALG off, stateful</li>
+        <li>Geo-blocking підозрілих AS</li>
+        <li>BCP38 anti-spoofing</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🖧 Мережа</h3>
+      <ul>
+        <li>VLAN сегрегація VoIP</li>
+        <li>802.1X аутентифікація портів</li>
+        <li>DAI (Dynamic ARP Inspection)</li>
+        <li>DHCP snooping</li>
+        <li>QoS / DSCP маркування</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📱 Застосунок</h3>
+      <ul>
+        <li>TLS/SIPS + SRTP скрізь</li>
+        <li>Сильна автентифікація SIP</li>
+        <li>Fail2ban + rate limiting</li>
+        <li>CDR-моніторинг у реальному часі</li>
+        <li>Регулярний патчинг PBX</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:.8em;">
+    <strong>Принцип:</strong> жодний окремий засіб захисту не є достатнім. Ефективна безпека VoIP = <strong>багаторівневий захист</strong> (мережа + протокол + застосунок + організація + моніторинг).
+  </div>
+</section>
+
+<!-- ==================== SLIDE 29 – Standards & Tools ==================== -->
+<section class="slide bg-plain">
+  <h2>📚 Стандарти та інструменти</h2>
+  <div class="two-col">
+    <div>
+      <h3>Ключові RFC та стандарти</h3>
+      <table>
+        <tr><th>Документ</th><th>Тема</th></tr>
+        <tr><td>RFC 3261</td><td>SIP — базовий стандарт</td></tr>
+        <tr><td>RFC 3711</td><td>SRTP — захист медіа</td></tr>
+        <tr><td>RFC 6189</td><td>ZRTP — медіа-рівень E2E</td></tr>
+        <tr><td>RFC 8224</td><td>Authenticated Identity Management (STIR)</td></tr>
+        <tr><td>RFC 8226</td><td>JWT Credentials for STIR</td></tr>
+        <tr><td>RFC 5245</td><td>ICE — NAT traversal</td></tr>
+        <tr><td>ITU-T X.805</td><td>Безпекова архітектура мереж</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Практичні інструменти</h3>
+      <div class="card" style="margin-bottom:.5em;">
+        <h3>Аналіз та тестування</h3>
+        <ul>
+          <li><strong>SIPVicious</strong> — svmap, svwar, svcrack</li>
+          <li><strong>Wireshark / sngrep</strong> — аналіз SIP/RTP</li>
+          <li><strong>SIPp</strong> — генерація трафіку</li>
+          <li><strong>Metasploit</strong> — SIP auxiliary modules</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Захист та моніторинг</h3>
+        <ul>
+          <li><strong>Kamailio</strong> — pike, topos, auth</li>
+          <li><strong>Fail2ban</strong> — SIP brute-force блокування</li>
+          <li><strong>Homer / Heplify</strong> — SIP моніторинг</li>
+          <li><strong>rtpengine / rtpproxy</strong> — SRTP gateway</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 30 – Q&A ==================== -->
+<section class="slide bg-end center">
+  <div>
+    <h1 style="font-size:clamp(2rem,5vw,3.5rem); color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin: 1em 0;">
+      Запитання?
+    </h3>
+    <p style="color:#666; margin-top:2.5em; font-size:clamp(.65rem,1.1vw,.85rem);">
+      RFC: 3261 · 3711 · 6189 · 8224 · 8226 · ITU-T X.805
+    </p>
+    <p style="color:#444; font-size:clamp(.62rem,1vw,.8rem); margin-top:.6em;">
+      Теми: DoS/DDoS · SPIT · Toll Fraud · Eavesdropping · MitM
+    </p>
+    <p style="color:#333; margin-top:.8em; font-size:clamp(.6rem,1vw,.78rem);">
+      Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
+    </p>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- NAV CONTROLS -->
+<div id="nav">
+  <button onclick="move(-1)">&#8592;</button>
+  <span id="counter"></span>
+  <button onclick="move(1)">&#8594;</button>
+</div>
+
+<script>
+(function () {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let cur = 0;
+
+  function goto(n) {
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('prev');
+    cur = (n + total) % total;
+    slides[cur].classList.remove('prev');
+    slides[cur].classList.add('active');
+    const prev = slides[(cur - 1 + total) % total];
+    setTimeout(() => prev.classList.remove('prev'), 420);
+    document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
+    document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+  }
+
+  function move(dir) { goto(cur + dir); }
+  window.move = move;
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { move(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { move(-1); e.preventDefault(); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  // touch swipe
+  let sx = 0;
+  document.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function (e) {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+  });
+
+  goto(0);
+})();
+</script>
+</body>
+</html>
