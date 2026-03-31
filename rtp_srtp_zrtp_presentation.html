@@ -309,7 +309,7 @@ a=rtpmap:0 PCMU/8000
 a=rtpmap:8 PCMA/8000
 a=rtpmap:96 opus/48000/2
 a=crypto:1 AES_CM_128_HMAC_SHA1_80
-  inline:d0RmdmcmVCspeEc3jek7Ch4FgkDgBbaB
+  inline:d0RmdmcmVCspeEc3jek7Ch4FgkDgBbaBoZW5jdGw=
 a=sendrecv</pre>
     </div>
   </div>
@@ -682,11 +682,10 @@ Master Salt (112 біт) — захист від атак
       <pre class="sip">/* SDP з SDES */
 m=audio 49170 RTP/SAVP 0
 a=crypto:1 AES_CM_128_HMAC_SHA1_80
-  inline:WVNfX19zZW1jdGwgKCkgewn
-         jdGwgKCkgewn/2^20/1:4
+  inline:WVNfX19zZW1jdGwgKCkgewnjdGwgKCkgewnjdGwK|2^20|1:4
 
 a=crypto:2 AES_CM_128_HMAC_SHA1_32
-  inline:NzB4d1BINUAvLEw6UzF3WSJ
+  inline:NzB4d1BINUAvLEw6UzF3WSJ3WSJ3WSJ3WSjdGwK
 
 /* Параметри crypto-атрибута:
    tag: 1 або 2 (ідентифікатор)
@@ -806,7 +805,7 @@ a=setup:actpass</pre>
         <li><code>Prsh</code> — Preshared mode</li>
       </ul>
       <div class="gbox" style="margin-top:.5em;">
-        ZRTP-оснований: Signal Protocol, Linphone, ZFONE, Twinkle
+        На основі ZRTP: Signal Protocol, Linphone, ZFONE, Twinkle
       </div>
     </div>
   </div>
@@ -1095,7 +1094,7 @@ v=0
 o=alice 123 456 IN IP4 192.168.1.10
 m=audio 49170 RTP/SAVP 0
 a=crypto:1 AES_CM_128_HMAC_SHA1_80
-  inline:T1d2V3c0X2tleQ==
+  inline:T1d2V3c0X2tleVNhbHRLZXlTYWx0S2V5U2Fs
 
 /* RTP/SAVP = Secure Audio/Video Profile */</pre>
       <div class="wbox" style="margin-top:.4em;">
@@ -1117,7 +1116,7 @@ a=setup:actpass
 
 /* UDP/TLS/RTP/SAVP = DTLS-SRTP */</pre>
       <div class="gbox" style="margin-top:.4em;">
-        Fingerprint прив'язаний до SDP — TLS для SIP опційний, але рекомендований.
+        Fingerprint прив'язаний до SDP — для повного захисту від підміни fingerprint необхідний <strong>SIP over TLS</strong>.
       </div>
     </div>
   </div>
