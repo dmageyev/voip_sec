@@ -32,14 +32,14 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 .bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
 
 /* ===== TYPOGRAPHY ===== */
-h1 { font-size: 4.8rem; color: #00b4d8; line-height: 1.15; }
-h2 { font-size: 2.8rem; color: #48cae4;
-     border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
-h3 { font-size: 1.7rem; color: #fff; margin-bottom: .4em; }
-p, li { font-size: 1.4rem; line-height: 1.55; }
+h1 { font-size: 5.5rem; color: #00b4d8; line-height: 1.15; }
+h2 { font-size: 3.4rem; color: #48cae4;
+     border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .6em; }
+h3 { font-size: 2.2rem; color: #fff; margin-bottom: .35em; }
+p, li { font-size: 1.8rem; line-height: 1.5; }
 ul { margin-left: 1.3em; }
-li { margin-bottom: .35em; }
-code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
+li { margin-bottom: .3em; }
+code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .88em; }
 strong { color: #90e0ef; }
 
 /* ===== LAYOUT HELPERS ===== */
@@ -60,36 +60,36 @@ strong { color: #90e0ef; }
   background: rgba(0,180,216,.13);
   border-left: 4px solid #00b4d8;
   padding: .55em 1em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: 1.2rem;
+  font-size: 1.55rem;
 }
 .wbox {
   background: rgba(247,127,0,.13);
   border-left: 4px solid #f77f00;
   padding: .55em 1em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: 1.2rem;
+  font-size: 1.55rem;
 }
 
 /* ===== DIAGRAMS / PREFORMATTED ===== */
 pre.sip {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: .95rem;
+  font-size: 1.1rem;
   background: #0d1117; border: 1px solid #00b4d8;
   border-radius: .4em; padding: .7em 1em;
   line-height: 1.45; white-space: pre; overflow: auto;
-  max-height: 560px;
+  max-height: 580px;
 }
 pre.diag {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: .93rem;
+  font-size: 1.08rem;
   background: #0d1117; border: 1px solid #00b4d8;
   border-radius: .4em; padding: .65em 1.2em;
   line-height: 1.6; white-space: pre; width: 100%;
 }
 
 /* ===== TABLES ===== */
-table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
-th { background: rgba(0,180,216,.22); color: #48cae4; padding: .4em .7em; text-align: left; }
-td { padding: .35em .7em; border-bottom: 1px solid rgba(255,255,255,.09); }
+table { width: 100%; border-collapse: collapse; font-size: 1.35rem; }
+th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .7em; text-align: left; }
+td { padding: .3em .7em; border-bottom: 1px solid rgba(255,255,255,.09); }
 tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 
 /* ===== BADGE ===== */
@@ -130,12 +130,12 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 <!-- ==================== SLIDE 1 – Title ==================== -->
 <section class="slide bg-dark center active" id="s0">
   <div>
-    <h1 style="font-size:5.5rem; margin-bottom:.4em;">Протокол H.323</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:2.2rem; margin-bottom:1.5em;">
+    <h1 style="font-size:6.5rem; margin-bottom:.4em;">Протокол H.323</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:2.8rem; margin-bottom:1.5em;">
       Мультимедійні комунікації в IP-мережах
     </h3>
-    <p style="color:#aaa; font-size:1.5rem;">Курс «Безпека VoIP» · Напрям кібербезпека</p>
-    <p style="color:#444; font-size:1.2rem; margin-top:2.5em;">
+    <p style="color:#aaa; font-size:1.9rem;">Курс «Безпека VoIP» · Напрям кібербезпека</p>
+    <p style="color:#444; font-size:1.5rem; margin-top:2.5em;">
       Кафедра інформаційних технологій та кібербезпеки
     </p>
   </div>
@@ -263,7 +263,41 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
   </div>
 </section>
 
-<!-- ==================== SLIDE 6 – Architecture ==================== -->
+<!-- ==================== SLIDE 6 – ASN.1 Encoding Theory ==================== -->
+<section class="slide bg-plain">
+  <h2>🔢 ASN.1 та PER — бінарне кодування H.323</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    H.323 використовує <strong>ASN.1 (Abstract Syntax Notation One)</strong> — мову опису структур даних, та <strong>PER (Packed Encoding Rules)</strong> — правила їх компактного бінарного кодування. Це принципово відрізняє H.323 від текстових протоколів.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Чому ASN.1/PER?</h3>
+      <ul>
+        <li><strong>Компактність:</strong> PER кодує без тегів і роздільників — мінімальний розмір пакету</li>
+        <li><strong>Строга типізація:</strong> кожне поле має фіксований тип та обмеження</li>
+        <li><strong>Стандартизована схема:</strong> автогенерація коду для будь-якої платформи</li>
+        <li><strong>ALIGNED vs UNALIGNED PER:</strong> H.323 використовує ALIGNED (вирівнювання по байту)</li>
+      </ul>
+      <div class="wbox" style="margin-top:.6em;">
+        <strong>Наслідок для безпеки:</strong> складний бінарний парсер = більша поверхня атаки. Помилки в парсингу ASN.1 — основна причина CVE у H.323-реалізаціях.
+      </div>
+    </div>
+    <div>
+      <h3>ASN.1 vs текстовий SIP</h3>
+      <table>
+        <tr><th>Критерій</th><th>H.323 (ASN.1/PER)</th><th>SIP (текст)</th></tr>
+        <tr><td>Розмір повідомлення</td><td>~100–200 байт</td><td>~1–5 KB</td></tr>
+        <tr><td>Читабельність</td><td>❌ Бінарний</td><td>✅ Текстовий</td></tr>
+        <tr><td>Парсинг</td><td>Складний (стан. машина)</td><td>Простий (regex/split)</td></tr>
+        <tr><td>IDS-аналіз</td><td>Потребує декодера</td><td>Інспекція рядків</td></tr>
+        <tr><td>Fuzzing вразливості</td><td>Часті (CVE-2004-0054)</td><td>Рідші</td></tr>
+        <tr><td>Wireshark decode</td><td>Вбудований ASN.1</td><td>Нативний</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 7 – Architecture ==================== -->
 <section class="slide bg-plain">
   <h2>🏗️ Архітектура H.323-мережі</h2>
   <pre class="diag">
@@ -411,7 +445,32 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
   </div>
 </section>
 
-<!-- ==================== SLIDE 11 – Basic Call Flow ==================== -->
+<!-- ==================== SLIDE 11 – H.323 Port Reference ==================== -->
+<section class="slide bg-plain">
+  <h2>🔌 H.323 — Таблиця портів та вимоги до firewall</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    H.323 використовує <strong>множину TCP/UDP-портів</strong> — як фіксовані, так і динамічно узгоджені. Це ускладнює налаштування firewall та є причиною появи H.460 як NAT traversal рішення.
+  </div>
+  <table style="margin-bottom:.6em;">
+    <tr><th>Порт / Діапазон</th><th>Протокол</th><th>Призначення</th><th>Примітки</th></tr>
+    <tr><td><strong>UDP 1719</strong></td><td>H.225 RAS</td><td>Реєстрація, допуск, статус</td><td>GK Discovery (multicast 224.0.1.41, ITU-T H.323)</td></tr>
+    <tr><td><strong>TCP 1720</strong></td><td>H.225 Call Sig.</td><td>Встановлення/завершення виклику</td><td>Q.931 signaling; обов'язковий</td></tr>
+    <tr><td><strong>TCP 1300</strong></td><td>H.225 TLS</td><td>Шифрована сигналізація (H.460.22)</td><td>Опціонально</td></tr>
+    <tr><td><strong>TCP дин.</strong></td><td>H.245</td><td>Узгодження медіа-можливостей</td><td>Порт передається в H.225 Setup</td></tr>
+    <tr><td><strong>UDP 49152–65535</strong></td><td>RTP / RTCP</td><td>Аудіо/відео медіа-потоки</td><td>Порт узгоджується в H.245 OLC</td></tr>
+    <tr><td><strong>TCP 1718</strong></td><td>Gatekeeper</td><td>GK Discovery (unicast альтернатива)</td><td>Рідко використовується</td></tr>
+  </table>
+  <div class="two-col">
+    <div class="wbox">
+      <strong>Проблема для firewall:</strong> динамічні порти H.245 і RTP не можна заздалегідь дозволити. Потрібен ALG (Application Layer Gateway) або H.460.18/19, або SBC для NAT/firewall traversal.
+    </div>
+    <div class="hbox">
+      <strong>Мінімальний набір портів для firewall:</strong> TCP 1720 вхідний + UDP 1719 двосторонній + дозволити встановлені TCP-з'єднання (stateful). Для повного функціонування — або ALG, або H.460.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 12 – Basic Call Flow ==================== -->
 <section class="slide bg-plain">
   <h2>📞 H.323 Call Flow — прямий виклик (без GK)</h2>
   <pre class="diag">
@@ -543,7 +602,42 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
   </div>
 </section>
 
-<!-- ==================== SLIDE 15 – H.460 NAT Traversal ==================== -->
+<!-- ==================== SLIDE 15 – RTP/RTCP Theory ==================== -->
+<section class="slide bg-plain">
+  <h2>📡 RTP/RTCP — Транспорт медіа в H.323</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>RTP (Real-time Transport Protocol, RFC 3550)</strong> — протокол доставки аудіо/відео в реальному часі. Порти узгоджуються в H.245 <em>OpenLogicalChannel</em> і не є фіксованими, що є ключовою відмінністю від сигналізації.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Структура RTP</h3>
+      <ul>
+        <li><strong>SSRC</strong> — унікальний ідентифікатор джерела медіа</li>
+        <li><strong>PT (Payload Type)</strong> — тип кодека (G.711=0/8, G.729=18, H.264=динамічний)</li>
+        <li><strong>Sequence Number</strong> — порядковий номер для реасемблювання</li>
+        <li><strong>Timestamp</strong> — час семплювання (синхронізація відео+аудіо)</li>
+        <li><strong>CSRC</strong> — список джерел при мікшуванні MCU</li>
+      </ul>
+      <div class="hbox" style="margin-top:.5em;">
+        <strong>RTP = UDP + {seq, ts, ssrc, payload}</strong>. Без гарантії доставки — втрати пакетів = артефакти звуку.
+      </div>
+    </div>
+    <div>
+      <h3>RTCP — управління якістю</h3>
+      <ul>
+        <li><strong>SR (Sender Report)</strong> — статистика відправника: bytes, packets, NTP timestamp</li>
+        <li><strong>RR (Receiver Report)</strong> — якість отримання: втрати, jitter, RTT</li>
+        <li><strong>SDES</strong> — опис джерела (CNAME, NAME)</li>
+        <li><strong>BYE</strong> — завершення сесії</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        <strong>Безпека RTP:</strong> без H.235.6/SRTP RTP-потоки передаються у відкритому вигляді. Будь-хто у мережі може прослухати дзвінок або впровадити фальшивий RTP (injection).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 16 – H.460 NAT Traversal ==================== -->
 <section class="slide bg-plain">
   <h2>🌐 H.460 — NAT Traversal у H.323</h2>
   <div class="three-col">
@@ -586,7 +680,47 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
   </div>
 </section>
 
-<!-- ==================== SLIDE 16 – H.235 Security ==================== -->
+<!-- ==================== SLIDE 17 – H.323 Fast Connect ==================== -->
+<section class="slide bg-plain">
+  <h2>⚡ H.323 Fast Connect — оптимізація встановлення виклику</h2>
+  <div class="hbox" style="margin-bottom:.6em;">
+    <strong>Fast Connect (H.323 Annex E)</strong> — механізм скорочення затримки встановлення виклику. Замість окремого H.245 TCP-з'єднання, параметри медіа-каналів передаються <em>всередині</em> H.225 Setup/Connect.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Стандартний режим (без Fast Connect)</h3>
+      <pre class="diag">
+A ──── H.225 Setup ──────────────► B
+A ◄─── H.225 Alerting/Connect ──── B
+  [відкриття H.245 TCP]
+A ──── H.245 MSD ────────────────► B
+A ◄─── H.245 MSD Ack ─────────────B
+A ──── H.245 CapabilitySet ──────► B
+A ◄─── H.245 CapabilitySet ───────B
+A ──── H.245 OLC (audio) ────────► B
+A ◄─── H.245 OLC Ack ─────────────B
+  [лише тепер починається медіа]
+Затримка: 4–6 round-trips ≈ 200–600 мс (LAN)</pre>
+    </div>
+    <div>
+      <h3>Fast Connect (H.245 tunneled in H.225)</h3>
+      <pre class="diag">
+A ──── H.225 Setup ──────────────► B
+        (містить FastStart:
+         OLC для audio/video)
+A ◄─── H.225 Connect ─────────────B
+        (містить FastStart ACK:
+         підтверджені канали)
+  [медіа починається ОДРАЗУ]
+Затримка: 1 round-trip ≈ 50–100 мс (LAN)</pre>
+      <div class="wbox" style="margin-top:.4em;">
+        <strong>Безпека:</strong> при Fast Connect H.245 не виконує повний обмін можливостями — можливий downgrade до слабших кодеків. Рекомендується валідувати FastStart параметри на SBC.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 18 – H.235 Security ==================== -->
 <section class="slide bg-sec">
   <h2>🔒 H.235 — Безпека в H.323</h2>
   <div class="hbox" style="margin-bottom:.8em;">
@@ -654,7 +788,27 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
   </div>
 </section>
 
-<!-- ==================== SLIDE 18 – H.235 Authentication ==================== -->
+<!-- ==================== SLIDE 20 – STRIDE Threat Model ==================== -->
+<section class="slide bg-sec">
+  <h2>🎯 STRIDE-модель загроз для H.323-інфраструктури</h2>
+  <div class="hbox" style="margin-bottom:.6em;">
+    Застосування методології <strong>STRIDE</strong> (Microsoft) до H.323 дозволяє систематично ідентифікувати загрози та визначити пріоритети захисних заходів.
+  </div>
+  <table>
+    <tr><th>STRIDE</th><th>Загроза</th><th>Вектор атаки в H.323</th><th>Контрзахід</th></tr>
+    <tr><td><strong class="m">S</strong>poofing</td><td>Підробка ідентичності</td><td>Фальшивий Gatekeeper (GRQ), Registration Hijacking</td><td>H.235.2 PKI, ACL для GK IP</td></tr>
+    <tr><td><strong class="m">T</strong>ampering</td><td>Модифікація даних</td><td>RTP Injection, H.245 Downgrade, ASN.1 маніпуляції</td><td>H.235.6 (SRTP), TLS, HMAC-SHA1</td></tr>
+    <tr><td><strong class="m">R</strong>epudiation</td><td>Відмова від дій</td><td>Виклики без CDR, відсутність audit trail у GK</td><td>GK з RADIUS/CDR, логування RAS</td></tr>
+    <tr><td><strong class="m">I</strong>nformation Disc.</td><td>Розкриття інформації</td><td>Прослух незашифрованого RTP, метадані викликів</td><td>H.235.6 шифрування медіа, TLS</td></tr>
+    <tr><td><strong class="m">D</strong>oS</td><td>Відмова в обслуговуванні</td><td>RAS Flood (ARQ), Malformed ASN.1, SYN-flood TCP 1720</td><td>Rate limiting, SBC, IPS сигнатури</td></tr>
+    <tr><td><strong class="m">E</strong>levation of Priv.</td><td>Підвищення привілеїв</td><td>Toll Fraud через Zone Bypass, GK Routed обхід</td><td>ACL, обов'язковий ARQ, моніторинг CDR</td></tr>
+  </table>
+  <div class="wbox" style="margin-top:.5em;">
+    H.323 найбільш вразливий до <strong>S</strong>poofing (через відсутність обов'язкового H.235) та <strong>D</strong>oS (складний ASN.1 парсинг). SBC на периметрі є найефективнішим єдиним контрзаходом.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 21 – H.235 Authentication ==================== -->
 <section class="slide bg-plain">
   <h2>🔑 H.235 — Аутентифікація терміналів</h2>
   <div class="two-col">
@@ -1060,17 +1214,17 @@ Terminal A              Gatekeeper
 <!-- ==================== SLIDE 30 – Q&A ==================== -->
 <section class="slide bg-end center">
   <div>
-    <h1 style="font-size:5rem; color:#00b4d8;">Дякую за увагу!</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:2.2rem; margin: 1em 0;">
+    <h1 style="font-size:6rem; color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:2.8rem; margin: 1em 0;">
       Запитання?
     </h3>
-    <p style="color:#666; margin-top:2.5em; font-size:1.2rem;">
+    <p style="color:#666; margin-top:2.5em; font-size:1.5rem;">
       Стандарти: ITU-T H.323 v7 · H.225 · H.245 · H.235 · H.239 · H.450 · H.460
     </p>
-    <p style="color:#444; font-size:1rem; margin-top:.5em;">
+    <p style="color:#444; font-size:1.3rem; margin-top:.5em;">
       RFC: 3550 (RTP) · 3711 (SRTP) · 8445 (ICE) · 8489 (STUN)
     </p>
-    <p style="color:#333; margin-top:.8em; font-size:1rem;">
+    <p style="color:#333; margin-top:.8em; font-size:1.2rem;">
       Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
     </p>
   </div>
