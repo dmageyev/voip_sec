@@ -7,14 +7,29 @@
 <style>
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
+html, body { width: 100%; height: 100%; overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
 
-/* ===== SLIDESHOW CONTAINER ===== */
-.deck { width: 100vw; height: 100vh; position: relative; }
+/* ===== STAGE WRAPPER ===== */
+#stage-wrap {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* ===== DECK — fixed 1920×1080 canvas ===== */
+.deck {
+  width: 1920px; height: 1080px;
+  position: relative;
+  transform-origin: center center;
+  flex-shrink: 0;
+}
+
+/* ===== SLIDES ===== */
 .slide {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-  padding: 3.5vw 5vw;
+  padding: 52px 80px;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease, transform .4s ease;
   transform: translateX(60px);
@@ -31,12 +46,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 .bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
 .bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
 
-/* ===== TYPOGRAPHY ===== */
-h1 { font-size: clamp(1.8rem, 4vw, 3.2rem); color: #00b4d8; line-height: 1.15; }
-h2 { font-size: clamp(1.2rem, 2.5vw, 1.9rem); color: #48cae4;
+/* ===== TYPOGRAPHY (fixed px for correct scaling at 1920×1080) ===== */
+h1 { font-size: 48px; color: #00b4d8; line-height: 1.15; }
+h2 { font-size: 28px; color: #48cae4;
      border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
-h3 { font-size: clamp(.85rem, 1.5vw, 1.05rem); color: #fff; margin-bottom: .4em; }
-p, li { font-size: clamp(.72rem, 1.3vw, .92rem); line-height: 1.55; }
+h3 { font-size: 18px; color: #fff; margin-bottom: .4em; }
+p, li { font-size: 15px; line-height: 1.55; }
 ul { margin-left: 1.3em; }
 li { margin-bottom: .28em; }
 code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
@@ -60,95 +75,151 @@ strong { color: #90e0ef; }
   background: rgba(0,180,216,.13);
   border-left: 4px solid #00b4d8;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: 13px;
 }
 .wbox {
   background: rgba(247,127,0,.13);
   border-left: 4px solid #f77f00;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: 13px;
 }
 .rbox {
   background: rgba(220,50,50,.13);
   border-left: 4px solid #e63946;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: 13px;
 }
 .gbox {
   background: rgba(82,183,136,.13);
   border-left: 4px solid #52b788;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: 13px;
 }
 
 /* ===== DIAGRAMS / PREFORMATTED ===== */
-pre.sip {
+pre.sip, pre.diag, pre {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: clamp(.52rem, .95vw, .72rem);
+  font-size: 12px;
   background: #0d1117; border: 1px solid #00b4d8;
   border-radius: .4em; padding: .7em 1em;
   line-height: 1.45; white-space: pre; overflow: auto;
-  max-height: 42vh;
+  max-height: 480px; width: 100%;
 }
-pre.diag {
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: clamp(.5rem, .9vw, .7rem);
-  background: #0d1117; border: 1px solid #00b4d8;
-  border-radius: .4em; padding: .7em 1.2em;
-  line-height: 1.65; white-space: pre; width: 100%;
-}
+pre.diag { padding: .7em 1.2em; line-height: 1.65; max-height: none; }
 
 /* ===== TABLES ===== */
-table { width: 100%; border-collapse: collapse; font-size: clamp(.62rem, 1.1vw, .82rem); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .65em; text-align: left; }
 td { padding: .3em .65em; border-bottom: 1px solid rgba(255,255,255,.09); }
 tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 
-/* ===== BADGE ===== */
+/* ===== BADGE / COLORS ===== */
 .badge { display: inline-block; background: #00b4d8; color: #000;
   border-radius: .25em; padding: .05em .4em; font-size: .72em; font-weight: bold; }
-.m  { color: #00b4d8; font-weight: bold; }
-.ok { color: #52b788; }
-.er { color: #f77f00; }
+.m   { color: #00b4d8; font-weight: bold; }
+.ok  { color: #52b788; }
+.er  { color: #f77f00; }
 .red { color: #e63946; }
+.hl  { color: #90e0ef; font-weight: bold; }
+.info { color: #00b4d8; }
+.warn { color: #f77f00; }
 
-/* ===== NAVIGATION ===== */
+/* ===== NOTES BUTTON (injected by JS into each slide) ===== */
+.note-btn {
+  position: absolute; bottom: 10px; right: 16px;
+  background: rgba(0,180,216,.13); border: 1px solid rgba(0,180,216,.38);
+  color: #48cae4; border-radius: .28em;
+  padding: 4px 11px; font-size: 12px; cursor: pointer;
+  transition: background .2s; z-index: 10;
+  font-family: 'Segoe UI', Arial, sans-serif; letter-spacing: .03em;
+  line-height: 1.5;
+}
+.note-btn:hover { background: rgba(0,180,216,.32); color: #90e0ef; }
+
+/* ===== NAVIGATION (fixed — outside scale) ===== */
 #nav {
-  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
-  display: flex; align-items: center; gap: .6em;
+  position: fixed; bottom: 14px; right: 20px; z-index: 300;
+  display: flex; align-items: center; gap: 8px;
 }
 #nav button {
   background: rgba(0,180,216,.18); border: 1px solid #00b4d8; color: #00b4d8;
-  border-radius: .35em; padding: .4em .9em; font-size: .85rem; cursor: pointer;
+  border-radius: .3em; padding: 6px 14px; font-size: 13px; cursor: pointer;
   transition: background .2s;
 }
 #nav button:hover { background: rgba(0,180,216,.4); }
-#counter { color: #555; font-size: .78rem; min-width: 4em; text-align: center; }
+#counter { color: #555; font-size: 13px; min-width: 56px; text-align: center; }
 
-/* ===== PROGRESS BAR ===== */
-#prog { position: fixed; bottom: 0; left: 0; height: 3px; background: #00b4d8;
-        transition: width .35s ease; z-index: 200; }
+/* ===== PROGRESS ===== */
+#prog { position: fixed; bottom: 0; left: 0; height: 3px;
+        background: #00b4d8; transition: width .35s ease; z-index: 400; }
 
-/* ===== KEYBOARD HINT ===== */
-#hint { position: fixed; top: 1vh; right: 1.5vw; font-size: .62rem; color: #333; z-index: 100; }
+/* ===== HINT ===== */
+#hint { position: fixed; top: 8px; right: 16px;
+        font-size: 11px; color: #2a2a2a; z-index: 300; }
+
+/* ===== NOTES MODAL ===== */
+#modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.75);
+  align-items: center; justify-content: center;
+}
+#modal-overlay.open { display: flex; }
+#modal {
+  background: #0d1527; border: 1px solid #00b4d8;
+  border-radius: .55em;
+  width: min(860px, 88vw);
+  max-height: 78vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 10px 48px rgba(0,0,0,.75);
+}
+#modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 22px 10px;
+  border-bottom: 1px solid rgba(0,180,216,.28);
+  flex-shrink: 0;
+}
+#modal-title { color: #48cae4; font-size: 15px; font-weight: 600; }
+#modal-close {
+  background: none; border: none; color: #666;
+  font-size: 22px; cursor: pointer; line-height: 1; padding: 0 4px;
+}
+#modal-close:hover { color: #fff; }
+#modal-body {
+  padding: 18px 24px;
+  overflow-y: auto;
+  font-size: 14px; line-height: 1.72;
+  color: #c8c8c8;
+  flex: 1;
+}
+#modal-body p { margin-bottom: .85em; }
+#modal-body strong { color: #90e0ef; }
+#modal-body em { color: #aaa; }
+#modal-body code {
+  background: rgba(0,180,216,.12); color: #90e0ef;
+  padding: .06em .3em; border-radius: 3px; font-size: .88em;
+  font-family: 'Consolas','Courier New',monospace;
+}
 </style>
 </head>
 <body>
 
 <div id="prog"></div>
-<div id="hint">← → | F — повний екран</div>
+<div id="hint">← → стрілки · F — повний екран · N / 📝 — нотатки</div>
 
+<div id="stage-wrap">
 <div class="deck" id="deck">
+
 
 <!-- ==================== SLIDE 1 – Title ==================== -->
 <section class="slide bg-dark center active" id="s0">
   <div>
-    <h1 style="font-size:clamp(1.6rem,4vw,3rem); margin-bottom:.4em;">Протоколи передачі медіа-даних<br>та захист контенту</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin-bottom:1.5em;">
+    <h1 style="font-size:48px; margin-bottom:.4em;">Протоколи передачі медіа-даних<br>та захист контенту</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:26px; margin-bottom:1.5em;">
       RTP · SRTP · ZRTP
     </h3>
-    <p style="color:#aaa; font-size:clamp(.8rem,1.5vw,1rem);">Курс для студентів магістратури — Кібербезпека</p>
-    <p style="color:#444; font-size:clamp(.7rem,1.2vw,.88rem); margin-top:2.5em;">
+    <p style="color:#aaa; font-size:18px;">Курс для студентів магістратури — Кібербезпека</p>
+    <p style="color:#444; font-size:15px; margin-top:2.5em;">
       Кафедра інформаційних технологій та кібербезпеки
     </p>
   </div>
@@ -201,7 +272,7 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
     </div>
     <div>
       <h3>Місце у стеку</h3>
-      <pre class="diag" style="font-size:clamp(.48rem,.85vw,.68rem);">
+      <pre class="diag" style="font-size:11px;">
 ┌─────────────────────────────┐
 │  Застосування (аудіо/відео) │
 ├─────────────────────────────┤
@@ -458,7 +529,7 @@ a=sendrecv</pre>
     </div>
     <div>
       <h3>Генерація ключового потоку (AES-CM)</h3>
-      <pre class="diag" style="font-size:clamp(.42rem,.78vw,.62rem);">
+      <pre class="diag" style="font-size:10px;">
 IV = (k_s XOR (SSRC * 2^64
               XOR (i * 2^16))) * 2^16
 
@@ -496,7 +567,7 @@ Ciphertext = Plaintext XOR Keystream</pre>
       </div>
     </div>
     <div>
-      <pre class="diag" style="font-size:clamp(.42rem,.78vw,.62rem);">
+      <pre class="diag" style="font-size:10px;">
 HMAC-SHA1-80 обчислення:
 
 tag = HMAC-SHA1(k_a, RTP_packet || ROC)
@@ -531,7 +602,7 @@ tag = HMAC-SHA1(k_a, RTP_packet || ROC)
       </ul>
     </div>
     <div>
-      <pre class="diag" style="font-size:clamp(.42rem,.78vw,.62rem);">
+      <pre class="diag" style="font-size:10px;">
 Отримання пакету з Seq=N:
 
 1. Обчислити повний індекс i = ROC*2^16 + N
@@ -600,7 +671,7 @@ tag = HMAC-SHA1(k_a, RTP_packet || ROC)
       </div>
     </div>
     <div>
-      <pre class="diag" style="font-size:clamp(.42rem,.78vw,.62rem);">
+      <pre class="diag" style="font-size:10px;">
 KDF (Key Derivation):
 
 k_e = PRF(Master_Key, label_e || r)
@@ -723,7 +794,7 @@ a=crypto:2 AES_CM_128_HMAC_SHA1_32
       </ul>
     </div>
     <div>
-      <pre class="diag" style="font-size:clamp(.42rem,.78vw,.62rem);">
+      <pre class="diag" style="font-size:10px;">
 Alice                          Bob
   │  ─── DTLS ClientHello ──►  │
   │  ◄── DTLS HelloVerify ───  │  (cookie)
@@ -1049,7 +1120,7 @@ Alice                                              Bob
   <div class="two-col">
     <div>
       <h3>Стек безпеки WebRTC</h3>
-      <pre class="diag" style="font-size:clamp(.42rem,.78vw,.62rem);">
+      <pre class="diag" style="font-size:10px;">
 ┌────────────────────────────────┐
 │          Застосування          │
 ├────────────────────────────────┤
@@ -1289,68 +1360,117 @@ a=setup:actpass
 <!-- ==================== SLIDE 33 – Q&A ==================== -->
 <section class="slide bg-end center">
   <div>
-    <h1 style="font-size:clamp(2rem,5vw,3.5rem); color:#00b4d8;">Дякую за увагу!</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin: 1em 0;">
+    <h1 style="font-size:60px; color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:26px; margin: 1em 0;">
       Запитання?
     </h3>
-    <p style="color:#666; margin-top:2.5em; font-size:clamp(.65rem,1.1vw,.85rem);">
+    <p style="color:#666; margin-top:2.5em; font-size:14px;">
       RFC: 3550 · 3711 · 4568 · 4566 · 5764 · 6189 · 6347 · 7714 · 8827
     </p>
-    <p style="color:#333; margin-top:.8em; font-size:clamp(.6rem,1vw,.78rem);">
+    <p style="color:#333; margin-top:.8em; font-size:13px;">
       Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
     </p>
   </div>
 </section>
 
+
 </div><!-- /deck -->
+</div><!-- #stage-wrap -->
 
 <!-- NAV CONTROLS -->
 <div id="nav">
-  <button onclick="move(-1)">&#8592;</button>
+  <button onclick="move(-1)">◀ Назад</button>
   <span id="counter"></span>
-  <button onclick="move(1)">&#8594;</button>
+  <button onclick="move(1)">Вперед ▶</button>
 </div>
 
+<!-- ==================== NOTES MODAL ==================== -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <div id="modal-head">
+      <span id="modal-title">📝 Нотатки до слайду</span>
+      <button id="modal-close" onclick="closeModal(null)" title="Закрити (Esc)">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script type="application/json" id="notes-data">["<p>Курс для студентів магістратури — Кібербезпека</p>\n<p>Кафедра інформаційних технологій та кібербезпеки</p>", "<p><strong>📋 План лекції</strong></p>\n<p>RTP: призначення та архітектура; Формат пакету RTP; RTCP — управління сесією; SDP — опис медіа-сесій; Вразливості RTP; Вектори атак на медіа-потоки; SRTP — концепція та цілі; Шифрування AES у SRTP; Автентифікація та цілісність SRTP; Захист від replay-атак; Формат пакету SRTP; SDES — управління ключами.</p>", "<p><strong>📡 RTP — Real-time Transport Protocol</strong></p>\n<p>Ключові характеристики · Місце у стеку</p>\n<p>Працює поверх UDP (мінімальна затримка); Не гарантує доставку — прийнятно для медіа; Підтримує мультикаст і юнікаст; Ідентифікує тип корисного навантаження ( payload type ); Нумерація пакетів для виявлення втрат; Мітки часу ( timestamp ) для синхронізації.</p>", "<p><strong>🗂️ Формат пакету RTP</strong></p>\n<p>V (2 біти) — версія (=2); P — padding-прапорець; X — розширення заголовка; CC (4 біти) — кількість CSRC; M — маркер (межа кадру); PT (7 біт) — тип payload (0=G.711, 8=G.711-A, 96+=динамічний); Sequence Number — лічильник 0–65535; Timestamp — момент вибірки; SSRC — унікальний ID потоку.</p>", "<p><strong>📊 RTCP — RTP Control Protocol</strong></p>\n<p>Типи RTCP-пакетів · Функції RTCP</p>\n<p>SR (Sender Report) — статистика відправника: кількість пакетів, октетів, NTP-мітка; RR (Receiver Report) — частка втрат, міжприбуттєвий джиттер, RTT; SDES — опис джерела (ім'я, e-mail, місцезнаходження); BYE — завершення участі; APP — специфічні для застосування; Моніторинг QoS (jitter, втрати); Синхронізація медіа-потоків; Ідентифікація учасників; Адаптивна бітова швидкість.</p>", "<p><strong>📄 SDP — Session Description Protocol</strong></p>\n<p>Визначає адресу і порт RTP-потоку; Узгоджує кодеки (payload types); Описує параметри шифрування (SDES/DTLS); Підтримує ICE-атрибути для NAT traversal.</p>", "<p><strong>🔄 Потік RTP-сесії</strong></p>", "<p><strong>⚠️ Вразливості RTP</strong></p>\n<p>Причини вразливостей · Класи атак</p>\n<p>Відсутність шифрування корисного навантаження; Відсутність автентифікації відправника; Відсутність перевірки цілісності; Передбачуваний формат заголовків; Фіксовані діапазони портів (16384–32767); Прослуховування (Eavesdropping); Ін'єкція пакетів (Packet Injection); Replay-атаки; Man-in-the-Middle (MitM); DoS / DDoS на медіа-потік.</p>", "<p><strong>🎯 Вектори атак на RTP-потоки</strong></p>\n<p>🎧 Прослуховування · 💉 Ін'єкція / підміна · 🔁 Replay-атака</p>\n<p>Захоплення UDP-пакетів на шляху (Wireshark); Відновлення голосу з G.711 без декодування; Можливе зберігання та подальший аналіз; Атакувальник вставляє підроблені RTP-пакети; Підміна SSRC для перехоплення потоку; Спотворення голосу або введення фальшивого аудіо; Запис легітимних RTP-пакетів; Повторна відправка пізніше; Може порушити сесію або впровадити старий контент.</p>", "<p><strong>🔒 SRTP — Secure Real-time Transport Protocol</strong></p>\n<p>Цілі захисту SRTP · Ключові особливості</p>\n<p>✔ Конфіденційність — шифрування payload AES; ✔ Цілісність повідомлень — HMAC-SHA1; ✔ Автентифікація — перевірка відправника; ✔ Захист від replay — sliding window; Зворотно сумісний з RTP — однакові заголовки; Шифрує лише payload (не заголовок); Мінімальний overhead: +10 байт на пакет; Також визначає SRTCP для RTCP; Стандарт для WebRTC (обов'язковий).</p>", "<p><strong>🔐 SRTP: Шифрування AES</strong></p>\n<p>Режими шифрування · AES-CM (Counter Mode) — основний · AES-GCM (Galois/Counter Mode) — RFC 7714 · Генерація ключового потоку (AES-CM)</p>\n<p>128-бітний або 256-бітний ключ; Лічильник: SSRC + Timestamp + Sequence Number; Потоковий шифр — XOR з keystream; Паралельна обробка, низька затримка; Автентифіковане шифрування (AEAD); 128 або 256 біт; Поєднує шифрування + MAC в одному проході.</p>", "<p><strong>🛡️ SRTP: Автентифікація та цілісність</strong></p>\n<p>Алгоритм HMAC-SHA1-80</p>\n<p>Ключ автентифікації: 160 біт; Охоплює весь RTP-пакет (заголовок + payload); Тег: 80 біт (10 байт, усічений з 160); Додається в кінець пакету.</p>", "<p><strong>🔁 SRTP: Захист від Replay-атак</strong></p>\n<p>Механізм «ковзного вікна»</p>\n<p>Розмір вікна: як правило 64 пакети; Індекс пакету = 2^16 × ROC + SEQ; Пакети з вже баченим індексом відкидаються; ROC (Rollover Counter) — 32-бітний лічильник переповнень.</p>", "<p><strong>📦 Формат пакету SRTP vs RTP</strong></p>", "<p><strong>🔑 SRTP: Деривація сесійних ключів</strong></p>", "<p><strong>🗝️ Управління ключами SRTP</strong></p>\n<p>SDES · DTLS-SRTP · ZRTP</p>\n<p>Session Description Protocol Security Descriptions; Ключі в SDP у відкритому тексті Base64; Передається через SIP (потрібен TLS); Простий, але залежить від безпеки сигналізації; Datagram TLS для узгодження ключів; Handshake безпосередньо в медіа-каналі; Сертифікати / PSK; Обов'язковий у WebRTC (RFC 5764); P2P без центрального сервера; Diffie-Hellman в RTP-потоці; Short Authentication String (SAS); ZRTP RFC 6189.</p>", "<p><strong>📝 SDES — SDP Security Descriptions</strong></p>\n<p>Переваги · Недоліки</p>\n<p>✔ Простота реалізації; ✔ Широка підтримка (SIP PBX, телефони); ✔ Низький overhead; ✗ Ключі у відкритому тексті в SDP; ✗ Безпека залежить від TLS на SIP; ✗ SIP Proxy бачить ключі (middlebox); ✗ Немає Perfect Forward Secrecy.</p>", "<p><strong>🔐 DTLS-SRTP — Datagram TLS</strong></p>\n<p>Переваги DTLS-SRTP · Процес</p>\n<p>✔ Ключі НЕ проходять через SIP Proxy; ✔ Perfect Forward Secrecy (ECDHE); ✔ Обов'язковий у WebRTC; ✔ Взаємна автентифікація через сертифікати; ✔ Fingerprint сертифіката в SDP; SDP містить лише fingerprint сертифіката; DTLS-handshake виконується у RTP-порту; Ключі виводяться через SRTP_MasterSecret.</p>", "<p><strong>🍪 DTLS: Захист від DoS та повторних ідентифікаторів</strong></p>\n<p>HelloVerify Cookie · DTLS vs TLS ключові відмінності</p>\n<p>Сервер генерує cookie на основі IP/порту клієнта; Клієнт повторює HelloVerify з валідним cookie; Сервер виділяє ресурси лише після валідації.</p>", "<p><strong>🤝 ZRTP — Zero-knowledge RTP</strong></p>\n<p>Ключові принципи · Підтримувані DH-групи</p>\n<p>Узгодження ключів через Diffie-Hellman; Ключі генеруються на кінцевих точках; Сервер сигналізації не бачить ключів; Short Authentication String (SAS) — захист від MitM; Continuity via retained secrets (rs1/rs2); Підтримка SRTP як транспорту; DH3k — DH з 3072-бітним ключем; EC25 — ECDH на Curve25519; EC38 — ECDH на P-384; Mult — Multistream mode (без нового DH); Prsh — Preshared mode.</p>", "<p><strong>🔄 ZRTP: Обмін повідомленнями</strong></p>", "<p><strong>🔑 ZRTP: Short Authentication String (SAS)</strong></p>\n<p>Як це захищає? · Retained Secrets (rs1/rs2)</p>\n<p>MitM не може підробити SAS, не знаючи спільного секрету; Абоненти перевіряють однаковість SAS голосом; Якщо SAS однаковий → з'єднання захищено; Якщо різний → MitM виявлено → завершити дзвінок; Після першого дзвінка зберігається shared secret (rs1); У наступних дзвінках rs1 включається у деривацію ключів; Навіть якщо MitM активний, він не знає rs1; SAS автоматично різниться → MitM виявляється.</p>", "<p><strong>⚖️ Порівняння SDES / DTLS-SRTP / ZRTP</strong></p>", "<p><strong>⏱️ Вплив шифрування на затримку</strong></p>\n<p>Компоненти затримки у VoIP · Оцінка впливу</p>\n<p>SRTP per-packet overhead: мізерний на сучасному залізі; Апаратне прискорення AES (AES-NI на x86) — нульова затримка; DTLS handshake — відчутний, але одноразовий на сесію; ZRTP DH-обмін — 100–500 мс на початку сесії.</p>", "<p><strong>📉 Вплив на джиттер та пропускну здатність</strong></p>\n<p>Додатковий overhead пакетів · Джиттер та буферизація · Рекомендації</p>\n<p>Криптографія на перевантаженому CPU → нерівномірна затримка; SRTP/HMAC-SHA1 перевірка на приймачі додає до jitter buffer; Адаптивний jitter buffer компенсує варіацію; Допустимий jitter для голосу: < 30–50 мс; Використовувати AES-NI (апаратне прискорення); Виділяти пріоритет SRTP у QoS (DSCP EF); Уникати програмної реалізації на embedded-пристроях.</p>", "<p><strong>📊 QoS та шифрування медіа</strong></p>\n<p>🏷️ DSCP маркування · 🔄 NAT Traversal · 📡 Моніторинг</p>\n<p>SRTP-пакети мають ті самі DSCP , що й RTP; Expedited Forwarding (EF, DSCP 46) для голосу; Шифрування не змінює IP-заголовок → маркування збережено; Але deep packet inspection неможливий; SRTP + ICE/STUN/TURN — стандартна комбінація; NAT бачить UDP, але не зміст; DTLS-SRTP + ICE — основа WebRTC; SRTP-aware middlebox не розшифровує трафік; RTCP SR/RR — доступні навіть у SRTCP; MOS, jitter, packet loss — RTCP-XR (RFC 3611); Шифрований трафік складніше налагоджувати; Рекомендація: логувати SRTP-статистику на UA.</p>", "<p><strong>🌐 Практична реалізація: WebRTC</strong></p>\n<p>Стек безпеки WebRTC · Процес WebRTC-дзвінка</p>\n<p>1. Генерація DTLS-сертифіката (самопідписаного); 2. SDP offer/answer обмін з a=fingerprint:; 3. ICE candidates збір (STUN/TURN); 4. ICE connectivity check (DTLS port); 5. DTLS handshake → SRTP keys; 6. SRTP/SRTCP потоки.</p>", "<p><strong>📞 Практична реалізація: SIP + SRTP</strong></p>", "<p><strong>🛠️ Інструменти аналізу та відлагодження</strong></p>\n<p>🦈 Wireshark · 📊 sngrep · ⚙️ Тестові середовища</p>\n<p>Аналіз RTP/SRTP трафіку; Декодування RTP: Telephony → RTP → RTP Streams; Playback голосу (тільки незашифрований RTP); DTLS-декодування при наявності ключів (SSLKEYLOGFILE); Термінальний аналізатор SIP; Відображення SIP call flows; Аналіз SDP та crypto-атрибутів; Підтримка TLS-перехоплення; Asterisk / FreeSWITCH — SRTP/SDES/DTLS; Linphone — ZRTP/DTLS клієнт; Janus Gateway — WebRTC DTLS-SRTP; OpenSSL — тестування DTLS.</p>", "<p><strong>🎯 Модель загроз та захист SRTP</strong></p>", "<p><strong>📌 Підсумок та кращі практики</strong></p>\n<p>Ключові висновки · Кращі практики</p>\n<p>RTP — ефективний, але незахищений за замовчуванням; SRTP додає AES + HMAC-SHA1 з мінімальним overhead; Вибір KMS (SDES/DTLS/ZRTP) визначає реальний рівень захисту; DTLS-SRTP — сучасний стандарт для WebRTC та нових систем SIP; ZRTP — найвищий рівень конфіденційності (E2E без серверів); Шифрування не погіршує якість голосу при правильній реалізації; ✔ Завжди використовувати SRTP у виробничих системах; ✔ Надавати перевагу DTLS-SRTP перед SDES; ✔ SIP over TLS якщо використовується SDES; ✔ Увімкнути AES-NI для апаратного прискорення; ✔ Регулярно оновлювати ключі (MKI rotation); ✔ Аудит налаштувань шифрування через sngrep/Wireshark.</p>", "<p><strong>📚 Стандарти та ресурси</strong></p>\n<p>RFC та стандарти · Практичні ресурси</p>\n<p>RFC 3550 — RTP: A Transport Protocol for Real-Time Applications; RFC 3711 — The Secure Real-time Transport Protocol (SRTP); RFC 4568 — SDP Security Descriptions (SDES); RFC 4566 — SDP: Session Description Protocol; RFC 5764 — DTLS Extension to SRTP; RFC 6189 — ZRTP: Media Path Key Agreement; RFC 6347 — Datagram Transport Layer Security 1.2; RFC 7714 — AES-GCM for SRTP; RFC 8827 — WebRTC Security Architecture; NIST SP 800-52 — Guidelines for TLS; OWASP VoIP Security Guide; Asterisk SRTP configuration docs.</p>", "<p>RFC: 3550 · 3711 · 4568 · 4566 · 5764 · 6189 · 6347 · 7714 · 8827</p>\n<p>Навігація: ← → (стрілки клавіатури) | F — повний екран</p>"]</script>
+
 <script>
-(function () {
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  const total = slides.length;
-  let cur = 0;
+const NOTES = JSON.parse(document.getElementById('notes-data').textContent);
 
-  function goto(n) {
-    slides[cur].classList.remove('active');
-    slides[cur].classList.add('prev');
-    cur = (n + total) % total;
-    slides[cur].classList.remove('prev');
-    slides[cur].classList.add('active');
-    const prev = slides[(cur - 1 + total) % total];
-    setTimeout(() => prev.classList.remove('prev'), 420);
-    document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
-    document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total  = slides.length;
+let cur = 0;
+
+// Inject notes button into every slide
+slides.forEach((sl, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'note-btn';
+  btn.textContent = '📝 Нотатки';
+  btn.title = 'Відкрити коментар до слайду (N)';
+  btn.onclick = e => { e.stopPropagation(); openModal(i); };
+  sl.appendChild(btn);
+});
+
+function goto(n) {
+  const old = cur;
+  slides[old].classList.remove('active');
+  slides[old].classList.add('prev');
+  cur = (n + total) % total;
+  slides[cur].classList.remove('prev');
+  slides[cur].classList.add('active');
+  setTimeout(() => slides[old].classList.remove('prev'), 420);
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+}
+
+function move(dir) { goto(cur + dir); }
+
+// Stage scaling (1920×1080 fixed canvas)
+const deck = document.getElementById('deck');
+function scaleStage() {
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  deck.style.transform = 'scale(' + scale + ')';
+}
+scaleStage();
+window.addEventListener('resize', scaleStage);
+
+// Notes modal
+function openModal(idx) {
+  const overlay = document.getElementById('modal-overlay');
+  document.getElementById('modal-title').textContent =
+    '📝 Нотатки — Слайд ' + (idx + 1) + ' / ' + total;
+  document.getElementById('modal-body').innerHTML = NOTES[idx] || '<p><em>Нотатків немає.</em></p>';
+  overlay.classList.add('open');
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(null); return; }
+  if (document.getElementById('modal-overlay').classList.contains('open')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); move(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); move(-1); }
+  if (e.key === 'n' || e.key === 'N') openModal(cur);
+  if (e.key === 'f' || e.key === 'F') {
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
   }
+});
 
-  function move(dir) { goto(cur + dir); }
-  window.move = move;
+let sx = 0;
+document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - sx;
+  if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+}, { passive: true });
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { move(1); e.preventDefault(); }
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { move(-1); e.preventDefault(); }
-    else if (e.key === 'f' || e.key === 'F') {
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-      else document.exitFullscreen();
-    }
-  });
-
-  // touch swipe
-  let sx = 0;
-  document.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; });
-  document.addEventListener('touchend', function (e) {
-    const dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
-  });
-
-  goto(0);
-})();
+goto(0);
 </script>
+
 </body>
 </html>

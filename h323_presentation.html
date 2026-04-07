@@ -7,14 +7,29 @@
 <style>
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
+html, body { width: 100%; height: 100%; overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
 
-/* ===== SLIDESHOW CONTAINER ===== */
-.deck { width: 100vw; height: 100vh; position: relative; }
+/* ===== STAGE WRAPPER ===== */
+#stage-wrap {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* ===== DECK — fixed 1920×1080 canvas ===== */
+.deck {
+  width: 1920px; height: 1080px;
+  position: relative;
+  transform-origin: center center;
+  flex-shrink: 0;
+}
+
+/* ===== SLIDES ===== */
 .slide {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-  padding: 3.5vw 5vw;
+  padding: 52px 80px;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease, transform .4s ease;
   transform: translateX(60px);
@@ -31,12 +46,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 .bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
 .bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
 
-/* ===== TYPOGRAPHY ===== */
-h1 { font-size: clamp(1.8rem, 4vw, 3.2rem); color: #00b4d8; line-height: 1.15; }
-h2 { font-size: clamp(1.2rem, 2.5vw, 1.9rem); color: #48cae4;
+/* ===== TYPOGRAPHY (fixed px for correct scaling at 1920×1080) ===== */
+h1 { font-size: 48px; color: #00b4d8; line-height: 1.15; }
+h2 { font-size: 28px; color: #48cae4;
      border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
-h3 { font-size: clamp(.85rem, 1.5vw, 1.05rem); color: #fff; margin-bottom: .4em; }
-p, li { font-size: clamp(.72rem, 1.3vw, .92rem); line-height: 1.55; }
+h3 { font-size: 18px; color: #fff; margin-bottom: .4em; }
+p, li { font-size: 15px; line-height: 1.55; }
 ul { margin-left: 1.3em; }
 li { margin-bottom: .28em; }
 code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
@@ -60,82 +75,151 @@ strong { color: #90e0ef; }
   background: rgba(0,180,216,.13);
   border-left: 4px solid #00b4d8;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: 13px;
 }
 .wbox {
   background: rgba(247,127,0,.13);
   border-left: 4px solid #f77f00;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: 13px;
+}
+.rbox {
+  background: rgba(220,50,50,.13);
+  border-left: 4px solid #e63946;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: 13px;
+}
+.gbox {
+  background: rgba(82,183,136,.13);
+  border-left: 4px solid #52b788;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: 13px;
 }
 
 /* ===== DIAGRAMS / PREFORMATTED ===== */
-pre.sip {
+pre.sip, pre.diag, pre {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: clamp(.52rem, .95vw, .72rem);
+  font-size: 12px;
   background: #0d1117; border: 1px solid #00b4d8;
   border-radius: .4em; padding: .7em 1em;
   line-height: 1.45; white-space: pre; overflow: auto;
-  max-height: 42vh;
+  max-height: 480px; width: 100%;
 }
-pre.diag {
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: clamp(.5rem, .9vw, .7rem);
-  background: #0d1117; border: 1px solid #00b4d8;
-  border-radius: .4em; padding: .7em 1.2em;
-  line-height: 1.65; white-space: pre; width: 100%;
-}
+pre.diag { padding: .7em 1.2em; line-height: 1.65; max-height: none; }
 
 /* ===== TABLES ===== */
-table { width: 100%; border-collapse: collapse; font-size: clamp(.62rem, 1.1vw, .82rem); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .65em; text-align: left; }
 td { padding: .3em .65em; border-bottom: 1px solid rgba(255,255,255,.09); }
 tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 
-/* ===== BADGE ===== */
+/* ===== BADGE / COLORS ===== */
 .badge { display: inline-block; background: #00b4d8; color: #000;
   border-radius: .25em; padding: .05em .4em; font-size: .72em; font-weight: bold; }
-.m  { color: #00b4d8; font-weight: bold; }
-.ok { color: #52b788; }
-.er { color: #f77f00; }
+.m   { color: #00b4d8; font-weight: bold; }
+.ok  { color: #52b788; }
+.er  { color: #f77f00; }
+.red { color: #e63946; }
+.hl  { color: #90e0ef; font-weight: bold; }
+.info { color: #00b4d8; }
+.warn { color: #f77f00; }
 
-/* ===== NAVIGATION ===== */
+/* ===== NOTES BUTTON (injected by JS into each slide) ===== */
+.note-btn {
+  position: absolute; bottom: 10px; right: 16px;
+  background: rgba(0,180,216,.13); border: 1px solid rgba(0,180,216,.38);
+  color: #48cae4; border-radius: .28em;
+  padding: 4px 11px; font-size: 12px; cursor: pointer;
+  transition: background .2s; z-index: 10;
+  font-family: 'Segoe UI', Arial, sans-serif; letter-spacing: .03em;
+  line-height: 1.5;
+}
+.note-btn:hover { background: rgba(0,180,216,.32); color: #90e0ef; }
+
+/* ===== NAVIGATION (fixed — outside scale) ===== */
 #nav {
-  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
-  display: flex; align-items: center; gap: .6em;
+  position: fixed; bottom: 14px; right: 20px; z-index: 300;
+  display: flex; align-items: center; gap: 8px;
 }
 #nav button {
   background: rgba(0,180,216,.18); border: 1px solid #00b4d8; color: #00b4d8;
-  border-radius: .35em; padding: .4em .9em; font-size: .85rem; cursor: pointer;
+  border-radius: .3em; padding: 6px 14px; font-size: 13px; cursor: pointer;
   transition: background .2s;
 }
 #nav button:hover { background: rgba(0,180,216,.4); }
-#counter { color: #555; font-size: .78rem; min-width: 4em; text-align: center; }
+#counter { color: #555; font-size: 13px; min-width: 56px; text-align: center; }
 
-/* ===== PROGRESS BAR ===== */
-#prog { position: fixed; bottom: 0; left: 0; height: 3px; background: #00b4d8;
-        transition: width .35s ease; z-index: 200; }
+/* ===== PROGRESS ===== */
+#prog { position: fixed; bottom: 0; left: 0; height: 3px;
+        background: #00b4d8; transition: width .35s ease; z-index: 400; }
 
-/* ===== KEYBOARD HINT ===== */
-#hint { position: fixed; top: 1vh; right: 1.5vw; font-size: .62rem; color: #333; z-index: 100; }
+/* ===== HINT ===== */
+#hint { position: fixed; top: 8px; right: 16px;
+        font-size: 11px; color: #2a2a2a; z-index: 300; }
+
+/* ===== NOTES MODAL ===== */
+#modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.75);
+  align-items: center; justify-content: center;
+}
+#modal-overlay.open { display: flex; }
+#modal {
+  background: #0d1527; border: 1px solid #00b4d8;
+  border-radius: .55em;
+  width: min(860px, 88vw);
+  max-height: 78vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 10px 48px rgba(0,0,0,.75);
+}
+#modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 22px 10px;
+  border-bottom: 1px solid rgba(0,180,216,.28);
+  flex-shrink: 0;
+}
+#modal-title { color: #48cae4; font-size: 15px; font-weight: 600; }
+#modal-close {
+  background: none; border: none; color: #666;
+  font-size: 22px; cursor: pointer; line-height: 1; padding: 0 4px;
+}
+#modal-close:hover { color: #fff; }
+#modal-body {
+  padding: 18px 24px;
+  overflow-y: auto;
+  font-size: 14px; line-height: 1.72;
+  color: #c8c8c8;
+  flex: 1;
+}
+#modal-body p { margin-bottom: .85em; }
+#modal-body strong { color: #90e0ef; }
+#modal-body em { color: #aaa; }
+#modal-body code {
+  background: rgba(0,180,216,.12); color: #90e0ef;
+  padding: .06em .3em; border-radius: 3px; font-size: .88em;
+  font-family: 'Consolas','Courier New',monospace;
+}
 </style>
 </head>
 <body>
 
 <div id="prog"></div>
-<div id="hint">← → | F — full screen</div>
+<div id="hint">← → стрілки · F — повний екран · N / 📝 — нотатки</div>
 
+<div id="stage-wrap">
 <div class="deck" id="deck">
+
 
 <!-- ==================== SLIDE 1 – Title ==================== -->
 <section class="slide bg-dark center active" id="s0">
   <div>
-    <h1 style="font-size:clamp(2rem,5vw,3.8rem); margin-bottom:.4em;">Протокол H.323</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin-bottom:1.5em;">
+    <h1 style="font-size:60px; margin-bottom:.4em;">Протокол H.323</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:26px; margin-bottom:1.5em;">
       Мультимедійні комунікації в IP-мережах
     </h3>
-    <p style="color:#aaa; font-size:clamp(.8rem,1.5vw,1rem);">Курс «Безпека VoIP» · Напрям кібербезпека</p>
-    <p style="color:#444; font-size:clamp(.7rem,1.2vw,.88rem); margin-top:2.5em;">
+    <p style="color:#aaa; font-size:18px;">Курс «Безпека VoIP» · Напрям кібербезпека</p>
+    <p style="color:#444; font-size:15px; margin-top:2.5em;">
       Кафедра інформаційних технологій та кібербезпеки
     </p>
   </div>
@@ -380,7 +464,7 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
   <div class="two-col">
     <div>
       <h3>Фази H.245</h3>
-      <ol style="margin-left:1.2em; font-size:clamp(.72rem, 1.3vw, .92rem);">
+      <ol style="margin-left:1.2em; font-size:16px;">
         <li style="margin-bottom:.3em;"><strong>Master/Slave Determination</strong> — визначення ролей (хто «Master»)</li>
         <li style="margin-bottom:.3em;"><strong>Capabilities Exchange</strong> — обмін підтримуваними кодеками та можливостями</li>
         <li style="margin-bottom:.3em;"><strong>Open Logical Channel (OLC)</strong> — відкриття RTP-каналу (IP:порт для медіа)</li>
@@ -1042,72 +1126,120 @@ Terminal A              Gatekeeper
 <!-- ==================== SLIDE 30 – Q&A ==================== -->
 <section class="slide bg-end center">
   <div>
-    <h1 style="font-size:clamp(2rem,5vw,3.5rem); color:#00b4d8;">Дякую за увагу!</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin: 1em 0;">
+    <h1 style="font-size:60px; color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:26px; margin: 1em 0;">
       Запитання?
     </h3>
-    <p style="color:#666; margin-top:2.5em; font-size:clamp(.65rem,1.1vw,.85rem);">
+    <p style="color:#666; margin-top:2.5em; font-size:14px;">
       Стандарти: ITU-T H.323 v7 · H.225 · H.245 · H.235 · H.239 · H.450 · H.460
     </p>
-    <p style="color:#444; font-size:clamp(.6rem,1vw,.78rem); margin-top:.5em;">
+    <p style="color:#444; font-size:13px; margin-top:.5em;">
       RFC: 3550 (RTP) · 3711 (SRTP) · 8445 (ICE) · 8489 (STUN)
     </p>
-    <p style="color:#333; margin-top:.8em; font-size:clamp(.6rem,1vw,.78rem);">
+    <p style="color:#333; margin-top:.8em; font-size:13px;">
       Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
     </p>
   </div>
 </section>
 
+
 </div><!-- /deck -->
+</div><!-- #stage-wrap -->
 
 <!-- NAV CONTROLS -->
 <div id="nav">
-  <button onclick="move(-1)">&#8592;</button>
+  <button onclick="move(-1)">◀ Назад</button>
   <span id="counter"></span>
-  <button onclick="move(1)">&#8594;</button>
+  <button onclick="move(1)">Вперед ▶</button>
 </div>
 
+<!-- ==================== NOTES MODAL ==================== -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <div id="modal-head">
+      <span id="modal-title">📝 Нотатки до слайду</span>
+      <button id="modal-close" onclick="closeModal(null)" title="Закрити (Esc)">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script type="application/json" id="notes-data">["<p>Курс «Безпека VoIP» · Напрям кібербезпека</p>\n<p>Кафедра інформаційних технологій та кібербезпеки</p>", "<p><strong>📋 План лекції</strong></p>\n<p>Що таке H.323? Передісторія та стандарт ITU-T; Місце H.323 у стеку протоколів; Архітектура H.323-мережі; Компоненти: Terminal, Gateway, Gatekeeper, MCU; Концепція зони H.323; Протоколи стека: H.225, H.245, RAS; H.225 — сигналізація та Q.931; RAS — реєстрація та контроль доступу; H.245 — узгодження медіа-можливостей; Call Flow: прямий та через Gatekeeper; Аудіо- та відеокодеки H.323; H.239 — подвійний потік (презентація).</p>", "<p><strong>📡 Що таке H.323?</strong></p>\n<p>Ключові факти · Сфери застосування</p>\n<p>Перша версія: 1996 рік (ITU-T H.323 v1); Поточна редакція: H.323 v7 (2009); Бінарний протокол на базі ASN.1; Пов'язаний стандарт: H.320 (ISDN), H.324 (PSTN); Широко розповсюджений у 2000-х роках; Система відеоконференцій Cisco, Polycom, Tandberg; Корпоративні IP-АТС та відеоконференції; Шлюзи VoIP ↔ PSTN; Мережі операторів зв'язку (кінець 1990-х — 2010-х); Системи дистанційного навчання (H.323 + H.239); Відеоспостереження та телемедицина; Сумісність зі спадковим обладнанням.</p>", "<p><strong>📅 Еволюція H.323</strong></p>", "<p><strong>📚 Стек протоколів H.323</strong></p>\n<p>Компоненти стека</p>\n<p>H.225 RAS — реєстрація, допуск, статус (UDP 1719); H.225 Call Signaling — сигналізація Q.931 (TCP 1720); H.245 — узгодження медіа-можливостей (TCP, динамічний порт); RTP/RTCP — транспорт медіа (UDP, динамічні порти); H.235 — безпека (інтегрована в H.225/H.245); T.120 — протокол обміну даними (whiteboard, sharing).</p>", "<p><strong>🏗️ Архітектура H.323-мережі</strong></p>\n<p>Terminal (TE) — кінцевий пристрій (IP-телефон, відеосистема, softphone); Gatekeeper (GK) — центральний реєстратор зони, контроль доступу та маршрутизація; Gateway (GW) — міжмережевий шлюз (H.323 ↔ PSTN/H.320/SIP); MCU — багатоточкова конференція (Multipoint Control Unit).</p>", "<p><strong>🗺️ Концепція зони H.323</strong></p>\n<p>Зона H.323 · Функції Gatekeeper</p>\n<p>Набір H.323-пристроїв, керованих одним Gatekeeper; Gatekeeper може бути обов'язковим (зареєстровані термінали) або необов'язковим; Кожен термінал реєструється в GK через RAS (UDP 1719); GK призначає псевдонім → IP-адресу (alias translation); Кілька зон = міжзонова маршрутизація через ієрархію GK; Address Translation — E.164 → IP; Admissions Control — ARQ/ACF/ARJ; Bandwidth Control — BRQ/BCF; Zone Management — реєстрація/відкликання; Маршрутизація сигналізації (Routed Mode); Авторизація та тарифікація (CDR); Балансування навантаження між MCU.</p>", "<p><strong>📡 RAS — Registration, Admission and Status</strong></p>", "<p><strong>📞 H.225 — Сигналізація викликів (Q.931)</strong></p>\n<p>Характеристики H.225 · Основні повідомлення Q.931</p>\n<p>Базується на Q.931 (ISDN-сигналізація); Транспорт: TCP, порт 1720; Встановлення та завершення викликів; Перенесення H.245 адреси (IP:порт для управління); Підтримка Fast Connect (спрощений handshake); Кодування: ASN.1 / PER (бінарне).</p>", "<p><strong>🎛️ H.245 — Протокол управління медіа</strong></p>\n<p>Фази H.245 · Ключові повідомлення H.245</p>\n<p>Master/Slave Determination — визначення ролей (хто «Master»); Capabilities Exchange — обмін підтримуваними кодеками та можливостями; Open Logical Channel (OLC) — відкриття RTP-каналу (IP:порт для медіа); Close Logical Channel (CLC) — закриття медіа-каналу.</p>", "<p><strong>📞 H.323 Call Flow — прямий виклик (без GK)</strong></p>", "<p><strong>📞 H.323 Call Flow — через Gatekeeper</strong></p>\n<p>Terminal A Gatekeeper Terminal B │ │ │ │── RAS: ARQ ──────►│ │ ① запит допуску │◄─ RAS: ACF ───────│ │ ② GK дозволяє │ │ │ │── H.225 Setup ────────────────────────►│ ③ виклик (Direct Mode) │ (або через GK — Routed) │ │◄─ H.225 Alerting ──────────────────────│ │ │ │◄═══════════ H.245 (TCP) ══════════════►│ ④ узгодження медіа │◄═══════════ RTP Media ════════════════►│ 🎤 аудіо/відео │ │ │── RAS: DRQ ──────►│ │ ⑤ сповіщення про кінець │◄─ RAS: DCF ───────│ │ Direct Mode (Direct Call Signaling) H.225 Setup надсилається безпосередньо від A до B. GK лише перевіряє допуск через RAS. Менший контроль, менше навантаження на GK.</p>\n<p>Вся H.225-сигналізація проходить через GK. GK має повний контроль, може вести CDR, застосовувати політики. Аналог SIP Proxy.</p>", "<p><strong>🎼 Кодеки в H.323</strong></p>", "<p><strong>🖥️ H.239 — Подвійний потік (Dual Stream)</strong></p>\n<p>Принцип роботи</p>\n<p>Визначає два окремих логічних RTP-канали; Live Channel — відео з камери (people video); Presentation Channel — контент (slides, screen); Узгоджується через H.245 ExtendedVideoCapability; Застосовується у системах Polycom, Cisco Tandberg, LifeSize.</p>", "<p><strong>🌐 H.460 — NAT Traversal у H.323</strong></p>\n<p>H.460.17 · H.460.18 · H.460.19 · H.460.24</p>\n<p>RAS через TCP (замість UDP); Допомагає при NAT, що блокує UDP; Тунелювання RAS через H.225 TCP; Keepalive пакети для підтримки NAT-сесії; Нотифікація GK про IP/порт термінала; Сигналізація через вхідне з'єднання; NAT traversal для медіа (RTP); Мультиплексування RTP/RTCP на одному порту; Сумісний з H.460.18; Підтримка IPv4/IPv6 dual-stack; NAT traversal для змішаних мереж.</p>", "<p><strong>🔒 H.235 — Безпека в H.323</strong></p>\n<p>Профілі H.235 · Механізми H.235</p>\n<p>MD5 / SHA-1 / SHA-256 — хешування для автентифікації; HMAC-SHA1 — цілісність повідомлень H.225/H.245; DH обмін ключами — Perfect Forward Secrecy; RSA / ECDSA — цифровий підпис (сертифікати); AES-128/256-CBC — шифрування медіа; TLS — захист H.225 (H.460.22).</p>", "<p><strong>⚠️ Загрози та атаки на H.323</strong></p>\n<p>Специфічні загрози H.323 · Загальні VoIP-загрози</p>\n<p>Gatekeeper Spoofing — підробка GK для перехоплення трафіку; RAS Flooding — DoS-атака через лавину ARQ-запитів; Malformed ASN.1 — переповнення буфера через некоректні пакети; Call Hijacking — перехоплення виклику через фальшивий Connect; H.245 Downgrade — примушення до слабких кодеків/алгоритмів; RTP Injection — підміна медіа-потоку; Zone Bypass — обхід контролю GK через прямі виклики; Eavesdropping — прослуховування незашифрованого RTP; Toll Fraud — несанкціоновані виклики; Replay Attack — відтворення перехоплених повідомлень; Man-in-the-Middle — атака посередника; Registration Hijacking — перехоплення реєстрації в GK.</p>", "<p><strong>🔑 H.235 — Аутентифікація терміналів</strong></p>\n<p>Password-Based (H.235.1) · Certificate-Based (H.235.2) · Практичні рекомендації</p>\n<p>Термінал має X.509-сертифікат; GK перевіряє сертифікат через PKI; TLS-з'єднання для H.225 (порт 1300); Взаємна автентифікація (mTLS); Більш безпечний, але складний у розгортанні; Використовувати H.235.6 + AES-128 для медіа; TLS для H.225 (H.460.22); Сегментація мережі (VLAN); SBC на периметрі.</p>", "<p><strong>🔀 H.323 Gateway — міжмережева взаємодія</strong></p>\n<p>H.323 ↔ PSTN/ISDN · H.323 ↔ SIP · H.323 ↔ H.320 (ISDN)</p>\n<p>Перетворення H.225/H.245 ↔ ISDN Q.931; Транскодування кодеків (G.711 ↔ G.729); E.164 ↔ IP-адреса; Інтерфейси: E1/T1, BRI, PRI; B2BUA або proxy між двома стеками; Відображення: INVITE ↔ Setup; SDP ↔ H.245 capabilities; Приклади: Cisco IOS, OpenH323; Взаємодія з відеосистемами ISDN; Конвертація H.261 ↔ H.261; BRI/PRI інтерфейси; Застаріло, але ще присутнє.</p>", "<p><strong>👥 MCU — Multipoint Control Unit</strong></p>\n<p>Компоненти MCU · MC (Multipoint Controller) · MP (Multipoint Processor) · Режими конференції</p>\n<p>Управляє конференцією (H.245); Узгоджує можливості всіх учасників; Визначає спільний «lowest common denominator»; Обробляє медіа (мікшування аудіо); Перемикання відео (Voice-Activated Switching); Транскодування між форматами.</p>", "<p><strong>📋 H.450 — Додаткові послуги H.323</strong></p>", "<p><strong>⚖️ H.323 vs SIP — порівняння</strong></p>", "<p><strong>🚀 H.323 у сучасних мережах</strong></p>\n<p>Де H.323 ще використовується · Сучасний стан · Міграція до SIP/WebRTC · Гібридні рішення</p>\n<p>Відеозали Cisco / Polycom / Tandberg — спадкове обладнання; Корпоративні IP-PBX зі старою інфраструктурою; Телемедицина (стандарти ITU-T для відеоконсультацій); Дистанційна освіта (H.323 + H.239); Урядові та оборонні системи зв'язку; Мережі оператора класу (carrier-grade GW); Cisco замінює H.323 на SIP у нових продуктах; Microsoft Teams / Lync (SIP-based) підтримують H.323 через спеціальний коннектор; Polycom → SIP-firmware update; H.323/SIP Interop Gateway (Cisco CME, CUBE); WebRTC ↔ H.323 шлюзи (Pexip, Cisco CMS); Microsoft Teams: H.323/SIP connector.</p>", "<p><strong>🛡️ Захист H.323-інфраструктури</strong></p>\n<p>Мережеві заходи · Протокольні заходи</p>\n<p>Firewall — обмежити TCP 1720, UDP 1719, TCP 1300 (TLS); SBC (Session Border Controller) — топологічне приховування, нормалізація ASN.1; VLAN — ізоляція голосового трафіку від даних; IDS/IPS — сигнатури для H.323-атак (Snort rules); Rate limiting — ARQ/RRQ flood захист; ACL — білі списки IP для реєстрації в GK; H.235.6 — шифрування медіа (AES-128); TLS для H.225 (H.460.22, порт 1300); H.235.2 — PKI-аутентифікація терміналів; GK-Routed mode — централізований контроль; Моніторинг CDR на аномалії (toll fraud); Регулярне оновлення прошивки обладнання.</p>", "<p><strong>🔧 Діагностика H.323-мереж</strong></p>\n<p>Інструменти · Типові проблеми</p>\n<p>Wireshark — декодування H.225, H.245, RAS (вбудований декодер); H323plus / OpenH323 — відкрита реалізація для тестування; Ekiga / X-Lite — H.323 softphone для тестів; Cisco CDPi / Packet Tracer — симуляція H.323 в Cisco IOS; Netstat / tcpdump — моніторинг TCP 1720, UDP 1719; GnuGK (Gatekeeper) — open-source GK з детальним логуванням.</p>", "<p><strong>🎯 H.323 у контексті кібербезпеки</strong></p>\n<p>Відомі CVE та вразливості · Пентест H.323-інфраструктури</p>\n<p>CVE-2004-0054 — переповнення буфера в ASN.1 парсері Cisco IOS (CVSS 10.0); CVE-2003-0819 — DoS у Microsoft NetMeeting (H.323); CVE-2007-5570 — обхід аутентифікації GK; CVE-2012-0393 — вразливість у Cisco H.323 реалізації; Fuzzing ASN.1 — стабільне джерело нових вразливостей; Reconnaissance : сканування TCP 1720, UDP 1719 (nmap -sU -p 1719); GRQ flooding : пошук GK у мережі через broadcast GRQ; RAS fuzzing : інструменти Boofuzz, ASN.1-фаззери; Call interception : MITM при відсутності H.235; Wireshark decode : аналіз RTP при незашифрованих потоках.</p>", "<p><strong>🛠️ Open Source екосистема H.323</strong></p>\n<p>Стеки та бібліотеки · Сервери та PBX · Клієнти та тести</p>\n<p>OpenH323 / H323plus — C++ бібліотека; OPAL — Open Phone Abstraction Library (SIP + H.323); PTLib — portable tools library; ooh323c — C-бібліотека для Asterisk; GnuGK — GNU Gatekeeper; Asterisk + chan_ooh323 — IP PBX з H.323; FreeSWITCH + mod_h26x — media server; Kamailio — SIP/H.323 interworking; Ekiga — SIP + H.323 softphone (Linux); Linphone — опціональна H.323-підтримка; H323Plus tools — simph323, simpleph323; Wireshark — вбудований H.323 dissector.</p>", "<p><strong>📊 Порівняння H.323 з іншими протоколами</strong></p>", "<p><strong>📌 Підсумки</strong></p>\n<p>H.323 — стандарт ITU-T (1996), перший масовий протокол VoIP/відеоконференцій; Gatekeeper — центральний компонент зони, аналог SIP Registrar + Proxy; Три ключових підпротоколи: RAS + H.225 + H.245; Бінарний ASN.1 — складніший для аналізу та відлагодження, ніж SIP; H.235 — безпека: аутентифікація, шифрування медіа (AES); H.460.18/19 — NAT traversal для сигналізації та медіа; H.239 — dual stream для відеоконференцій з контентом; SIP поступово витісняє H.323 у нових інсталяціях.</p>", "<p>Стандарти: ITU-T H.323 v7 · H.225 · H.245 · H.235 · H.239 · H.450 · H.460</p>\n<p>RFC: 3550 (RTP) · 3711 (SRTP) · 8445 (ICE) · 8489 (STUN)</p>\n<p>Навігація: ← → (стрілки клавіатури) | F — повний екран</p>"]</script>
+
 <script>
-(function () {
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  const total = slides.length;
-  let cur = 0;
+const NOTES = JSON.parse(document.getElementById('notes-data').textContent);
 
-  function goto(n) {
-    slides[cur].classList.remove('active');
-    slides[cur].classList.add('prev');
-    cur = (n + total) % total;
-    slides[cur].classList.remove('prev');
-    slides[cur].classList.add('active');
-    // remove prev class after transition
-    const prev = slides[(cur - 1 + total) % total];
-    setTimeout(() => prev.classList.remove('prev'), 420);
-    document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
-    document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total  = slides.length;
+let cur = 0;
+
+// Inject notes button into every slide
+slides.forEach((sl, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'note-btn';
+  btn.textContent = '📝 Нотатки';
+  btn.title = 'Відкрити коментар до слайду (N)';
+  btn.onclick = e => { e.stopPropagation(); openModal(i); };
+  sl.appendChild(btn);
+});
+
+function goto(n) {
+  const old = cur;
+  slides[old].classList.remove('active');
+  slides[old].classList.add('prev');
+  cur = (n + total) % total;
+  slides[cur].classList.remove('prev');
+  slides[cur].classList.add('active');
+  setTimeout(() => slides[old].classList.remove('prev'), 420);
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+}
+
+function move(dir) { goto(cur + dir); }
+
+// Stage scaling (1920×1080 fixed canvas)
+const deck = document.getElementById('deck');
+function scaleStage() {
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  deck.style.transform = 'scale(' + scale + ')';
+}
+scaleStage();
+window.addEventListener('resize', scaleStage);
+
+// Notes modal
+function openModal(idx) {
+  const overlay = document.getElementById('modal-overlay');
+  document.getElementById('modal-title').textContent =
+    '📝 Нотатки — Слайд ' + (idx + 1) + ' / ' + total;
+  document.getElementById('modal-body').innerHTML = NOTES[idx] || '<p><em>Нотатків немає.</em></p>';
+  overlay.classList.add('open');
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(null); return; }
+  if (document.getElementById('modal-overlay').classList.contains('open')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); move(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); move(-1); }
+  if (e.key === 'n' || e.key === 'N') openModal(cur);
+  if (e.key === 'f' || e.key === 'F') {
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
   }
+});
 
-  function move(dir) { goto(cur + dir); }
-  window.move = move;
+let sx = 0;
+document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - sx;
+  if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+}, { passive: true });
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { move(1); e.preventDefault(); }
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { move(-1); e.preventDefault(); }
-    else if (e.key === 'f' || e.key === 'F') {
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-      else document.exitFullscreen();
-    }
-  });
-
-  // touch swipe
-  let sx = 0;
-  document.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; });
-  document.addEventListener('touchend', function (e) {
-    const dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
-  });
-
-  goto(0);
-})();
+goto(0);
 </script>
+
 </body>
 </html>

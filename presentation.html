@@ -7,14 +7,29 @@
 <style>
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
+html, body { width: 100%; height: 100%; overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
 
-/* ===== SLIDESHOW CONTAINER ===== */
-.deck { width: 100vw; height: 100vh; position: relative; }
+/* ===== STAGE WRAPPER ===== */
+#stage-wrap {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* ===== DECK — fixed 1920×1080 canvas ===== */
+.deck {
+  width: 1920px; height: 1080px;
+  position: relative;
+  transform-origin: center center;
+  flex-shrink: 0;
+}
+
+/* ===== SLIDES ===== */
 .slide {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-  padding: 3.5vw 5vw;
+  padding: 52px 80px;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease, transform .4s ease;
   transform: translateX(60px);
@@ -31,12 +46,12 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 .bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
 .bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
 
-/* ===== TYPOGRAPHY ===== */
-h1 { font-size: clamp(1.8rem, 4vw, 3.2rem); color: #00b4d8; line-height: 1.15; }
-h2 { font-size: clamp(1.2rem, 2.5vw, 1.9rem); color: #48cae4;
+/* ===== TYPOGRAPHY (fixed px for correct scaling at 1920×1080) ===== */
+h1 { font-size: 48px; color: #00b4d8; line-height: 1.15; }
+h2 { font-size: 28px; color: #48cae4;
      border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
-h3 { font-size: clamp(.85rem, 1.5vw, 1.05rem); color: #fff; margin-bottom: .4em; }
-p, li { font-size: clamp(.72rem, 1.3vw, .92rem); line-height: 1.55; }
+h3 { font-size: 18px; color: #fff; margin-bottom: .4em; }
+p, li { font-size: 15px; line-height: 1.55; }
 ul { margin-left: 1.3em; }
 li { margin-bottom: .28em; }
 code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
@@ -60,82 +75,151 @@ strong { color: #90e0ef; }
   background: rgba(0,180,216,.13);
   border-left: 4px solid #00b4d8;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: 13px;
 }
 .wbox {
   background: rgba(247,127,0,.13);
   border-left: 4px solid #f77f00;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: 13px;
+}
+.rbox {
+  background: rgba(220,50,50,.13);
+  border-left: 4px solid #e63946;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: 13px;
+}
+.gbox {
+  background: rgba(82,183,136,.13);
+  border-left: 4px solid #52b788;
+  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: 13px;
 }
 
 /* ===== DIAGRAMS / PREFORMATTED ===== */
-pre.sip {
+pre.sip, pre.diag, pre {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: clamp(.52rem, .95vw, .72rem);
+  font-size: 12px;
   background: #0d1117; border: 1px solid #00b4d8;
   border-radius: .4em; padding: .7em 1em;
   line-height: 1.45; white-space: pre; overflow: auto;
-  max-height: 42vh;
+  max-height: 480px; width: 100%;
 }
-pre.diag {
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: clamp(.5rem, .9vw, .7rem);
-  background: #0d1117; border: 1px solid #00b4d8;
-  border-radius: .4em; padding: .7em 1.2em;
-  line-height: 1.65; white-space: pre; width: 100%;
-}
+pre.diag { padding: .7em 1.2em; line-height: 1.65; max-height: none; }
 
 /* ===== TABLES ===== */
-table { width: 100%; border-collapse: collapse; font-size: clamp(.62rem, 1.1vw, .82rem); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
 th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .65em; text-align: left; }
 td { padding: .3em .65em; border-bottom: 1px solid rgba(255,255,255,.09); }
 tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 
-/* ===== BADGE ===== */
+/* ===== BADGE / COLORS ===== */
 .badge { display: inline-block; background: #00b4d8; color: #000;
   border-radius: .25em; padding: .05em .4em; font-size: .72em; font-weight: bold; }
-.m  { color: #00b4d8; font-weight: bold; }
-.ok { color: #52b788; }
-.er { color: #f77f00; }
+.m   { color: #00b4d8; font-weight: bold; }
+.ok  { color: #52b788; }
+.er  { color: #f77f00; }
+.red { color: #e63946; }
+.hl  { color: #90e0ef; font-weight: bold; }
+.info { color: #00b4d8; }
+.warn { color: #f77f00; }
 
-/* ===== NAVIGATION ===== */
+/* ===== NOTES BUTTON (injected by JS into each slide) ===== */
+.note-btn {
+  position: absolute; bottom: 10px; right: 16px;
+  background: rgba(0,180,216,.13); border: 1px solid rgba(0,180,216,.38);
+  color: #48cae4; border-radius: .28em;
+  padding: 4px 11px; font-size: 12px; cursor: pointer;
+  transition: background .2s; z-index: 10;
+  font-family: 'Segoe UI', Arial, sans-serif; letter-spacing: .03em;
+  line-height: 1.5;
+}
+.note-btn:hover { background: rgba(0,180,216,.32); color: #90e0ef; }
+
+/* ===== NAVIGATION (fixed — outside scale) ===== */
 #nav {
-  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
-  display: flex; align-items: center; gap: .6em;
+  position: fixed; bottom: 14px; right: 20px; z-index: 300;
+  display: flex; align-items: center; gap: 8px;
 }
 #nav button {
   background: rgba(0,180,216,.18); border: 1px solid #00b4d8; color: #00b4d8;
-  border-radius: .35em; padding: .4em .9em; font-size: .85rem; cursor: pointer;
+  border-radius: .3em; padding: 6px 14px; font-size: 13px; cursor: pointer;
   transition: background .2s;
 }
 #nav button:hover { background: rgba(0,180,216,.4); }
-#counter { color: #555; font-size: .78rem; min-width: 4em; text-align: center; }
+#counter { color: #555; font-size: 13px; min-width: 56px; text-align: center; }
 
-/* ===== PROGRESS BAR ===== */
-#prog { position: fixed; bottom: 0; left: 0; height: 3px; background: #00b4d8;
-        transition: width .35s ease; z-index: 200; }
+/* ===== PROGRESS ===== */
+#prog { position: fixed; bottom: 0; left: 0; height: 3px;
+        background: #00b4d8; transition: width .35s ease; z-index: 400; }
 
-/* ===== KEYBOARD HINT ===== */
-#hint { position: fixed; top: 1vh; right: 1.5vw; font-size: .62rem; color: #333; z-index: 100; }
+/* ===== HINT ===== */
+#hint { position: fixed; top: 8px; right: 16px;
+        font-size: 11px; color: #2a2a2a; z-index: 300; }
+
+/* ===== NOTES MODAL ===== */
+#modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.75);
+  align-items: center; justify-content: center;
+}
+#modal-overlay.open { display: flex; }
+#modal {
+  background: #0d1527; border: 1px solid #00b4d8;
+  border-radius: .55em;
+  width: min(860px, 88vw);
+  max-height: 78vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 10px 48px rgba(0,0,0,.75);
+}
+#modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 22px 10px;
+  border-bottom: 1px solid rgba(0,180,216,.28);
+  flex-shrink: 0;
+}
+#modal-title { color: #48cae4; font-size: 15px; font-weight: 600; }
+#modal-close {
+  background: none; border: none; color: #666;
+  font-size: 22px; cursor: pointer; line-height: 1; padding: 0 4px;
+}
+#modal-close:hover { color: #fff; }
+#modal-body {
+  padding: 18px 24px;
+  overflow-y: auto;
+  font-size: 14px; line-height: 1.72;
+  color: #c8c8c8;
+  flex: 1;
+}
+#modal-body p { margin-bottom: .85em; }
+#modal-body strong { color: #90e0ef; }
+#modal-body em { color: #aaa; }
+#modal-body code {
+  background: rgba(0,180,216,.12); color: #90e0ef;
+  padding: .06em .3em; border-radius: 3px; font-size: .88em;
+  font-family: 'Consolas','Courier New',monospace;
+}
 </style>
 </head>
 <body>
 
 <div id="prog"></div>
-<div id="hint">← → | F — full screen</div>
+<div id="hint">← → стрілки · F — повний екран · N / 📝 — нотатки</div>
 
+<div id="stage-wrap">
 <div class="deck" id="deck">
+
 
 <!-- ==================== SLIDE 1 – Title ==================== -->
 <section class="slide bg-dark center active" id="s0">
   <div>
-    <h1 style="font-size:clamp(2rem,5vw,3.8rem); margin-bottom:.4em;">Технології VoIP</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin-bottom:1.5em;">
+    <h1 style="font-size:60px; margin-bottom:.4em;">Технології VoIP</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:26px; margin-bottom:1.5em;">
       Voice over Internet Protocol
     </h3>
-    <p style="color:#aaa; font-size:clamp(.8rem,1.5vw,1rem);">Курс для студентів магістратури</p>
-    <p style="color:#444; font-size:clamp(.7rem,1.2vw,.88rem); margin-top:2.5em;">
+    <p style="color:#aaa; font-size:18px;">Курс для студентів магістратури</p>
+    <p style="color:#444; font-size:15px; margin-top:2.5em;">
       Кафедра інформаційних технологій та кібербезпеки
     </p>
   </div>
@@ -923,69 +1007,117 @@ a=fmtp:96 profile-level-id=42e01f</pre>
 <!-- ==================== SLIDE 26 – Q&A ==================== -->
 <section class="slide bg-end center">
   <div>
-    <h1 style="font-size:clamp(2rem,5vw,3.5rem); color:#00b4d8;">Дякую за увагу!</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin: 1em 0;">
+    <h1 style="font-size:60px; color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:26px; margin: 1em 0;">
       Запитання?
     </h3>
-    <p style="color:#666; margin-top:2.5em; font-size:clamp(.65rem,1.1vw,.85rem);">
+    <p style="color:#666; margin-top:2.5em; font-size:14px;">
       RFC: 3261 · 3550 · 4566 · 3711 · 8445 · 8489 · 8656
     </p>
-    <p style="color:#333; margin-top:.8em; font-size:clamp(.6rem,1vw,.78rem);">
+    <p style="color:#333; margin-top:.8em; font-size:13px;">
       Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
     </p>
   </div>
 </section>
 
+
 </div><!-- /deck -->
+</div><!-- #stage-wrap -->
 
 <!-- NAV CONTROLS -->
 <div id="nav">
-  <button onclick="move(-1)">&#8592;</button>
+  <button onclick="move(-1)">◀ Назад</button>
   <span id="counter"></span>
-  <button onclick="move(1)">&#8594;</button>
+  <button onclick="move(1)">Вперед ▶</button>
 </div>
 
+<!-- ==================== NOTES MODAL ==================== -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <div id="modal-head">
+      <span id="modal-title">📝 Нотатки до слайду</span>
+      <button id="modal-close" onclick="closeModal(null)" title="Закрити (Esc)">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script type="application/json" id="notes-data">["<p>Курс для студентів магістратури</p>\n<p>Кафедра інформаційних технологій та кібербезпеки</p>", "<p><strong>📋 План лекції</strong></p>\n<p>Що таке VoIP? Коротка історія; Архітектура VoIP-систем; Огляд стеку протоколів; SIP — глибоке занурення; Компоненти SIP-мережі; SIP URI та адресація; Методи і коди відповідей SIP; Формат SIP-повідомлення; SIP Call Flow; RTP / RTCP / SDP; Аудіо-кодеки та QoS; NAT traversal: STUN / TURN / ICE.</p>", "<p><strong>🔊 Що таке VoIP?</strong></p>\n<p>Традиційна телефонія (PSTN) · VoIP</p>\n<p>Комутація каналів ( circuit switching ); Виділений фізичний канал на час розмови; 64 кбіт/с на виклик (G.711); Висока надійність, фіксована затримка; Висока вартість міжнародних дзвінків; Комутація пакетів ( packet switching ); Спільне використання смуги пропускання; 8–100+ кбіт/с залежно від кодека; Змінна затримка (jitter), потрібен QoS; Значно нижча вартість, гнучкість.</p>", "<p><strong>📅 Коротка історія VoIP</strong></p>", "<p><strong>🏗️ Архітектура VoIP-системи</strong></p>\n<p>UA (User Agent) — кінцевий пристрій (IP-телефон, softphone, браузер); SIP Proxy / PBX — маршрутизація та обробка сесій; PSTN Gateway — інтерфейс між IP-мережею і традиційною телефонією.</p>", "<p><strong>📡 Стек протоколів VoIP</strong></p>\n<p>Сигналізація · Медіа-транспорт · Опис сесії / NAT</p>\n<p>SIP — RFC 3261; H.323 — ITU-T; MGCP — RFC 3435; H.248/Megaco; XMPP/Jingle; RTP — RFC 3550; RTCP — RFC 3550; SRTP — RFC 3711; ZRTP — RFC 6189; WebRTC DTLS-SRTP; SDP — RFC 4566; ICE — RFC 8445.</p>", "<p><strong>🔵 SIP — Session Initiation Protocol</strong></p>\n<p>Ключові характеристики · Функції SIP</p>\n<p>Базується на HTTP/SMTP-семантиці; Транспорт: UDP / TCP / TLS / SCTP; Порт за замовчуванням: 5060 (UDP/TCP), 5061 (TLS); Текстовий формат — легко читати і налагоджувати; Розширюваний: SUBSCRIBE, NOTIFY, REFER…; Незалежний від медіа (лише сигналізація); Реєстрація UA (REGISTER); Встановлення виклику (INVITE); Локалізація кінцевого пристрою; Визначення медіа-можливостей (SDP); Управління сесією (hold, transfer, conference); Завершення сесії (BYE).</p>", "<p><strong>🧩 Компоненти SIP-мережі</strong></p>\n<p>👤 User Agent (UA) · 🔀 Proxy Server · 📋 Registrar Server · 🔁 Redirect Server</p>\n<p>UAC (Client) — ініціює запити; UAS (Server) — приймає та відповідає; Приклади: Zoiper, Linphone, Cisco IP Phone; Маршрутизує SIP-запити від UAC до UAS; Stateful / Stateless; Може розгалужувати виклик (forking); Обробляє REGISTER-запити; Зберігає прив'язки AOR → контакт (IP); AOR = sip:user@domain; Відповідає кодом 3xx; Вказує UA новий URI для запиту.</p>", "<p><strong>🔗 SIP URI та адресація</strong></p>\n<p>Заголовки адресації · Ідентифікація діалогу</p>\n<p>From: — адреса відправника; To: — адреса одержувача; Contact: — поточна IP-адреса UA; Via: — шлях запиту (hop-by-hop); Route / Record-Route: — примусова маршрутизація; Call-ID: — унікальний ID сесії; CSeq: — порядковий номер запиту; branch у Via — ідентифікатор транзакції; tag у From/To — ідентифікатор діалогу; Діалог = Call-ID + From-tag + To-tag.</p>", "<p><strong>📨 Методи SIP (Requests)</strong></p>", "<p><strong>📬 Відповіді SIP (Response Codes)</strong></p>", "<p><strong>📄 Формат SIP-повідомлення</strong></p>", "<p><strong>📞 SIP Call Flow — базовий дзвінок</strong></p>", "<p><strong>📝 Реєстрація SIP UA (REGISTER)</strong></p>", "<p><strong>🎵 RTP та RTCP (RFC 3550)</strong></p>\n<p>RTP — Real-time Transport Protocol · RTCP — RTP Control Protocol</p>\n<p>Передача аудіо/відео пакетів у реальному часі; Транспорт: UDP (парні порти); Заголовок: payload type, sequence number, timestamp, SSRC; Не гарантує доставку або порядок; SRTP (RFC 3711) — шифрована версія; Статистика сесії: втрати, jitter, RTT; Порт = RTP-порт + 1; SR (Sender Report) / RR (Receiver Report); SDES — опис джерела (CNAME); Основа для адаптивного бітрейту.</p>", "<p><strong>📋 SDP — Session Description Protocol (RFC 4566)</strong></p>\n<p>Структура SDP · Offer / Answer модель (RFC 3264)</p>\n<p>Offer : INVITE містить список підтримуваних кодеків; Answer : 200 OK — вибирає один або кілька; Визначає IP-адресу та порт для RTP; ICE-кандидати для NAT traversal; Режими: sendrecv, sendonly, recvonly, inactive.</p>", "<p><strong>🎼 Аудіо-кодеки VoIP</strong></p>", "<p><strong>🌐 NAT Traversal: STUN / TURN / ICE</strong></p>\n<p>STUN (RFC 8489) · TURN (RFC 8656) · ICE (RFC 8445)</p>\n<p>UA дізнається свою публічну IP:port; Легкий протокол, низька затримка; Не вирішує symmetric NAT; Типово: Google STUN, Coturn; Relay-сервер ретранслює медіа; Вирішує всі типи NAT; Вища затримка, навантаження на сервер; Резервний варіант за ICE; Комбінує STUN та TURN; Збирає host / srflx / relay кандидати; Connectivity checks (STUN binding); Вибирає найкращий шлях.</p>", "<p><strong>⚡ Якість обслуговування (QoS)</strong></p>\n<p>Ключові параметри · Механізми QoS</p>\n<p>Затримка (latency) : < 150 мс one-way (рек. ITU G.114); Jitter : < 30 мс (згладжується jitter buffer); Втрати пакетів : < 1% для задовільної якості; Пропускна здатність : 8–100 кбіт/с на виклик; DSCP/DiffServ : маркування пакетів (EF = 46 для голосу); 802.1p CoS : пріоритизація на рівні L2; VLAN : ізольована голосова мережа; Traffic policing/shaping; Jitter buffer : adaptive / fixed; PLC (Packet Loss Concealment) : приховування втрат; AEC : придушення акустичного відлуння.</p>", "<p><strong>🔒 Безпека VoIP</strong></p>\n<p>Основні загрози · Захисні заходи</p>\n<p>Toll fraud — несанкціоновані дзвінки; Eavesdropping — прослуховування RTP; SIP flooding / DoS; Registration hijacking; SPIT — спам через IP-телефонію; Man-in-the-Middle; Replay attacks; Vishing — голосовий фішинг; TLS для сигналізації SIP (порт 5061); SRTP/ZRTP для шифрування медіа; SIP Digest Auth + SHA-256 (RFC 7616); SBC (Session Border Controller).</p>", "<p><strong>🛡️ SRTP — Secure RTP (RFC 3711)</strong></p>\n<p>Особливості SRTP · RTP vs SRTP</p>\n<p>Шифрування: AES-CTR (128 або 256 біт); Аутентифікація: HMAC-SHA1; Захист від відтворення (replay protection); Мінімальні накладні витрати (~10 байт); Управління ключами: SDES , DTLS-SRTP.</p>", "<p><strong>🌍 WebRTC та сучасний VoIP-стек</strong></p>\n<p>Протокольний стек WebRTC · Застосування</p>\n<p>Сигналізація : не стандартизована (SIP/WebSocket/proprietary); JSEP : JavaScript Session Establishment Protocol; ICE/STUN/TURN : NAT traversal; DTLS : обмін ключами (PFS); SRTP : шифрування медіа; SCTP over DTLS : DataChannel; Opus / VP8/VP9/H.264/AV1 : кодеки; Google Meet, Microsoft Teams; Discord, Zoom (WebRTC-режим); WhatsApp Web, Telegram Web; Браузерні контакт-центри; IoT голосові пристрої.</p>", "<p><strong>🚀 Сучасні VoIP-системи</strong></p>\n<p>Open Source · Комерційні UCaaS · Хмарні тренди</p>\n<p>Asterisk — IP PBX №1; FreeSWITCH — media server; Kamailio — SIP proxy/router; OpenSIPS — SIP server; PJSIP — бібліотека; Linphone, Baresip; Janus WebRTC gateway; Microsoft Teams Phone; Cisco Webex Calling; RingCentral MVP; Zoom Phone; 8x8, Vonage, Dialpad.</p>", "<p><strong>🔧 Діагностика VoIP</strong></p>\n<p>Інструменти · Типові проблеми та рішення</p>\n<p>Wireshark — аналіз SIP/RTP пакетів; sngrep — консольний SIP-монітор; SIPp — генератор навантаження SIP; Homer SIPCapture — корпоративний моніторинг; VoIPmonitor — аналіз MOS у реальному часі; tcpdump + pcap — захоплення трафіку.</p>", "<p><strong>📌 Підсумки</strong></p>\n<p>VoIP замінює PSTN завдяки економічності та гнучкості; SIP (RFC 3261) — домінуючий протокол сигналізації; Чіткий поділ: сигналізація (SIP) ↔ медіа (RTP); SDP описує медіа-параметри (offer/answer); ICE/STUN/TURN вирішують проблему NAT; TLS + SRTP — обов'язковий мінімум безпеки; QoS критичний: затримка < 150 мс, jitter < 30 мс; WebRTC виносить VoIP у будь-який браузер.</p>", "<p>RFC: 3261 · 3550 · 4566 · 3711 · 8445 · 8489 · 8656</p>\n<p>Навігація: ← → (стрілки клавіатури) | F — повний екран</p>"]</script>
+
 <script>
-(function () {
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  const total = slides.length;
-  let cur = 0;
+const NOTES = JSON.parse(document.getElementById('notes-data').textContent);
 
-  function goto(n) {
-    slides[cur].classList.remove('active');
-    slides[cur].classList.add('prev');
-    cur = (n + total) % total;
-    slides[cur].classList.remove('prev');
-    slides[cur].classList.add('active');
-    // remove prev class after transition
-    const prev = slides[(cur - 1 + total) % total];
-    setTimeout(() => prev.classList.remove('prev'), 420);
-    document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
-    document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total  = slides.length;
+let cur = 0;
+
+// Inject notes button into every slide
+slides.forEach((sl, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'note-btn';
+  btn.textContent = '📝 Нотатки';
+  btn.title = 'Відкрити коментар до слайду (N)';
+  btn.onclick = e => { e.stopPropagation(); openModal(i); };
+  sl.appendChild(btn);
+});
+
+function goto(n) {
+  const old = cur;
+  slides[old].classList.remove('active');
+  slides[old].classList.add('prev');
+  cur = (n + total) % total;
+  slides[cur].classList.remove('prev');
+  slides[cur].classList.add('active');
+  setTimeout(() => slides[old].classList.remove('prev'), 420);
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+}
+
+function move(dir) { goto(cur + dir); }
+
+// Stage scaling (1920×1080 fixed canvas)
+const deck = document.getElementById('deck');
+function scaleStage() {
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  deck.style.transform = 'scale(' + scale + ')';
+}
+scaleStage();
+window.addEventListener('resize', scaleStage);
+
+// Notes modal
+function openModal(idx) {
+  const overlay = document.getElementById('modal-overlay');
+  document.getElementById('modal-title').textContent =
+    '📝 Нотатки — Слайд ' + (idx + 1) + ' / ' + total;
+  document.getElementById('modal-body').innerHTML = NOTES[idx] || '<p><em>Нотатків немає.</em></p>';
+  overlay.classList.add('open');
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(null); return; }
+  if (document.getElementById('modal-overlay').classList.contains('open')) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); move(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); move(-1); }
+  if (e.key === 'n' || e.key === 'N') openModal(cur);
+  if (e.key === 'f' || e.key === 'F') {
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
   }
+});
 
-  function move(dir) { goto(cur + dir); }
-  window.move = move;
+let sx = 0;
+document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - sx;
+  if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+}, { passive: true });
 
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { move(1); e.preventDefault(); }
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { move(-1); e.preventDefault(); }
-    else if (e.key === 'f' || e.key === 'F') {
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-      else document.exitFullscreen();
-    }
-  });
-
-  // touch swipe
-  let sx = 0;
-  document.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; });
-  document.addEventListener('touchend', function (e) {
-    const dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
-  });
-
-  goto(0);
-})();
+goto(0);
 </script>
+
 </body>
 </html>
