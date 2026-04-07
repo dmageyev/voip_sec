@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=1920">
 <title>Протокол H.323</title>
 <style>
 /* ===== RESET & BASE ===== */
@@ -10,11 +10,11 @@
 html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
 
 /* ===== SLIDESHOW CONTAINER ===== */
-.deck { width: 100vw; height: 100vh; position: relative; }
+.deck { width: 1920px; height: 1080px; position: absolute; top: 0; left: 0; transform-origin: top left; }
 .slide {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-  padding: 3.5vw 5vw;
+  padding: 60px 90px;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease, transform .4s ease;
   transform: translateX(60px);
@@ -32,11 +32,11 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 .bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
 
 /* ===== TYPOGRAPHY ===== */
-h1 { font-size: clamp(1.8rem, 4vw, 3.2rem); color: #00b4d8; line-height: 1.15; }
-h2 { font-size: clamp(1.2rem, 2.5vw, 1.9rem); color: #48cae4;
+h1 { font-size: 3.2rem; color: #00b4d8; line-height: 1.15; }
+h2 { font-size: 1.9rem; color: #48cae4;
      border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
-h3 { font-size: clamp(.85rem, 1.5vw, 1.05rem); color: #fff; margin-bottom: .4em; }
-p, li { font-size: clamp(.72rem, 1.3vw, .92rem); line-height: 1.55; }
+h3 { font-size: 1.05rem; color: #fff; margin-bottom: .4em; }
+p, li { font-size: 1rem; line-height: 1.55; }
 ul { margin-left: 1.3em; }
 li { margin-bottom: .28em; }
 code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
@@ -60,34 +60,34 @@ strong { color: #90e0ef; }
   background: rgba(0,180,216,.13);
   border-left: 4px solid #00b4d8;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: .9rem;
 }
 .wbox {
   background: rgba(247,127,0,.13);
   border-left: 4px solid #f77f00;
   padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: clamp(.68rem, 1.2vw, .85rem);
+  font-size: .9rem;
 }
 
 /* ===== DIAGRAMS / PREFORMATTED ===== */
 pre.sip {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: clamp(.52rem, .95vw, .72rem);
+  font-size: .75rem;
   background: #0d1117; border: 1px solid #00b4d8;
   border-radius: .4em; padding: .7em 1em;
   line-height: 1.45; white-space: pre; overflow: auto;
-  max-height: 42vh;
+  max-height: 450px;
 }
 pre.diag {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: clamp(.5rem, .9vw, .7rem);
+  font-size: .72rem;
   background: #0d1117; border: 1px solid #00b4d8;
   border-radius: .4em; padding: .7em 1.2em;
   line-height: 1.65; white-space: pre; width: 100%;
 }
 
 /* ===== TABLES ===== */
-table { width: 100%; border-collapse: collapse; font-size: clamp(.62rem, 1.1vw, .82rem); }
+table { width: 100%; border-collapse: collapse; font-size: .85rem; }
 th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .65em; text-align: left; }
 td { padding: .3em .65em; border-bottom: 1px solid rgba(255,255,255,.09); }
 tr:nth-child(even) td { background: rgba(255,255,255,.04); }
@@ -130,12 +130,12 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 <!-- ==================== SLIDE 1 – Title ==================== -->
 <section class="slide bg-dark center active" id="s0">
   <div>
-    <h1 style="font-size:clamp(2rem,5vw,3.8rem); margin-bottom:.4em;">Протокол H.323</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin-bottom:1.5em;">
+    <h1 style="font-size:3.8rem; margin-bottom:.4em;">Протокол H.323</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:1.6rem; margin-bottom:1.5em;">
       Мультимедійні комунікації в IP-мережах
     </h3>
-    <p style="color:#aaa; font-size:clamp(.8rem,1.5vw,1rem);">Курс «Безпека VoIP» · Напрям кібербезпека</p>
-    <p style="color:#444; font-size:clamp(.7rem,1.2vw,.88rem); margin-top:2.5em;">
+    <p style="color:#aaa; font-size:1rem;">Курс «Безпека VoIP» · Напрям кібербезпека</p>
+    <p style="color:#444; font-size:.88rem; margin-top:2.5em;">
       Кафедра інформаційних технологій та кібербезпеки
     </p>
   </div>
@@ -380,7 +380,7 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
   <div class="two-col">
     <div>
       <h3>Фази H.245</h3>
-      <ol style="margin-left:1.2em; font-size:clamp(.72rem, 1.3vw, .92rem);">
+      <ol style="margin-left:1.2em; font-size:.92rem;">
         <li style="margin-bottom:.3em;"><strong>Master/Slave Determination</strong> — визначення ролей (хто «Master»)</li>
         <li style="margin-bottom:.3em;"><strong>Capabilities Exchange</strong> — обмін підтримуваними кодеками та можливостями</li>
         <li style="margin-bottom:.3em;"><strong>Open Logical Channel (OLC)</strong> — відкриття RTP-каналу (IP:порт для медіа)</li>
@@ -1042,17 +1042,17 @@ Terminal A              Gatekeeper
 <!-- ==================== SLIDE 30 – Q&A ==================== -->
 <section class="slide bg-end center">
   <div>
-    <h1 style="font-size:clamp(2rem,5vw,3.5rem); color:#00b4d8;">Дякую за увагу!</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:clamp(1rem,2.2vw,1.6rem); margin: 1em 0;">
+    <h1 style="font-size:3.5rem; color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:1.6rem; margin: 1em 0;">
       Запитання?
     </h3>
-    <p style="color:#666; margin-top:2.5em; font-size:clamp(.65rem,1.1vw,.85rem);">
+    <p style="color:#666; margin-top:2.5em; font-size:.85rem;">
       Стандарти: ITU-T H.323 v7 · H.225 · H.245 · H.235 · H.239 · H.450 · H.460
     </p>
-    <p style="color:#444; font-size:clamp(.6rem,1vw,.78rem); margin-top:.5em;">
+    <p style="color:#444; font-size:.78rem; margin-top:.5em;">
       RFC: 3550 (RTP) · 3711 (SRTP) · 8445 (ICE) · 8489 (STUN)
     </p>
-    <p style="color:#333; margin-top:.8em; font-size:clamp(.6rem,1vw,.78rem);">
+    <p style="color:#333; margin-top:.8em; font-size:.78rem;">
       Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
     </p>
   </div>
@@ -1107,6 +1107,17 @@ Terminal A              Gatekeeper
   });
 
   goto(0);
+
+  // Scale deck to fill viewport at 1920×1080
+  function scaleSlides() {
+    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    var deck = document.getElementById('deck');
+    deck.style.transform = 'scale(' + scale + ')';
+    deck.style.left = Math.round((window.innerWidth - 1920 * scale) / 2) + 'px';
+    deck.style.top = Math.round((window.innerHeight - 1080 * scale) / 2) + 'px';
+  }
+  window.addEventListener('resize', scaleSlides);
+  scaleSlides();
 })();
 </script>
 </body>
