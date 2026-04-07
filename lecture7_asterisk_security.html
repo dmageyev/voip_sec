@@ -1,0 +1,1369 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Лекція 7 — Безпека IP-АТС на прикладі Asterisk</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
+
+/* ===== SLIDESHOW ===== */
+.deck { width: 100vw; height: 100vh; position: relative; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;
+  padding: 3.2vw 4.5vw 4vh 4.5vw;
+  opacity: 0; pointer-events: none;
+  transition: opacity .38s ease, transform .38s ease;
+  transform: translateX(60px);
+  overflow: hidden;
+}
+.slide.active  { opacity: 1; pointer-events: all; transform: translateX(0); }
+.slide.prev    { opacity: 0; transform: translateX(-60px); }
+.slide.center  { align-items: center; text-align: center; justify-content: center; }
+
+/* ===== BACKGROUNDS ===== */
+.bg-title  { background: radial-gradient(circle at 60% 40%, #003566 0%, #001d3d 55%, #000814 100%); }
+.bg-mid    { background: linear-gradient(135deg, #001d3d 0%, #003566 100%); }
+.bg-red    { background: linear-gradient(135deg, #1a0000 0%, #3d0000 100%); }
+.bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
+.bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
+
+/* ===== TYPOGRAPHY ===== */
+h1 { font-size: clamp(1.7rem, 3.8vw, 3rem); color: #00b4d8; line-height: 1.15; margin-bottom: .5em; }
+h2 { font-size: clamp(1.1rem, 2.2vw, 1.7rem); color: #48cae4;
+     border-bottom: 2px solid #00b4d8; padding-bottom: .28em; margin-bottom: .6em; }
+h3 { font-size: clamp(.82rem, 1.4vw, 1rem); color: #fff; margin: .5em 0 .3em; }
+p  { font-size: clamp(.7rem, 1.2vw, .88rem); line-height: 1.55; margin-bottom: .35em; }
+ul, ol { margin-left: 1.4em; }
+li { font-size: clamp(.68rem, 1.15vw, .85rem); line-height: 1.5; margin-bottom: .24em; }
+strong { color: #90e0ef; }
+em { color: #ccc; font-style: italic; }
+a  { color: #48cae4; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== CODE ===== */
+code { font-family: 'Consolas','Courier New',monospace; color: #90e0ef;
+       background: rgba(0,180,216,.12); padding: .08em .32em; border-radius: 3px;
+       font-size: .88em; }
+pre  { font-family: 'Consolas','Courier New',monospace;
+       font-size: clamp(.47rem, .88vw, .67rem);
+       background: #0d1117; border: 1px solid #00b4d8;
+       border-radius: .4em; padding: .65em 1em;
+       line-height: 1.48; white-space: pre; overflow: auto;
+       max-height: 44vh; width: 100%; margin: .4em 0; }
+
+/* ===== LAYOUT ===== */
+.two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; width: 100%; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; width: 100%; }
+.w100 { width: 100%; }
+
+/* ===== CARDS ===== */
+.card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(0,180,216,.3);
+  border-radius: .45em; padding: .7em .9em; margin-bottom: .5em;
+}
+.card h3 { color: #00b4d8; font-size: .9em; margin-top: 0; }
+
+/* ===== CALLOUTS ===== */
+.hbox {
+  background: rgba(0,180,216,.12);
+  border-left: 4px solid #00b4d8;
+  padding: .45em .85em; border-radius: 0 .35em .35em 0; margin: .45em 0;
+  font-size: clamp(.65rem, 1.1vw, .82rem);
+}
+.wbox {
+  background: rgba(247,127,0,.12);
+  border-left: 4px solid #f77f00;
+  padding: .45em .85em; border-radius: 0 .35em .35em 0; margin: .45em 0;
+  font-size: clamp(.65rem, 1.1vw, .82rem);
+}
+.rbox {
+  background: rgba(230,57,70,.12);
+  border-left: 4px solid #e63946;
+  padding: .45em .85em; border-radius: 0 .35em .35em 0; margin: .45em 0;
+  font-size: clamp(.65rem, 1.1vw, .82rem);
+}
+.gbox {
+  background: rgba(82,183,136,.12);
+  border-left: 4px solid #52b788;
+  padding: .45em .85em; border-radius: 0 .35em .35em 0; margin: .45em 0;
+  font-size: clamp(.65rem, 1.1vw, .82rem);
+}
+
+/* ===== TABLES ===== */
+table { width: 100%; border-collapse: collapse; font-size: clamp(.58rem, 1vw, .78rem); margin: .4em 0; }
+th { background: rgba(0,180,216,.22); color: #48cae4; padding: .35em .6em; text-align: left; }
+td { padding: .27em .6em; border-bottom: 1px solid rgba(255,255,255,.08); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(255,255,255,.04); }
+
+/* ===== COLORS ===== */
+.ok   { color: #52b788; }
+.er   { color: #e63946; }
+.warn { color: #f77f00; }
+.info { color: #00b4d8; }
+.hl   { color: #90e0ef; font-weight: bold; }
+
+/* ===== SLIDE NUMBER ===== */
+.sn { position: absolute; bottom: 1.2vh; left: 4.5vw;
+      font-size: .6rem; color: #333; }
+
+/* ===== NAVIGATION ===== */
+#nav {
+  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
+  display: flex; align-items: center; gap: .55em;
+}
+#nav button {
+  background: rgba(0,180,216,.15); border: 1px solid #00b4d8; color: #00b4d8;
+  border-radius: .3em; padding: .38em .85em; font-size: .82rem; cursor: pointer;
+  transition: background .2s;
+}
+#nav button:hover { background: rgba(0,180,216,.38); }
+#counter { color: #555; font-size: .75rem; min-width: 4.5em; text-align: center; }
+
+/* ===== PROGRESS ===== */
+#prog { position: fixed; bottom: 0; left: 0; height: 3px;
+        background: #00b4d8; transition: width .32s ease; z-index: 200; }
+
+/* ===== HINT ===== */
+#hint { position: fixed; top: .8vh; right: 1.5vw;
+        font-size: .58rem; color: #2a2a2a; z-index: 100; }
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="hint">← → стрілки · F — повний екран</div>
+
+<div class="deck" id="deck">
+
+<!-- ==================== SLIDE 1 — Title ==================== -->
+<section class="slide bg-title center active" id="s0">
+  <div>
+    <p style="color:#48cae4;font-size:clamp(.8rem,1.6vw,1.1rem);letter-spacing:.12em;margin-bottom:.6em;text-transform:uppercase;">Курс «Технології VoIP» · Кібербезпека (магістратура)</p>
+    <h1 style="font-size:clamp(2rem,4.5vw,3.5rem);margin-bottom:.4em;">Лекція 7</h1>
+    <h2 style="border:none;font-size:clamp(1.2rem,2.8vw,2.1rem);color:#90e0ef;padding:0;margin-bottom:1.6em;">Безпека IP-АТС на прикладі Asterisk</h2>
+    <p style="color:#555;font-size:clamp(.72rem,1.3vw,.9rem);">Кафедра інформаційних технологій та кібербезпеки</p>
+  </div>
+  <div class="sn">1 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 2 — Plan ==================== -->
+<section class="slide bg-plain" id="s1">
+  <h2>📋 План лекції</h2>
+  <table>
+    <tr><th>Блок</th><th>Тема</th></tr>
+    <tr><td>1</td><td>IP-АТС та Asterisk: архітектура і поверхня атаки</td></tr>
+    <tr><td style="color:#90e0ef;font-weight:bold;">2</td><td style="color:#90e0ef;font-weight:bold;">Теоретичні принципи безпеки (CIA, AAA, Saltzer &amp; Schroeder…)</td></tr>
+    <tr><td>3</td><td>Мінімізація привілеїв (PoLP): ОС, ФС, мережева ізоляція</td></tr>
+    <tr><td>4</td><td>ACL: контроль доступу на рівні IP</td></tr>
+    <tr><td>5</td><td>Контексти SIP-драйверів: ізоляція груп</td></tr>
+    <tr><td>6</td><td>Безпека диалплану: Toll Fraud, DISA, валідація</td></tr>
+    <tr><td>7</td><td>Автентифікація, TLS/SRTP, AMI, моніторинг</td></tr>
+    <tr><td>8</td><td>Типові помилки, чек-ліст, Q&amp;A</td></tr>
+  </table>
+  <div class="sn">2 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 3 — CIA Triad ==================== -->
+<section class="slide bg-plain" id="s2">
+  <h2>🔺 CIA Тріада в контексті IP-АТС</h2>
+  <div class="hbox"><strong>CIA Triad</strong> — фундаментальна модель інформаційної безпеки: <strong>C</strong>onfidentiality · <strong>I</strong>ntegrity · <strong>A</strong>vailability.</div>
+  <table style="margin-top:.5em;">
+    <tr><th>Властивість</th><th>Загроза для IP-АТС</th><th>Захист в Asterisk</th></tr>
+    <tr><td><strong>Confidentiality</strong> (Конфіденційність)</td><td>Перехоплення SIP/RTP, eavesdropping</td><td>TLS для сигналізації, SRTP для медіа</td></tr>
+    <tr><td><strong>Integrity</strong> (Цілісність)</td><td>Підміна SIP-запитів, Caller ID spoofing</td><td>Digest Auth, TLS з верифікацією сертифіката</td></tr>
+    <tr><td><strong>Availability</strong> (Доступність)</td><td>DoS/DDoS на SIP-порт, flood реєстрацій</td><td>fail2ban, rate limiting, VLAN-ізоляція</td></tr>
+  </table>
+  <div style="margin-top:.7em;">
+    <p><strong>Практичне застосування:</strong></p>
+    <ul>
+      <li>Порушення <strong>C</strong> → витік записів переговорів, комерційної таємниці</li>
+      <li>Порушення <strong>I</strong> → шахрайські дзвінки від імені легітимного номера</li>
+      <li>Порушення <strong>A</strong> → АТС недоступна, бізнес-процеси зупинено</li>
+    </ul>
+  </div>
+  <div class="hbox" style="margin-top:.6em;">Захист IP-АТС = забезпечення <strong>всіх трьох</strong> властивостей одночасно.</div>
+  <div class="sn">3 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 4 — AAA ==================== -->
+<section class="slide bg-plain" id="s3">
+  <h2>🔑 AAA Framework: Автентифікація · Авторизація · Аудит</h2>
+  <div class="hbox"><strong>AAA</strong> — класична тріада контролю доступу, фундамент управління доступом у будь-якій системі.</div>
+  <div class="three-col" style="margin-top:.7em;">
+    <div class="card">
+      <h3>Authentication<br><small style="color:#aaa;font-weight:normal;">«Хто ти?»</small></h3>
+      <ul>
+        <li>SIP Digest Auth</li>
+        <li>ACL (IP-адреса)</li>
+        <li>TLS-сертифікат</li>
+        <li>(chan_pjsip)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Authorization<br><small style="color:#aaa;font-weight:normal;">«Що можна?»</small></h3>
+      <ul>
+        <li>Контекст у extensions.conf</li>
+        <li>Extension pattern</li>
+        <li>ACL permit/deny</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Accounting<br><small style="color:#aaa;font-weight:normal;">«Що робив?»</small></h3>
+      <ul>
+        <li>CDR / CEL</li>
+        <li>/var/log/asterisk/</li>
+        <li>SIEM-інтеграція</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wbox" style="margin-top:.7em;"><strong>Типова вразливість:</strong> слабка Authentication відкриває всі три рівні.</div>
+  <div class="rbox"><strong>Типова помилка:</strong> налаштована Authentication, але відсутній Accounting → атаку не виявлено.</div>
+  <div class="sn">4 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 5 — Saltzer & Schroeder ==================== -->
+<section class="slide bg-plain" id="s4">
+  <h2>📐 8 Принципів Saltzer &amp; Schroeder (1975)</h2>
+  <div class="hbox" style="margin-bottom:.5em;">Класична робота «The Protection of Information in Computer Systems» — основа сучасної security engineering.</div>
+  <table>
+    <tr><th>#</th><th>Принцип</th><th>Реалізація в Asterisk</th></tr>
+    <tr><td>1</td><td><strong>Economy of Mechanism</strong> — простота</td><td>Мінімальний набір модулів; прості контексти</td></tr>
+    <tr><td>2</td><td><strong>Fail-Safe Defaults</strong> — безпечний дефолт</td><td><code>allowguest=no</code>; <code>deny=0.0.0.0/0</code> першим</td></tr>
+    <tr><td>3</td><td><strong>Complete Mediation</strong> — перевірка кожного запиту</td><td>ACL на кожному endpoint; кожен виклик через контекст</td></tr>
+    <tr><td>4</td><td><strong>Open Design</strong> — безпека ≠ таємниця</td><td>Asterisk open-source; безпека через конфігурацію</td></tr>
+    <tr><td>5</td><td><strong>Separation of Privilege</strong> — розподіл прав</td><td>Окремі контексти; окремі AMI-акаунти</td></tr>
+    <tr><td>6</td><td><strong>Least Privilege</strong> — мінімум прав</td><td>Запуск від <code>asterisk</code>; обмежені права AMI</td></tr>
+    <tr><td>7</td><td><strong>Least Common Mechanism</strong> — ізоляція</td><td>VLAN; окремі процеси; не shared контексти</td></tr>
+    <tr><td>8</td><td><strong>Psychological Acceptability</strong> — зрозумілість</td><td>Іменовані контексти; коментарі у конфігах</td></tr>
+  </table>
+  <div class="sn">5 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 6 — Fail-Safe Defaults ==================== -->
+<section class="slide bg-plain" id="s5">
+  <h2>🔒 Fail-Safe Defaults: Безпечна відмова</h2>
+  <div class="hbox"><strong>Принцип:</strong> система за замовчуванням <strong>забороняє</strong> все, а дозволяє лише явно налаштоване.
+  Якщо перевірка неможлива або виникла помилка — відмовити у доступі.</div>
+  <div class="two-col" style="margin-top:.6em;gap:1em;">
+    <div>
+      <div class="rbox"><strong>❌ Fail-Open (небезпечний):</strong><br>дозволити все → заблокувати відоме шкідливе</div>
+      <pre>; Небезпечний дефолт
+allowguest=yes   ; анонімні дзвінки!
+permit=0.0.0.0/0 ; дозволити всіх
+deny=10.0.0.0/8  ; заблокувати частково
+context=default  ; відкритий контекст</pre>
+    </div>
+    <div>
+      <div class="gbox"><strong>✅ Fail-Secure (правильно):</strong><br>заборонити все → дозволити явно перевірене</div>
+      <pre>; Безпечний дефолт
+allowguest=no    ; тільки auth!
+deny=0.0.0.0/0   ; заборонити всіх
+permit=192.168.10.0/24 ; дозволити свою
+context=restricted ; мінімальний</pre>
+    </div>
+  </div>
+  <div class="wbox" style="margin-top:.5em;"><strong>Наслідок порушення:</strong> <code>allowguest=yes</code> + відсутність ACL = Toll Fraud без злому паролів.</div>
+  <div class="sn">6 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 7 — Attack Surface ==================== -->
+<section class="slide bg-plain" id="s6">
+  <h2>🎯 Мінімізація поверхні атаки</h2>
+  <div class="hbox"><strong>Attack Surface</strong> — сукупність усіх точок входу, через які зловмисник може взаємодіяти з системою.
+  <strong>Принцип:</strong> зменшити кількість та розмір цих точок до мінімально необхідного.</div>
+  <div class="two-col" style="margin-top:.5em;">
+    <div>
+      <p><strong>Повна поверхня (за замовчуванням):</strong></p>
+      <pre>UDP/5060  — SIP (відкритий для всіх)
+UDP/5061  — TLS-SIP
+UDP/10000-20000 — RTP (широкий)
+TCP/5038  — AMI (відкритий)
+TCP/8088  — HTTP/ARI
++ всі завантажені модулі</pre>
+    </div>
+    <div>
+      <p><strong>Мінімізована поверхня:</strong></p>
+      <pre>UDP/5060 — тільки внутр. підмережа
+UDP/5061 — тільки trusted trunk
+UDP/RTP  — обмежений діапазон
+TCP/5038 — тільки loopback
+TCP/8088 — вимкнений або HTTPS</pre>
+    </div>
+  </div>
+  <p style="margin-top:.5em;"><strong>Вимкнення модулів (modules.conf):</strong></p>
+  <pre>[modules]
+autoload=no            ; НЕ завантажувати все підряд
+load => chan_pjsip.so  ; тільки необхідне
+load => pbx_config.so
+load => app_dial.so
+; chan_sip.so — НЕ завантажуємо без потреби
+; res_http_websocket.so — тільки для WebRTC</pre>
+  <div class="sn">7 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 8 — Zero Trust ==================== -->
+<section class="slide bg-plain" id="s7">
+  <h2>🔐 Zero Trust для IP-АТС</h2>
+  <div class="hbox"><strong>Zero Trust:</strong> «Ніколи не довіряй, завжди перевіряй» — жоден компонент не є автоматично довіреним, навіть всередині мережі.</div>
+  <div class="two-col" style="margin-top:.6em;">
+    <div>
+      <p><strong>Традиційна модель (периметр):</strong></p>
+      <pre>Internet  │  LAN
+  ❌      │  ✅ (всі довірені)
+          │
+       Asterisk
+  ← SIP без auth від
+    внутрішніх IP</pre>
+      <div class="rbox" style="margin-top:.4em;">Компромет одного пристрою у LAN → доступ до АТС без перешкод</div>
+    </div>
+    <div>
+      <p><strong>Zero Trust:</strong></p>
+      <pre>Internet  │  LAN
+  ❌      │  перевіряється!
+          │
+       Asterisk
+  ← SIP Digest Auth
+    від КОЖНОГО IP</pre>
+      <div class="gbox" style="margin-top:.4em;">Мікросегментація: навіть VLAN-сусіди не довіряємо без auth</div>
+    </div>
+  </div>
+  <pre style="margin-top:.4em;">[6001]
+type=endpoint
+auth=auth6001     ; пароль для КОЖНОГО endpoint
+acl=internal_acl  ; + перевірка IP
+context=internal  ; + обмежений контекст</pre>
+  <div class="sn">8 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 9 — IP-PBX Infrastructure ==================== -->
+<section class="slide bg-plain" id="s8">
+  <h2>🏢 IP-АТС у сучасній інфраструктурі</h2>
+  <div class="hbox"><strong>IP-АТС (IP PBX)</strong> — програмна або апаратна телефонна станція, що обробляє дзвінки через IP-мережу.</div>
+  <p style="margin:.5em 0 .3em;"><strong>Чому безпека критична?</strong></p>
+  <ul>
+    <li>Toll Fraud завдає індустрії <strong>~40 млрд USD</strong> збитків щорічно (CFCA 2023)</li>
+    <li>IP-АТС — точка концентрації корпоративних комунікацій</li>
+    <li>Злом АТС → несанкціоновані дзвінки, прослуховування, DoS</li>
+  </ul>
+  <div class="two-col" style="margin-top:.7em;">
+    <table>
+      <tr><th>Open Source</th><th>Комерційні</th></tr>
+      <tr><td><strong>Asterisk</strong></td><td>Cisco CUCM</td></tr>
+      <tr><td>FreeSWITCH</td><td>Avaya Aura</td></tr>
+      <tr><td>Kamailio</td><td>3CX</td></tr>
+    </table>
+    <div>
+      <pre>UA (телефон) ─── SIP ──► Asterisk
+                               │
+                      SIP Trunk / PSTN GW
+                               │
+                          Зовнішня мережа</pre>
+    </div>
+  </div>
+  <div class="sn">9 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 10 — Asterisk Architecture ==================== -->
+<section class="slide bg-plain" id="s9">
+  <h2>🔭 Архітектура Asterisk</h2>
+  <pre>┌──────────────────────────────────────────────────────────────┐
+│                        Asterisk Core                         │
+│  ┌──────────────┐  ┌──────────────┐  ┌───────────────────┐  │
+│  │ Channel      │  │  Dialplan    │  │  Applications     │  │
+│  │ Drivers      │  │  (extensions │  │  (Dial, Voicemail,│  │
+│  │ chan_pjsip   │  │  .conf)      │  │   AGI, Queue…)    │  │
+│  │ chan_dahdi   │  └──────────────┘  └───────────────────┘  │
+│  └──────────────┘                                            │
+│  ┌──────────────┐  ┌──────────────┐  ┌───────────────────┐  │
+│  │ AMI          │  │ ARI          │  │ AGI / FastAGI     │  │
+│  │ (Manager)    │  │ (REST API)   │  │ (External scripts)│  │
+│  └──────────────┘  └──────────────┘  └───────────────────┘  │
+└──────────────────────────────────────────────────────────────┘</pre>
+  <div class="wbox" style="margin-top:.4em;"><strong>Поверхня атаки:</strong> SIP-стек · AMI · ARI · AGI-скрипти · HTTP · ФС · ОС</div>
+  <ul style="margin-top:.5em;">
+    <li><strong>chan_pjsip</strong> — сучасний SIP-драйвер (рекомендований)</li>
+    <li><strong>chan_sip</strong> — legacy-драйвер (застарілий, але ще поширений)</li>
+    <li><strong>AMI</strong> — TCP/5038, повний контроль; <strong>ARI</strong> — HTTP REST API</li>
+  </ul>
+  <div class="sn">10 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 11 — PoLP ==================== -->
+<section class="slide bg-plain" id="s10">
+  <h2>🔐 Принцип мінімізації привілеїв (PoLP) → Asterisk</h2>
+  <div class="hbox"><strong>Principle of Least Privilege (Saltzer &amp; Schroeder, принцип №6):</strong>
+  кожен суб'єкт отримує рівно ті права, які необхідні для виконання своєї функції, — і не більше.</div>
+  <pre style="margin-top:.5em;">┌──────────────────────────────────────────────────────────┐
+│  Рівень 4 — Диалплан                                     │
+│  Принцип: кожен контекст дозволяє тільки потрібні        │
+│  напрямки (whitelist замість blacklist)                   │
+├──────────────────────────────────────────────────────────┤
+│  Рівень 3 — Asterisk ACL (permit/deny по IP)             │
+│  Принцип: кожен endpoint бачить тільки свій ACL          │
+├──────────────────────────────────────────────────────────┤
+│  Рівень 2 — Мережа (VLAN, iptables, fail2ban)            │
+│  Принцип: сегментація — кожна зона має мінімальний доступ│
+├──────────────────────────────────────────────────────────┤
+│  Рівень 1 — ОС (непривілейований користувач asterisk)    │
+│  Принцип: процес не може робити більше, ніж його user    │
+└──────────────────────────────────────────────────────────┘</pre>
+  <div class="hbox" style="margin-top:.4em;"><strong>Defense-in-Depth:</strong> кожен рівень PoLP = окремий рубіж. Компрометація одного рівня не розкриває всю систему.</div>
+  <div class="sn">11 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 12 — OS Security ==================== -->
+<section class="slide bg-mid" id="s11">
+  <h2>🐧 Захист на рівні операційної системи</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Запуск від непривілейованого користувача:</strong></p>
+      <pre># Створення системного користувача
+useradd -r -s /sbin/nologin asterisk
+groupadd asterisk
+
+# Запуск з обмеженими правами
+asterisk -U asterisk -G asterisk</pre>
+      <p style="margin-top:.5em;"><strong>systemd unit-файл — захисні директиви:</strong></p>
+      <pre>[Service]
+User=asterisk
+Group=asterisk
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE</pre>
+    </div>
+    <div>
+      <div class="hbox"><strong>Навіщо?</strong> Якщо зловмисник виконає код через AGI — він не отримає root-доступу.</div>
+      <div style="margin-top:.8em;">
+        <p><strong>Що захищають директиви systemd:</strong></p>
+        <ul>
+          <li><code>NoNewPrivileges</code> — заборона підвищення прав</li>
+          <li><code>ProtectSystem=strict</code> — ФС тільки для читання</li>
+          <li><code>ProtectHome=true</code> — немає доступу до /home</li>
+          <li><code>PrivateTmp=true</code> — ізольована /tmp</li>
+          <li><code>CapabilityBoundingSet</code> — тільки потрібні capabilities</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sn">12 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 13 — Config File Security ==================== -->
+<section class="slide bg-plain" id="s12">
+  <h2>📁 Захист конфігураційних файлів</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Права доступу:</strong></p>
+      <pre>chown -R asterisk:asterisk /etc/asterisk/
+chmod 750 /etc/asterisk/
+chmod 640 /etc/asterisk/*.conf
+
+# Особливо чутливі файли
+chmod 600 /etc/asterisk/sip.conf
+chmod 600 /etc/asterisk/manager.conf</pre>
+    </div>
+    <div>
+      <p><strong>Розділення секретів через <code>#include</code>:</strong></p>
+      <pre>; sip.conf — публічна частина
+[general]
+bindport=5060
+#include "sip_secrets.conf"
+; ↑ права 600, у .gitignore
+
+; sip_secrets.conf
+[mypeer]
+secret=V3ryStr0ngP@ssw0rd!</pre>
+    </div>
+  </div>
+  <div class="two-col" style="margin-top:.5em;">
+    <div class="wbox"><strong>⚠ Ніколи</strong> не зберігайте паролі у файлах, доступних для читання іншим користувачам. <code>sip.conf</code> з правами 644 — це відкриті паролі для будь-якого локального користувача.</div>
+    <div>
+      <p><strong>Додаткові заходи:</strong></p>
+      <ul>
+        <li>HashiCorp Vault для централізованого зберігання секретів</li>
+        <li>Git + pre-commit hooks для виявлення секретів у коді</li>
+        <li>Шифрування диску (LUKS) для захисту при фізичному доступі</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sn">13 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 14 — Network Isolation ==================== -->
+<section class="slide bg-plain" id="s13">
+  <h2>🌐 Мережева ізоляція АТС</h2>
+  <p><strong>Архітектура VLAN для IP-АТС:</strong></p>
+  <pre>┌─────────────┐     ┌──────────────────┐     ┌──────────────┐
+│  VLAN 10    │     │    VLAN 20       │     │   VLAN 30    │
+│  IP-phones  │◄───►│  Asterisk PBX   │◄───►│  SIP Trunk   │
+│  Softphones │     │  (ізольована    │     │  (провайдер) │
+│  192.168.10 │     │   підмережа)    │     │  10.0.30.x   │
+└─────────────┘     │  10.0.20.x      │     └──────────────┘
+                    └──────────────────┘
+                            │
+                    ┌───────▼──────┐
+                    │   VLAN 40    │
+                    │  Моніторинг  │
+                    │  (тільки TCP)│
+                    └──────────────┘</pre>
+  <div class="two-col" style="margin-top:.4em;">
+    <div class="hbox">Кожен VLAN має <strong>окремий ACL</strong> на рівні мережевого обладнання. Трафік між VLAN проходить через firewall.</div>
+    <ul>
+      <li>IP-phones ↔ PBX: SIP (5060/5061) + RTP (10000–20000)</li>
+      <li>SIP Trunk ↔ PBX: тільки IP провайдера</li>
+      <li>Monitoring ↔ PBX: тільки TCP/5038 (AMI) або HTTPS</li>
+      <li>Internet → PBX: <strong>забороненo</strong> без явного дозволу</li>
+    </ul>
+  </div>
+  <div class="sn">14 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 15 — ACL Levels ==================== -->
+<section class="slide bg-plain" id="s14">
+  <h2>🛡️ ACL: Рівні захисту (Complete Mediation)</h2>
+  <p style="margin-bottom:.4em;"><strong>Defense-in-Depth для IP-фільтрації:</strong></p>
+  <pre>Incoming SIP INVITE
+        │
+        ▼
+┌───────────────────┐
+│  1. iptables/nft  │ → блокує цілі підмережі/країни
+└────────┬──────────┘
+         ▼
+┌───────────────────┐
+│  2. fail2ban      │ → динамічно блокує brute-force IP
+└────────┬──────────┘
+         ▼
+┌───────────────────┐
+│  3. Asterisk ACL  │ → permit/deny на рівні конфігурації
+└────────┬──────────┘
+         ▼
+┌───────────────────┐
+│  4. Контекст      │ → обмежує доступні extension
+└───────────────────┘</pre>
+  <div class="hbox" style="margin-top:.4em;">Реалізація принципу <strong>Complete Mediation</strong>: кожен запит перевіряється на кожному рівні незалежно.</div>
+  <div class="sn">15 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 16 — ACL chan_sip ==================== -->
+<section class="slide bg-plain" id="s15">
+  <h2>⚙️ ACL у chan_sip (sip.conf)</h2>
+  <pre>[general]
+; Глобальна заборона — дозволяємо тільки явно
+deny=0.0.0.0/0.0.0.0
+permit=192.168.10.0/255.255.255.0  ; внутрішня мережа
+
+; Заборона гостьових дзвінків (КРИТИЧНО!)
+allowguest=no
+
+; Відхиляти невідомі джерела — не розкривати чи існує peer
+alwaysauthreject=yes
+
+[mytrunk]
+type=peer
+host=sip.provider.com
+deny=0.0.0.0/0.0.0.0
+permit=203.0.113.10/255.255.255.255  ; тільки IP провайдера
+
+; Обмеження Contact-header при REGISTER
+contactpermit=192.168.10.0/255.255.255.0
+contactdeny=0.0.0.0/0.0.0.0</pre>
+  <div class="wbox" style="margin-top:.4em;"><strong><code>allowguest=yes</code></strong> (default у старих версіях) — дозволяє дзвінки без автентифікації!</div>
+  <div class="sn">16 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 17 — ACL chan_pjsip ==================== -->
+<section class="slide bg-plain" id="s16">
+  <h2>⚙️ ACL у chan_pjsip (pjsip.conf)</h2>
+  <pre>; Визначення об'єкта ACL
+[internal_acl]
+type=acl
+deny=0.0.0.0/0.0.0.0
+permit=192.168.10.0/24
+permit=192.168.11.0/24
+
+[contact_acl]
+type=acl
+deny=0.0.0.0/0.0.0.0
+permit=192.168.10.0/24
+
+; Прив'язка ACL до endpoint
+[6001]
+type=endpoint
+aors=6001
+auth=auth6001
+context=internal          ; контекст диалплану
+acl=internal_acl          ; перевірка IP джерела запиту
+contact_acl=contact_acl   ; перевірка Contact-header
+
+[trunk_provider]
+type=endpoint
+acl=trunk_acl             ; тільки IP провайдера
+context=from-trunk</pre>
+  <div class="sn">17 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 18 — fail2ban ==================== -->
+<section class="slide bg-plain" id="s17">
+  <h2>🔥 fail2ban + iptables/nftables</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Конфігурація fail2ban для Asterisk:</strong></p>
+      <pre>; /etc/fail2ban/filter.d/asterisk.conf
+[Definition]
+failregex = NOTICE.* &lt;HOST&gt;.*: Registration from .* failed
+            NOTICE.* &lt;HOST&gt;.*: No matching peer found
+            WARNING.* &lt;HOST&gt;.*: Digest auth failed
+            NOTICE.* &lt;HOST&gt;.*: Sending fake auth rejection
+
+; /etc/fail2ban/jail.local
+[asterisk]
+enabled  = true
+port     = 5060,5061
+filter   = asterisk
+logpath  = /var/log/asterisk/messages
+maxretry = 5
+bantime  = 3600   ; блокування на 1 годину
+findtime = 600    ; 5 спроб за 10 хвилин → бан</pre>
+    </div>
+    <div>
+      <p><strong>nftables rate-limiting для SIP:</strong></p>
+      <pre>nft add rule inet filter input \
+  udp dport 5060 \
+  limit rate 30/second \
+  burst 50 packets accept
+
+nft add rule inet filter input \
+  udp dport 5060 drop</pre>
+      <div class="hbox" style="margin-top:.5em;"><strong>Логіка:</strong> перші 50 пакетів + 30/с → accept. Все понад — drop. Захист від SIP flood.</div>
+      <div class="gbox" style="margin-top:.4em;"><code>fail2ban-client status asterisk</code> — перевірка поточних банів</div>
+    </div>
+  </div>
+  <div class="sn">18 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 19 — Contexts concept ==================== -->
+<section class="slide bg-plain" id="s18">
+  <h2>🗂️ Контексти Asterisk: концепція</h2>
+  <div class="hbox"><strong>Контекст</strong> — іменований простір у <code>extensions.conf</code>, що містить набір правил обробки дзвінків (extension patterns). Реалізація принципу <strong>Separation of Privilege</strong>.</div>
+  <p style="margin:.5em 0 .3em;"><strong>Зв'язок endpoint → context → extension:</strong></p>
+  <pre>SIP INVITE від 6001
+        │
+        ▼ (chan_pjsip визначає endpoint)
+ context = "internal"
+        │
+        ▼ (Asterisk шукає в [internal])
+ exten =&gt; 6002,1,Dial(PJSIP/6002)   ✓ знайдено
+ exten =&gt; 9.,1,Dial(PJSIP/trunk)    ✓ дозволено
+
+SIP INVITE від зовнішнього trunk
+        │
+        ▼
+ context = "from-trunk"
+        │
+        ▼ (в [from-trunk] немає внутрішніх extension!)
+ exten =&gt; s,1,Answer()              ✓ тільки IVR
+ exten =&gt; 6001,1,Dial(PJSIP/6001)  ✓ маршрут до внутрішнього</pre>
+  <div class="sn">19 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 20 — Context isolation chan_sip ==================== -->
+<section class="slide bg-plain" id="s19">
+  <h2>🔒 Ізоляція груп у chan_sip (sip.conf)</h2>
+  <pre>[general]
+context=default            ; fallback — має бути обмеженим!
+
+[6001]                     ; внутрішній телефон
+type=friend
+context=internal           ; доступ до внутрішніх + зовнішніх ліній
+secret=str0ngP@ss
+
+[6099]                     ; обмежений користувач (лобі, гість)
+type=friend
+context=restricted         ; тільки внутрішні номери
+secret=anotherP@ss
+
+[mytrunk]                  ; SIP-провайдер
+type=peer
+context=from-trunk         ; incoming дзвінки → IVR/черга
+host=sip.provider.com</pre>
+  <div class="wbox" style="margin-top:.4em;"><strong>⚠ Ніколи</strong> не ставте <code>context=from-trunk</code> для внутрішніх телефонів — trunk зазвичай не має автентифікації!</div>
+  <div class="sn">20 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 21 — Context isolation chan_pjsip ==================== -->
+<section class="slide bg-plain" id="s20">
+  <h2>🔒 Ізоляція груп у chan_pjsip (pjsip.conf)</h2>
+  <pre>[6001]
+type=endpoint
+context=internal           ; ← визначає доступні можливості
+aors=6001
+auth=auth6001
+disallow=all
+allow=opus,g722,ulaw
+
+[6099]
+type=endpoint
+context=restricted         ; ← обмежений контекст
+aors=6099
+auth=auth6099
+
+[trunk_inbound]
+type=endpoint
+context=from-trunk         ; ← зовнішні виклики
+identify_by=ip
+acl=trunk_ip_acl
+; Без секрету — автентифікація тільки по IP</pre>
+  <div class="hbox" style="margin-top:.4em;"><code>disallow=all</code> + явний <code>allow=</code> — принцип мінімізації кодеків. Відключаємо небезпечні або ліцензійно обтяжені.</div>
+  <div class="sn">21 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 22 — Context hierarchy ==================== -->
+<section class="slide bg-plain" id="s21">
+  <h2>🌲 Ієрархія контекстів: include</h2>
+  <div class="two-col">
+    <div>
+      <pre>; extensions.conf
+
+[restricted]           ; гості, лобі
+include =&gt; internal_phones
+
+[internal]             ; співробітники
+include =&gt; internal_phones
+include =&gt; outbound_local
+
+[internal_premium]     ; керівники
+include =&gt; internal
+include =&gt; outbound_international
+
+[from-trunk]           ; вхідні від провайдера
+exten =&gt; s,1,Goto(ivr,s,1)
+exten =&gt; +380XXXXXXXXX,1,Dial(PJSIP/6001)
+
+; ❌ КРИТИЧНА ПОМИЛКА:
+; include =&gt; internal  ← в [from-trunk] → Toll Fraud!</pre>
+    </div>
+    <div>
+      <div class="rbox"><strong>Правило:</strong> <code>include</code> передає права вниз. Ніколи не включайте привілейований контекст у менш захищений.</div>
+      <div style="margin-top:.7em;">
+        <p><strong>Ієрархія прав:</strong></p>
+        <pre>restricted
+  ↓ include
+internal
+  ↓ include
+internal_premium</pre>
+        <p style="margin-top:.4em;">Best practice: явний дозвіл, заборона за замовчуванням (Fail-Safe Default).</p>
+      </div>
+    </div>
+  </div>
+  <div class="sn">22 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 23 — Dialplan threats ==================== -->
+<section class="slide bg-red" id="s22">
+  <h2>💥 Загрози на рівні диалплану</h2>
+  <div class="two-col">
+    <div>
+      <div class="card" style="border-color:rgba(230,57,70,.5);background:rgba(230,57,70,.08);">
+        <h3 style="color:#e63946;">Toll Fraud</h3>
+        <p>Зловмисник реєструється (або обходить автентифікацію) і дзвонить на дорогі номери за рахунок жертви.</p>
+      </div>
+      <div class="card" style="border-color:rgba(230,57,70,.5);background:rgba(230,57,70,.08);margin-top:.5em;">
+        <h3 style="color:#e63946;">DISA (Direct Inward System Access)</h3>
+        <p>Вхід у АТС ззовні з відкритим виходом у зовнішні лінії через введення PIN.</p>
+      </div>
+      <div class="card" style="border-color:rgba(230,57,70,.5);background:rgba(230,57,70,.08);margin-top:.5em;">
+        <h3 style="color:#e63946;">Voicemail → Outbound</h3>
+        <p>VM-меню дозволяє передзвонити на довільний номер з зовнішньої лінії АТС.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="border-color:rgba(230,57,70,.5);background:rgba(230,57,70,.08);">
+        <h3 style="color:#e63946;">AGI/System() Injection</h3>
+        <p>Некоректна валідація вводу в AGI-скриптах або <code>System()</code> — виконання системних команд.</p>
+      </div>
+      <div class="card" style="border-color:rgba(230,57,70,.5);background:rgba(230,57,70,.08);margin-top:.5em;">
+        <h3 style="color:#e63946;">IVR DTMF Abuse</h3>
+        <p>Ін'єкція через DTMF-введення в IVR для переходу на заборонені extension.</p>
+      </div>
+      <div class="wbox" style="margin-top:.5em;">Всі загрози = наслідок порушення <strong>AAA</strong>, <strong>Fail-Safe Defaults</strong> або відсутності валідації вводу.</div>
+    </div>
+  </div>
+  <div class="sn">23 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 24 — Toll Fraud mechanism ==================== -->
+<section class="slide bg-plain" id="s23">
+  <h2>💸 Toll Fraud: Механізм атаки</h2>
+  <div class="two-col">
+    <pre>1. Розвідка:
+   svmap -r 5060 target_ip    # сканування SIP
+   svwar -e100-200 target_ip  # перебір extension
+
+2. Brute-force паролів:
+   svcrack -u 6001 target_ip  # підбір секрету
+
+3. Реєстрація скомпрометованого акаунта:
+   REGISTER sip:6001@target ...
+   Authorization: Digest ...
+
+4. Генерація дорогих дзвінків:
+   INVITE sip:+1900XXXXXXX@target ...
+   INVITE sip:+441XXXXXXXXX@target ...
+
+5. Збиток: сотні дзвінків за кілька годин
+   → рахунок від провайдера = тисячі доларів</pre>
+    <div>
+      <div class="rbox"><strong>Типові цілі:</strong><br>+1900 (преміум США)<br>+44 (Великобританія)<br>+371 (Латвія)<br>Міжнародні premium-rate</div>
+      <div style="margin-top:.7em;">
+        <p><strong>Уражені принципи:</strong></p>
+        <ul>
+          <li><strong>Authentication</strong> (AAA) — слабкий пароль</li>
+          <li><strong>Authorization</strong> — відсутня ізоляція контекстів</li>
+          <li><strong>Fail-Safe Default</strong> — allowguest=yes</li>
+          <li><strong>Availability</strong> (CIA) — фінансовий збиток → відключення послуги</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sn">24 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 25 — Toll Fraud protection ==================== -->
+<section class="slide bg-plain" id="s24">
+  <h2>🛡️ Захист від Toll Fraud у диалплані</h2>
+  <pre>; extensions.conf — [outbound_rules]
+
+; Дозволяємо тільки явний whitelist:
+; Місцеві номери (10 цифр)
+exten =&gt; _NXXXXXXXXX,1,Dial(PJSIP/trunk/${EXTEN})
+
+; Служби екстреної допомоги
+exten =&gt; 112,1,Dial(PJSIP/trunk/112)
+exten =&gt; 101,1,Dial(PJSIP/trunk/101)
+
+; [outbound_international] — тільки для авторизованих:
+exten =&gt; _+.,1,Dial(PJSIP/trunk/${EXTEN})
+exten =&gt; _011.,1,Dial(PJSIP/trunk/${EXTEN})
+
+; Явна заборона преміум (у будь-якому контексті):
+exten =&gt; _1900NXXXXXX,1,Playback(ss-noservice)
+exten =&gt; _1900NXXXXXX,2,Hangup()</pre>
+  <div class="hbox" style="margin-top:.4em;"><strong>Принцип Fail-Safe Default:</strong> «не включаємо <code>outbound_international</code>» для звичайних користувачів = вони не можуть дзвонити міжнародно. Явний whitelist замість blacklist.</div>
+  <div class="sn">25 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 26 — Input validation ==================== -->
+<section class="slide bg-plain" id="s25">
+  <h2>✅ Валідація введення в диалплані</h2>
+  <div class="two-col">
+    <div>
+      <div class="rbox"><strong>❌ НЕБЕЗПЕЧНО: довільне введення</strong></div>
+      <pre>exten =&gt; s,1,Read(USERNUM)
+exten =&gt; s,2,Dial(PJSIP/trunk/${USERNUM})
+; Будь-який номер → trunk!</pre>
+      <div class="rbox" style="margin-top:.5em;"><strong>❌ НЕБЕЗПЕЧНО: System() з змінною</strong></div>
+      <pre>exten =&gt; s,1,System(echo \
+  ${CALLERID(num)} &gt;&gt; /tmp/log)
+; Command injection!</pre>
+    </div>
+    <div>
+      <div class="gbox"><strong>✅ БЕЗПЕЧНО: FILTER() + перевірка довжини</strong></div>
+      <pre>exten =&gt; s,1,Read(USERNUM)
+exten =&gt; s,2,Set(CLEAN=\
+  ${FILTER(0-9,${USERNUM})})
+exten =&gt; s,3,GotoIf(\
+  $[${LEN(${CLEAN})} &lt; 4]?invalid)
+exten =&gt; s,4,GotoIf(\
+  $[${LEN(${CLEAN})} &gt; 15]?invalid)
+exten =&gt; s,5,Goto(outbound,${CLEAN},1)
+exten =&gt; s,n(invalid),Playback(invalid)
+exten =&gt; s,n,Hangup()</pre>
+      <div class="gbox"><strong>✅ БЕЗПЕЧНО: фіксований аргумент</strong></div>
+      <pre>exten =&gt; s,1,System(/usr/local/bin/log.sh)</pre>
+    </div>
+  </div>
+  <div class="sn">26 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 27 — DISA ==================== -->
+<section class="slide bg-plain" id="s26">
+  <h2>🚫 Захист від DISA</h2>
+  <div class="hbox"><strong>DISA (Direct Inward System Access):</strong> Зовнішній дзвінок → АТС → DISA() → введення PIN → отримання dial tone → дзвінок на будь-який номер.</div>
+  <div class="two-col" style="margin-top:.6em;">
+    <div>
+      <p><strong>Якщо DISA необхідна — мінімальний захист:</strong></p>
+      <pre>exten =&gt; s,1,DISA(no-password,restricted)
+;             ↑ файл з PIN   ↑ обмежений ctx
+
+; /etc/asterisk/disa.conf:
+; 7491823654|restricted  ; складний PIN</pre>
+      <div class="wbox" style="margin-top:.5em;">DISA без PIN або зі слабким PIN = відкритий trunk для будь-кого.</div>
+    </div>
+    <div>
+      <p><strong>Кращий підхід — замінити DISA на VPN:</strong></p>
+      <pre>; Замість:
+Зовн. дзвінок → DISA → trunk
+
+; Краще:
+VPN-підключення
+  → internal context
+    → SIP-дзвінок</pre>
+      <div class="gbox" style="margin-top:.5em;">VPN забезпечує <strong>Confidentiality + Integrity</strong>. DISA — лише слабку Authentication.</div>
+    </div>
+  </div>
+  <div class="sn">27 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 28 — Concurrent call limits ==================== -->
+<section class="slide bg-plain" id="s27">
+  <h2>📞 Обмеження одночасних дзвінків</h2>
+  <p><strong>Захист від масового Toll Fraud після компрометації акаунта:</strong></p>
+  <div class="two-col">
+    <pre>; Обмеження одночасних каналів на акаунт
+exten =&gt; _X.,1,Set(GROUP()=\
+  outbound_${CALLERID(num)})
+exten =&gt; _X.,2,Set(COUNT=${GROUP_COUNT(\
+  outbound_${CALLERID(num)})})
+exten =&gt; _X.,3,GotoIf(\
+  $[${COUNT} &gt; 3]?toolimit)
+exten =&gt; _X.,4,Dial(PJSIP/trunk/${EXTEN})
+exten =&gt; _X.,n(toolimit),Playback(conf-locked)
+exten =&gt; _X.,n,Hangup(17)  ; User Busy
+
+; Глобальне обмеження на trunk
+[from-trunk-outbound]
+exten =&gt; _X.,1,Set(GROUP()=trunk_out)
+exten =&gt; _X.,2,GotoIf(\
+  $[${GROUP_COUNT(trunk_out)} &gt; 30]?overlimit)</pre>
+    <div>
+      <p><strong>У pjsip.conf endpoint:</strong></p>
+      <pre>[6001]
+type=endpoint
+max_contacts=2  ; ≤ 2 реєстрацій</pre>
+      <div class="hbox" style="margin-top:.5em;"><strong>Логіка:</strong> навіть якщо зловмисник отримав доступ до акаунта, він не зможе згенерувати більше 3 одночасних вихідних дзвінків. Обмеження збитку.</div>
+    </div>
+  </div>
+  <div class="sn">28 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 29 — SIP Digest Auth ==================== -->
+<section class="slide bg-plain" id="s28">
+  <h2>🔑 SIP Digest Authentication</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Вимоги до паролів у Asterisk:</strong></p>
+      <pre>; pjsip.conf auth object
+[auth6001]
+type=auth
+auth_type=userpass
+username=6001
+password=P@$$w0rd!2024Str0ng
+; мінімум 16 символів, складний
+
+; chan_sip — захист від enumeration:
+alwaysauthreject=yes
+; завжди відхиляти з "fake" challenge
+
+; Обмеження реєстрацій:
+maxexpirey=3600  ; максимум 1 год.
+minexpirey=60    ; мінімум 60 с</pre>
+    </div>
+    <div>
+      <p><strong>Перевірка через CLI:</strong></p>
+      <pre># Поточні реєстрації
+asterisk -rx "pjsip show registrations"
+
+# Активні endpoints
+asterisk -rx "pjsip show endpoints"
+
+# Аутентифікація в real-time
+asterisk -rx "pjsip show auths"</pre>
+      <div class="hbox" style="margin-top:.5em;"><strong>alwaysauthreject=yes</strong> — Asterisk не повідомляє, чи існує акаунт. Захист від <em>username enumeration</em> через різницю відповідей.</div>
+    </div>
+  </div>
+  <div class="sn">29 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 30 — TLS & SRTP ==================== -->
+<section class="slide bg-plain" id="s29">
+  <h2>🔐 TLS та SRTP в Asterisk</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Налаштування TLS (pjsip.conf):</strong></p>
+      <pre>[transport-tls]
+type=transport
+protocol=tls
+bind=0.0.0.0:5061
+cert_file=/etc/asterisk/certs/server.crt
+priv_key_file=/etc/asterisk/certs/server.key
+ca_list_file=/etc/asterisk/certs/ca.crt
+method=tlsv1_2       ; мінімум TLS 1.2
+
+[6001]
+type=endpoint
+transport=transport-tls
+media_encryption=srtp
+media_encryption_optimistic=no
+; ↑ не допускати незашифроване!</pre>
+    </div>
+    <div>
+      <p><strong>Генерація сертифікатів:</strong></p>
+      <pre>cd /usr/share/asterisk/scripts
+./ast_tls_cert \
+  -C pbx.company.com \
+  -O "Company" \
+  -d /etc/asterisk/certs</pre>
+      <div class="hbox" style="margin-top:.5em;"><strong>TLS</strong> захищає сигналізацію SIP (CIA: Confidentiality + Integrity).<br><strong>SRTP</strong> захищає медіа-потік RTP.</div>
+      <div class="wbox" style="margin-top:.4em;"><code>media_encryption_optimistic=yes</code> дозволяє незашифровані з'єднання як fallback — <strong>Fail-Open!</strong> Використовуйте тільки у крайньому разі.</div>
+    </div>
+  </div>
+  <div class="sn">30 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 31 — AMI Security ==================== -->
+<section class="slide bg-mid" id="s30">
+  <h2>🔧 Захист AMI (Asterisk Manager Interface)</h2>
+  <div class="wbox" style="margin-bottom:.5em;"><strong>AMI надає повний контроль над Asterisk</strong> — потребує максимального захисту (принцип Least Privilege + Complete Mediation).</div>
+  <pre>; /etc/asterisk/manager.conf
+[general]
+enabled=yes
+port=5038
+bindaddr=127.0.0.1        ; тільки loopback!
+; bindaddr=0.0.0.0       ← НІКОЛИ!
+
+[monitoring_user]
+secret=Str0ngAMISecret!
+deny=0.0.0.0/0.0.0.0
+permit=127.0.0.1/255.255.255.255
+permit=10.0.40.5/255.255.255.255  ; тільки моніторинг-хост
+read=system,call,log,cdr
+write=command             ; мінімум необхідних прав
+
+[readonly_user]
+secret=AnotherSecret!
+permit=10.0.40.5/255.255.255.255
+read=call,cdr             ; тільки читання CDR
+write=                    ; без запису</pre>
+  <div class="sn">31 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 32 — Logging & Monitoring ==================== -->
+<section class="slide bg-plain" id="s31">
+  <h2>📊 Логування та моніторинг</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Конфігурація logger.conf:</strong></p>
+      <pre>[logfiles]
+; Повне логування в файл
+messages =&gt; notice,warning,error,verbose,dtmf,fax
+; Security-події окремо (для SIEM)
+security =&gt; security
+; Console для дебагу
+console =&gt; notice,warning,error</pre>
+      <p style="margin-top:.5em;"><strong>Ключові SECURITY-події:</strong></p>
+      <pre>SECURITY InvalidPassword: "SIP/192.168.1.100"
+SECURITY InvalidAccountID: "SIP/6099"
+SECURITY FailedACL: "SIP/10.0.0.50"
+SECURITY RequestNotAllowed: "AMI/unauth"</pre>
+    </div>
+    <div>
+      <p><strong>Команди для моніторингу:</strong></p>
+      <pre>asterisk -rx "core show channels verbose"
+asterisk -rx "pjsip show channels"
+tail -f /var/log/asterisk/security \
+  | grep -E "Fail|Invalid"
+sngrep -I capture.pcap  # аналіз SIP</pre>
+      <div class="hbox" style="margin-top:.5em;"><strong>Accounting (AAA):</strong> CDR + CEL + security-log + SIEM = повний ланцюг аудиту. Без Accounting неможливо виявити атаку та довести факт інциденту.</div>
+    </div>
+  </div>
+  <div class="sn">32 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 33 — Common mistakes ==================== -->
+<section class="slide bg-red" id="s32">
+  <h2>⚠️ Типові помилки конфігурації</h2>
+  <table>
+    <tr><th>Помилка</th><th>Наслідок</th><th>Виправлення</th></tr>
+    <tr><td><code>allowguest=yes</code></td><td class="er">Дзвінки без автентифікації</td><td class="ok"><code>allowguest=no</code></td></tr>
+    <tr><td>Слабкий пароль AMI</td><td class="er">Повний контроль над АТС</td><td class="ok">20+ символів, складний</td></tr>
+    <tr><td><code>context=from-trunk</code> для IP-phones</td><td class="er">Обхід білого списку</td><td class="ok">Окремі контексти</td></tr>
+    <tr><td>AMI на <code>0.0.0.0:5038</code></td><td class="er">Доступ з будь-якого IP</td><td class="ok"><code>bindaddr=127.0.0.1</code></td></tr>
+    <tr><td><code>include =&gt; internal</code> в <code>from-trunk</code></td><td class="er">Toll Fraud через trunk</td><td class="ok">Ізоляція контекстів</td></tr>
+    <tr><td>Asterisk від root</td><td class="er">Компрометація ОС</td><td class="ok"><code>-U asterisk -G asterisk</code></td></tr>
+    <tr><td><code>System(${USERDATA})</code></td><td class="er">Command injection</td><td class="ok"><code>FILTER()</code> + фіксовані аргументи</td></tr>
+    <tr><td>Відсутність fail2ban</td><td class="er">Brute-force без обмежень</td><td class="ok">fail2ban + rate limiting</td></tr>
+    <tr><td>DISA без PIN</td><td class="er">Відкритий доступ до trunk</td><td class="ok">VPN або складний PIN</td></tr>
+  </table>
+  <div class="sn">33 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 34 — Checklist Part 1 ==================== -->
+<section class="slide bg-plain" id="s33">
+  <h2>✅ Чек-ліст безпеки Asterisk (1/2)</h2>
+  <div class="three-col">
+    <div>
+      <p><strong>ОС та файлова система:</strong></p>
+      <ul>
+        <li>☐ Asterisk від користувача <code>asterisk</code> (не root)</li>
+        <li>☐ systemd: <code>NoNewPrivileges</code>, <code>ProtectSystem=strict</code></li>
+        <li>☐ <code>/etc/asterisk/</code> — права <code>750</code>, файли <code>640</code>/<code>600</code></li>
+        <li>☐ Секрети у окремих файлах з правами <code>600</code></li>
+      </ul>
+    </div>
+    <div>
+      <p><strong>Мережевий рівень:</strong></p>
+      <ul>
+        <li>☐ SIP-порти тільки для потрібних підмереж</li>
+        <li>☐ fail2ban активний для Asterisk</li>
+        <li>☐ AMI (<code>5038</code>) → <code>127.0.0.1</code></li>
+        <li>☐ nftables rate-limiting для SIP</li>
+        <li>☐ Asterisk у виділеному VLAN</li>
+      </ul>
+    </div>
+    <div>
+      <p><strong>Конфігурація Asterisk:</strong></p>
+      <ul>
+        <li>☐ <code>allowguest=no</code> (chan_sip)</li>
+        <li>☐ <code>alwaysauthreject=yes</code> (chan_sip)</li>
+        <li>☐ ACL <code>permit</code>/<code>deny</code> для кожного endpoint</li>
+        <li>☐ Окремі контексти: <code>internal</code>, <code>from-trunk</code>, <code>restricted</code></li>
+        <li>☐ <code>autoload=no</code> у modules.conf</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sn">34 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 35 — Checklist Part 2 ==================== -->
+<section class="slide bg-plain" id="s34">
+  <h2>✅ Чек-ліст безпеки Asterisk (2/2)</h2>
+  <div class="three-col">
+    <div>
+      <p><strong>Диалплан:</strong></p>
+      <ul>
+        <li>☐ Whitelist вихідних напрямків</li>
+        <li>☐ Заборона преміум-номерів (1900, міжнар.)</li>
+        <li>☐ <code>GROUP_COUNT()</code> — ліміт одночасних</li>
+        <li>☐ <code>FILTER()</code> для зовнішнього вводу</li>
+        <li>☐ <code>System()</code>/<code>AGI()</code> — без змінних</li>
+        <li>☐ DISA видалена або замінена VPN</li>
+      </ul>
+    </div>
+    <div>
+      <p><strong>Автентифікація та шифрування:</strong></p>
+      <ul>
+        <li>☐ Паролі SIP: мінімум 16 символів</li>
+        <li>☐ TLS для SIP (<code>tlsv1_2</code> або <code>tlsv1_3</code>)</li>
+        <li>☐ SRTP увімкнений (<code>media_encryption=srtp</code>)</li>
+        <li>☐ AMI: окремі акаунти з мін. правами</li>
+      </ul>
+    </div>
+    <div>
+      <p><strong>Моніторинг:</strong></p>
+      <ul>
+        <li>☐ <code>security</code> лог увімкнений</li>
+        <li>☐ CDR/CEL зберігаються й аналізуються</li>
+        <li>☐ Інтеграція з SIEM (ELK, Splunk, Graylog)</li>
+        <li>☐ Алерти при аномальних патернах дзвінків</li>
+        <li>☐ Регулярний аудит конфігурацій</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sn">35 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 36 — Audit tools ==================== -->
+<section class="slide bg-plain" id="s35">
+  <h2>🔍 Інструменти для аудиту</h2>
+  <table>
+    <tr><th>Інструмент</th><th>Призначення</th><th>Команда</th></tr>
+    <tr><td><strong>sipvicious</strong></td><td>Тест на проникнення SIP</td><td><code>svmap target</code>, <code>svcrack -u user target</code></td></tr>
+    <tr><td><strong>sngrep</strong></td><td>Аналіз SIP у терміналі</td><td><code>sngrep -d eth0 port 5060</code></td></tr>
+    <tr><td><strong>Wireshark</strong></td><td>Глибокий аналіз пакетів</td><td>Фільтр: <code>sip or rtp</code></td></tr>
+    <tr><td><strong>fail2ban-client</strong></td><td>Перевірка блокувань</td><td><code>fail2ban-client status asterisk</code></td></tr>
+    <tr><td><strong>nmap</strong></td><td>Виявлення відкритих портів</td><td><code>nmap -sU -p 5060 target</code></td></tr>
+    <tr><td><strong>asterisk CLI</strong></td><td>Внутрішній стан</td><td><code>asterisk -rx "pjsip show endpoints"</code></td></tr>
+    <tr><td><strong>grep/awk</strong></td><td>Аналіз security-логів</td><td><code>grep SECURITY /var/log/asterisk/security</code></td></tr>
+  </table>
+  <div style="margin-top:.5em;">
+    <p><strong>Рекомендований workflow аудиту:</strong></p>
+    <ol>
+      <li>Сканування портів (<code>nmap</code>) → виявлення поверхні атаки</li>
+      <li>SIP-сканування (<code>svmap</code>) → перевірка відкритості</li>
+      <li>Аналіз конфігурацій → пошук слабких місць</li>
+      <li>Перевірка ACL та контекстів</li>
+      <li>Аналіз логів → виявлення попередніх інцидентів</li>
+    </ol>
+  </div>
+  <div class="sn">36 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 37 — Summary ==================== -->
+<section class="slide bg-plain" id="s36">
+  <h2>📌 Підсумок: теорія → практика Asterisk</h2>
+  <table>
+    <tr><th>Принцип безпеки</th><th>Реалізація в Asterisk</th></tr>
+    <tr><td><strong>CIA Тріада</strong></td><td>TLS+SRTP (C), Digest Auth (I), fail2ban+rate-limit (A)</td></tr>
+    <tr><td><strong>AAA Framework</strong></td><td>Digest/ACL (Authn), контексти (Authz), CDR/CEL/SIEM (Accounting)</td></tr>
+    <tr><td><strong>Fail-Safe Defaults</strong></td><td><code>allowguest=no</code>, <code>deny=0.0.0.0/0</code> першим, <code>alwaysauthreject=yes</code></td></tr>
+    <tr><td><strong>Least Privilege</strong></td><td>user <code>asterisk</code>, мінімальні AMI-права, вузькі контексти</td></tr>
+    <tr><td><strong>Attack Surface Min.</strong></td><td><code>autoload=no</code>, закриті порти, VLAN-ізоляція</td></tr>
+    <tr><td><strong>Complete Mediation</strong></td><td>ACL на кожному endpoint, кожен виклик через контекст</td></tr>
+    <tr><td><strong>Zero Trust</strong></td><td>Auth для ВСІХ endpoint, навіть внутрішніх</td></tr>
+    <tr><td><strong>Defense-in-Depth</strong></td><td>ОС → мережа → Asterisk ACL → контекст → диалплан</td></tr>
+  </table>
+  <div class="hbox" style="margin-top:.5em;"><strong>Ключовий висновок:</strong> безпека IP-АТС — це <strong>послідовне</strong> застосування загальних принципів ІБ на специфічних рівнях телефонної системи, а не набір окремих «трюків».</div>
+  <div class="sn">37 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 38 — Resources ==================== -->
+<section class="slide bg-plain" id="s37">
+  <h2>📚 Ресурси та RFC</h2>
+  <div class="three-col">
+    <div>
+      <p><strong>Офіційна документація:</strong></p>
+      <ul>
+        <li><a href="https://wiki.asterisk.org/wiki/display/AST/Asterisk+Security+Best+Practices">wiki.asterisk.org — Security</a></li>
+        <li><a href="https://wiki.asterisk.org/wiki/display/AST/PJSIP+Configuration+Sections+and+Relationships">wiki.asterisk.org — PJSIP</a></li>
+      </ul>
+      <p style="margin-top:.7em;"><strong>Стандарти:</strong></p>
+      <ul>
+        <li><strong>RFC 3261</strong> — SIP</li>
+        <li><strong>RFC 3711</strong> — SRTP</li>
+        <li><strong>RFC 4568</strong> — SDES</li>
+        <li><strong>RFC 5764</strong> — DTLS-SRTP</li>
+      </ul>
+    </div>
+    <div>
+      <p><strong>Теоретична основа:</strong></p>
+      <ul>
+        <li>Saltzer &amp; Schroeder, <em>«The Protection of Information in Computer Systems»</em>, 1975</li>
+        <li>NIST SP 800-53 — Security Controls Catalog</li>
+        <li>OWASP VoIP Security Project</li>
+      </ul>
+    </div>
+    <div>
+      <p><strong>Інструменти:</strong></p>
+      <ul>
+        <li>SIPVicious Suite — <code>github.com/enablesecurity/sipvicious</code></li>
+        <li>fail2ban — <code>fail2ban.org</code></li>
+        <li>sngrep — <code>irontec.github.io/sngrep</code></li>
+      </ul>
+      <p style="margin-top:.7em;"><strong>Книги:</strong></p>
+      <ul>
+        <li><em>«Hacking VoIP»</em> — Himanshu Dwivedi</li>
+        <li><em>«Asterisk: The Definitive Guide»</em> — Madsen, Van Meggelen, Smith</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sn">38 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 39 — Thank You ==================== -->
+<section class="slide bg-title center" id="s38">
+  <div>
+    <h2 style="border:none;font-size:clamp(1.5rem,3.5vw,2.6rem);color:#90e0ef;padding:0;margin-bottom:.5em;">🙋 Дякую за увагу!</h2>
+    <h1 style="font-size:clamp(1.3rem,3vw,2.2rem);margin-bottom:1.5em;">Запитання?</h1>
+    <div class="hbox" style="max-width:36em;text-align:left;margin:0 auto;">
+      <strong>Контрольні запитання:</strong><br>
+      1. Чому <code>allowguest=yes</code> є критичною вразливістю?<br>
+      2. Яка різниця між ACL у <code>sip.conf</code> та правилами <code>iptables</code>?<br>
+      3. Чому не можна включати <code>[internal]</code> у контекст <code>[from-trunk]</code>?<br>
+      4. Опишіть сценарій Toll Fraud крок за кроком.<br>
+      5. Як <code>FILTER()</code> захищає від ін'єкцій у диалплані?
+    </div>
+    <p style="color:#333;font-size:.72rem;margin-top:2em;">RFC: 3261 · 3711 · 4568 · 5764</p>
+  </div>
+  <div class="sn">39 / 40</div>
+</section>
+
+<!-- ==================== SLIDE 40 — Q&A Details ==================== -->
+<section class="slide bg-plain" id="s39">
+  <h2>❓ Контрольні запитання (деталізовані)</h2>
+  <div class="two-col">
+    <div>
+      <p><strong>Теоретичні принципи:</strong></p>
+      <ol>
+        <li>Поясніть CIA Тріаду та наведіть по одному прикладу загрози й захисту для IP-АТС.</li>
+        <li>Що таке AAA Framework? Яка різниця між Authentication та Authorization в Asterisk?</li>
+        <li>Назвіть 5 з 8 принципів Saltzer &amp; Schroeder та їх реалізацію в Asterisk.</li>
+        <li>Що таке Fail-Safe Default? Наведіть два приклади fail-open у конфігурації Asterisk.</li>
+        <li>Поясніть принцип Zero Trust та чому автентифікація внутрішніх IP-телефонів важлива.</li>
+      </ol>
+    </div>
+    <div>
+      <p><strong>Практичні питання:</strong></p>
+      <ol start="6">
+        <li>Яка різниця між <code>permit</code>/<code>deny</code> у <code>sip.conf</code> і правилами iptables?</li>
+        <li>Чому небезпечно мати один контекст для внутрішніх користувачів і зовнішнього SIP-транку?</li>
+        <li>Які Extension-паттерни слід заборонити для запобігання несанкціонованим дзвінкам?</li>
+        <li>Як fail2ban захищає Asterisk від брутфорс-атак?</li>
+        <li>Яка різниця між <code>media_encryption_optimistic</code> та обов'язковим SRTP?</li>
+      </ol>
+    </div>
+  </div>
+  <div class="sn">40 / 40</div>
+</section>
+
+</div><!-- .deck -->
+
+<!-- ==================== NAVIGATION ==================== -->
+<div id="nav">
+  <button onclick="go(-1)" title="Попередній (←)">◀ Назад</button>
+  <span id="counter">1 / 40</span>
+  <button onclick="go(1)" title="Наступний (→)">Вперед ▶</button>
+</div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total  = slides.length;
+let cur = 0;
+
+function show(n) {
+  slides[cur].classList.remove('active');
+  slides[cur].classList.add('prev');
+  setTimeout(() => slides[cur < n ? cur : n + (n < cur ? 1 : 0)].classList.remove('prev'), 400);
+  cur = n;
+  slides[cur].classList.remove('prev');
+  slides[cur].classList.add('active');
+  document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
+  document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+}
+
+function go(dir) {
+  const next = Math.max(0, Math.min(total - 1, cur + dir));
+  if (next !== cur) show(next);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); go(-1); }
+  if (e.key === 'Home') show(0);
+  if (e.key === 'End')  show(total - 1);
+  if (e.key === 'f' || e.key === 'F') {
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  }
+});
+
+// Touch swipe
+let tx = 0;
+document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+}, { passive: true });
+
+// Init
+document.getElementById('prog').style.width = (1 / total * 100) + '%';
+</script>
+
+</body>
+</html>
