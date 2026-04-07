@@ -10,12 +10,26 @@
 html, body { width: 100%; height: 100%; overflow: hidden;
   font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
 
-/* ===== SLIDESHOW ===== */
-.deck { width: 100vw; height: 100vh; position: relative; }
+/* ===== STAGE WRAPPER ===== */
+#stage-wrap {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+
+/* ===== DECK — fixed 1920×1080 canvas ===== */
+.deck {
+  width: 1920px; height: 1080px;
+  position: relative;
+  transform-origin: center center;
+  flex-shrink: 0;
+}
+
+/* ===== SLIDES ===== */
 .slide {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;
-  padding: 3.2vw 4.5vw 4vh 4.5vw;
+  padding: 52px 80px 60px 80px;
   opacity: 0; pointer-events: none;
   transition: opacity .38s ease, transform .38s ease;
   transform: translateX(60px);
@@ -32,14 +46,14 @@ html, body { width: 100%; height: 100%; overflow: hidden;
 .bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
 .bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
 
-/* ===== TYPOGRAPHY ===== */
-h1 { font-size: clamp(1.7rem, 3.8vw, 3rem); color: #00b4d8; line-height: 1.15; margin-bottom: .5em; }
-h2 { font-size: clamp(1.1rem, 2.2vw, 1.7rem); color: #48cae4;
+/* ===== TYPOGRAPHY (fixed px for correct scaling at 1920×1080) ===== */
+h1 { font-size: 48px; color: #00b4d8; line-height: 1.15; margin-bottom: .5em; }
+h2 { font-size: 28px; color: #48cae4;
      border-bottom: 2px solid #00b4d8; padding-bottom: .28em; margin-bottom: .6em; }
-h3 { font-size: clamp(.82rem, 1.4vw, 1rem); color: #fff; margin: .5em 0 .3em; }
-p  { font-size: clamp(.7rem, 1.2vw, .88rem); line-height: 1.55; margin-bottom: .35em; }
+h3 { font-size: 18px; color: #fff; margin: .5em 0 .3em; }
+p  { font-size: 15px; line-height: 1.55; margin-bottom: .35em; }
 ul, ol { margin-left: 1.4em; }
-li { font-size: clamp(.68rem, 1.15vw, .85rem); line-height: 1.5; margin-bottom: .24em; }
+li { font-size: 14px; line-height: 1.5; margin-bottom: .24em; }
 strong { color: #90e0ef; }
 em { color: #ccc; font-style: italic; }
 a  { color: #48cae4; text-decoration: none; }
@@ -50,11 +64,11 @@ code { font-family: 'Consolas','Courier New',monospace; color: #90e0ef;
        background: rgba(0,180,216,.12); padding: .08em .32em; border-radius: 3px;
        font-size: .88em; }
 pre  { font-family: 'Consolas','Courier New',monospace;
-       font-size: clamp(.47rem, .88vw, .67rem);
+       font-size: 12px;
        background: #0d1117; border: 1px solid #00b4d8;
        border-radius: .4em; padding: .65em 1em;
        line-height: 1.48; white-space: pre; overflow: auto;
-       max-height: 44vh; width: 100%; margin: .4em 0; }
+       max-height: 480px; width: 100%; margin: .4em 0; }
 
 /* ===== LAYOUT ===== */
 .two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4em; width: 100%; }
@@ -74,29 +88,29 @@ pre  { font-family: 'Consolas','Courier New',monospace;
   background: rgba(0,180,216,.12);
   border-left: 4px solid #00b4d8;
   padding: .45em .85em; border-radius: 0 .35em .35em 0; margin: .45em 0;
-  font-size: clamp(.65rem, 1.1vw, .82rem);
+  font-size: 13px;
 }
 .wbox {
   background: rgba(247,127,0,.12);
   border-left: 4px solid #f77f00;
   padding: .45em .85em; border-radius: 0 .35em .35em 0; margin: .45em 0;
-  font-size: clamp(.65rem, 1.1vw, .82rem);
+  font-size: 13px;
 }
 .rbox {
   background: rgba(230,57,70,.12);
   border-left: 4px solid #e63946;
   padding: .45em .85em; border-radius: 0 .35em .35em 0; margin: .45em 0;
-  font-size: clamp(.65rem, 1.1vw, .82rem);
+  font-size: 13px;
 }
 .gbox {
   background: rgba(82,183,136,.12);
   border-left: 4px solid #52b788;
   padding: .45em .85em; border-radius: 0 .35em .35em 0; margin: .45em 0;
-  font-size: clamp(.65rem, 1.1vw, .82rem);
+  font-size: 13px;
 }
 
 /* ===== TABLES ===== */
-table { width: 100%; border-collapse: collapse; font-size: clamp(.58rem, 1vw, .78rem); margin: .4em 0; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; margin: .4em 0; }
 th { background: rgba(0,180,216,.22); color: #48cae4; padding: .35em .6em; text-align: left; }
 td { padding: .27em .6em; border-bottom: 1px solid rgba(255,255,255,.08); vertical-align: top; }
 tr:nth-child(even) td { background: rgba(255,255,255,.04); }
@@ -109,45 +123,102 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 .hl   { color: #90e0ef; font-weight: bold; }
 
 /* ===== SLIDE NUMBER ===== */
-.sn { position: absolute; bottom: 1.2vh; left: 4.5vw;
-      font-size: .6rem; color: #333; }
+.sn { position: absolute; bottom: 16px; left: 80px; font-size: 11px; color: #333; }
 
-/* ===== NAVIGATION ===== */
+/* ===== NOTES BUTTON (injected by JS into each slide) ===== */
+.note-btn {
+  position: absolute; bottom: 10px; right: 16px;
+  background: rgba(0,180,216,.13); border: 1px solid rgba(0,180,216,.38);
+  color: #48cae4; border-radius: .28em;
+  padding: 4px 11px; font-size: 12px; cursor: pointer;
+  transition: background .2s; z-index: 10;
+  font-family: 'Segoe UI', Arial, sans-serif; letter-spacing: .03em;
+  line-height: 1.5;
+}
+.note-btn:hover { background: rgba(0,180,216,.32); color: #90e0ef; }
+
+/* ===== NAVIGATION (fixed — outside scale) ===== */
 #nav {
-  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
-  display: flex; align-items: center; gap: .55em;
+  position: fixed; bottom: 14px; right: 20px; z-index: 300;
+  display: flex; align-items: center; gap: 8px;
 }
 #nav button {
-  background: rgba(0,180,216,.15); border: 1px solid #00b4d8; color: #00b4d8;
-  border-radius: .3em; padding: .38em .85em; font-size: .82rem; cursor: pointer;
+  background: rgba(0,180,216,.18); border: 1px solid #00b4d8; color: #00b4d8;
+  border-radius: .3em; padding: 6px 14px; font-size: 13px; cursor: pointer;
   transition: background .2s;
 }
-#nav button:hover { background: rgba(0,180,216,.38); }
-#counter { color: #555; font-size: .75rem; min-width: 4.5em; text-align: center; }
+#nav button:hover { background: rgba(0,180,216,.4); }
+#counter { color: #555; font-size: 13px; min-width: 56px; text-align: center; }
 
 /* ===== PROGRESS ===== */
 #prog { position: fixed; bottom: 0; left: 0; height: 3px;
-        background: #00b4d8; transition: width .32s ease; z-index: 200; }
+        background: #00b4d8; transition: width .32s ease; z-index: 400; }
 
 /* ===== HINT ===== */
-#hint { position: fixed; top: .8vh; right: 1.5vw;
-        font-size: .58rem; color: #2a2a2a; z-index: 100; }
+#hint { position: fixed; top: 8px; right: 16px;
+        font-size: 11px; color: #2a2a2a; z-index: 300; }
+
+/* ===== NOTES MODAL ===== */
+#modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.75);
+  align-items: center; justify-content: center;
+}
+#modal-overlay.open { display: flex; }
+#modal {
+  background: #0d1527; border: 1px solid #00b4d8;
+  border-radius: .55em;
+  width: min(860px, 88vw);
+  max-height: 78vh;
+  display: flex; flex-direction: column;
+  box-shadow: 0 10px 48px rgba(0,0,0,.75);
+}
+#modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 22px 10px;
+  border-bottom: 1px solid rgba(0,180,216,.28);
+  flex-shrink: 0;
+}
+#modal-title { color: #48cae4; font-size: 15px; font-weight: 600; }
+#modal-close {
+  background: none; border: none; color: #666;
+  font-size: 22px; cursor: pointer; line-height: 1; padding: 0 4px;
+}
+#modal-close:hover { color: #fff; }
+#modal-body {
+  padding: 18px 24px;
+  overflow-y: auto;
+  font-size: 14px; line-height: 1.72;
+  color: #c8c8c8;
+  flex: 1;
+}
+#modal-body p { margin-bottom: .85em; }
+#modal-body strong { color: #90e0ef; }
+#modal-body em { color: #aaa; }
+#modal-body code {
+  background: rgba(0,180,216,.12); color: #90e0ef;
+  padding: .06em .3em; border-radius: 3px; font-size: .88em;
+  font-family: 'Consolas','Courier New',monospace;
+}
 </style>
 </head>
 <body>
 
 <div id="prog"></div>
-<div id="hint">← → стрілки · F — повний екран</div>
+<div id="hint">← → стрілки · F — повний екран · N / 📝 — нотатки</div>
 
+<div id="stage-wrap">
 <div class="deck" id="deck">
+
 
 <!-- ==================== SLIDE 1 — Title ==================== -->
 <section class="slide bg-title center active" id="s0">
   <div>
-    <p style="color:#48cae4;font-size:clamp(.8rem,1.6vw,1.1rem);letter-spacing:.12em;margin-bottom:.6em;text-transform:uppercase;">Курс «Технології VoIP» · Кібербезпека (магістратура)</p>
-    <h1 style="font-size:clamp(2rem,4.5vw,3.5rem);margin-bottom:.4em;">Лекція 7</h1>
-    <h2 style="border:none;font-size:clamp(1.2rem,2.8vw,2.1rem);color:#90e0ef;padding:0;margin-bottom:1.6em;">Безпека IP-АТС на прикладі Asterisk</h2>
-    <p style="color:#555;font-size:clamp(.72rem,1.3vw,.9rem);">Кафедра інформаційних технологій та кібербезпеки</p>
+    <p style="color:#48cae4;font-size:19px;letter-spacing:.12em;margin-bottom:.6em;text-transform:uppercase;">Курс «Технології VoIP» · Кібербезпека (магістратура)</p>
+    <h1 style="font-size:62px;margin-bottom:.4em;">Лекція 7</h1>
+    <h2 style="border:none;font-size:36px;color:#90e0ef;padding:0;margin-bottom:1.6em;">Безпека IP-АТС на прикладі Asterisk</h2>
+    <p style="color:#555;font-size:16px;">Кафедра інформаційних технологій та кібербезпеки</p>
   </div>
   <div class="sn">1 / 40</div>
 </section>
@@ -1270,8 +1341,8 @@ sngrep -I capture.pcap  # аналіз SIP</pre>
 <!-- ==================== SLIDE 39 — Thank You ==================== -->
 <section class="slide bg-title center" id="s38">
   <div>
-    <h2 style="border:none;font-size:clamp(1.5rem,3.5vw,2.6rem);color:#90e0ef;padding:0;margin-bottom:.5em;">🙋 Дякую за увагу!</h2>
-    <h1 style="font-size:clamp(1.3rem,3vw,2.2rem);margin-bottom:1.5em;">Запитання?</h1>
+    <h2 style="border:none;font-size:42px;color:#90e0ef;padding:0;margin-bottom:.5em;">🙋 Дякую за увагу!</h2>
+    <h1 style="font-size:36px;margin-bottom:1.5em;">Запитання?</h1>
     <div class="hbox" style="max-width:36em;text-align:left;margin:0 auto;">
       <strong>Контрольні запитання:</strong><br>
       1. Чому <code>allowguest=yes</code> є критичною вразливістю?<br>
@@ -1313,7 +1384,9 @@ sngrep -I capture.pcap  # аналіз SIP</pre>
   <div class="sn">40 / 40</div>
 </section>
 
+
 </div><!-- .deck -->
+</div><!-- #stage-wrap -->
 
 <!-- ==================== NAVIGATION ==================== -->
 <div id="nav">
@@ -1322,18 +1395,46 @@ sngrep -I capture.pcap  # аналіз SIP</pre>
   <button onclick="go(1)" title="Наступний (→)">Вперед ▶</button>
 </div>
 
+<!-- ==================== NOTES MODAL ==================== -->
+<div id="modal-overlay" onclick="closeModal(event)">
+  <div id="modal">
+    <div id="modal-head">
+      <span id="modal-title">📝 Нотатки до слайду</span>
+      <button id="modal-close" onclick="closeModal(null)" title="Закрити (Esc)">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script type="application/json" id="notes-data">["<p>Лекція 7 присвячена практичному аспекту безпеки IP-телефонних мереж: ми розглянемо, як фундаментальні принципи інформаційної безпеки реалізуються у конкретній системі — IP-АТС Asterisk. Asterisk є найпоширенішою у світі відкритою програмною АТС і водночас найчастішою ціллю атак типу Toll Fraud та несанкціонованого доступу. Саме тому ця система є ідеальним навчальним середовищем для демонстрації принципів безпеки: вона відкрита, добре задокументована та демонструє всі типові вразливості класу IP PBX.</p>", "<p>Лекція структурована за принципом «від теорії до практики». Ми розпочнемо з огляду архітектури IP-АТС і поверхні атаки, після чого перейдемо до теоретичного фундаменту — CIA тріади, AAA Framework та принципів Saltzer & Schroeder. Саме ця теоретична основа є унікальною особливістю лекції: більшість матеріалів з безпеки Asterisk зосереджені виключно на практичних рецептах, проте не пояснюють, <em>чому</em> ці рецепти є правильними. Ми виправимо цю прогалину, а потім продемонструємо реалізацію кожного принципу на конкретних прикладах конфігурацій. Блок 8 — типові помилки та чек-ліст — дозволить систематизувати набуті знання та сформувати практичний інструмент для аудиту реальних систем.</p>", "<p><strong>Теоретична вставка: CIA Triad.</strong>  \nCIA Triad (Confidentiality — Integrity — Availability) — це фундаментальна модель інформаційної безпеки, яка описує три ключові властивості, що мають бути забезпечені для будь-якої захищеної системи. Модель була сформульована ще у 1970-х роках і залишається актуальною донині як базовий концептуальний інструмент аналізу безпеки.</p>\n<p>У контексті IP-АТС усі три властивості мають специфічне практичне значення. <strong>Конфіденційність</strong> (Confidentiality) порушується, коли зловмисник отримує можливість перехоплювати SIP-сигналізацію або RTP медіа-потоки: це може призвести до витоку комерційної таємниці, записів переговорів або персональних даних абонентів. <strong>Цілісність</strong> (Integrity) порушується при підміні SIP-запитів або маніпуляції заголовками: атаки типу Caller ID spoofing дозволяють шахраям здійснювати дзвінки від імені легітимних номерів організації. <strong>Доступність</strong> (Availability) є критичною для корпоративних комунікацій: DoS-атака на SIP-порт або flood реєстраційних запитів може вивести АТС з ладу та призупинити бізнес-процеси.</p>\n<p>Ключовим є розуміння того, що справжній захист системи вимагає забезпечення <strong>всіх трьох</strong> властивостей одночасно. Наприклад, шифрування трафіку (TLS/SRTP) захищає конфіденційність, але не запобігає DoS-атаці. Fail2ban захищає доступність, але не шифрує трафік. Повноцінний захист IP-АТС є комбінацією заходів, кожен з яких адресує певну властивість CIA.</p>", "<p><strong>Теоретична вставка: AAA Framework.</strong>  \nAAA (Authentication, Authorization, Accounting) — класична тріада контролю доступу, яка описує повний цикл управління ідентифікацією та доступом у будь-якій комп'ютерній системі. Ця концепція є стандартом для мережевих систем (RADIUS, DIAMETER) і повністю застосовується до IP-АТС.</p>\n<p><strong>Автентифікація</strong> (Authentication) відповідає на питання «хто ти?» і є першою лінією захисту. В Asterisk автентифікація реалізується через SIP Digest Authentication (challenge-response механізм на основі MD5/SHA), перевірку IP-адреси через ACL або TLS-сертифікат у chan_pjsip. <strong>Авторизація</strong> (Authorization) відповідає на питання «що тобі дозволено?». В Asterisk це реалізується через систему контекстів у <code>extensions.conf</code>: після успішної автентифікації endpoint потрапляє у визначений контекст, де діють конкретні правила доступу до extension. <strong>Облік</strong> (Accounting) відповідає на питання «що ти робив?» і є критично важливим для виявлення інцидентів та судово-технічного аналізу. В Asterisk це CDR (Call Detail Records), CEL (Channel Event Logging) та окремий файл security-log.</p>\n<p>Типова помилка адміністраторів — зосередитися виключно на автентифікації, ігноруючи облік. Без повноцінного логування атака типу Toll Fraud може тривати тижнями до виявлення.</p>", "<p><strong>Теоретична вставка: класика security engineering.</strong>  \nУ 1975 році Джером Солтзер та Майкл Шредер опублікували роботу «The Protection of Information in Computer Systems» у журналі Proceedings of the IEEE. Ця стаття сформулювала вісім принципів проектування захищених систем, які й сьогодні залишаються актуальними та цитуються у більшості підручників з кібербезпеки.</p>\n<p><strong>Economy of Mechanism</strong> (економія механізму) означає, що система захисту має бути якомога простішою і компактнішою. Складні механізми важко перевіряти та тестувати. В Asterisk це реалізується через мінімальний набір завантажених модулів та прості, очевидні контексти диалплану.</p>\n<p><strong>Fail-Safe Defaults</strong> вимагає, щоб базовий стан системи забороняв доступ, а дозвіл надавався явно. Це прямо відображається у правилі «спочатку <code>deny</code>, потім <code>permit</code>» в конфігурації ACL та директиві <code>allowguest=no</code>.</p>\n<p><strong>Complete Mediation</strong> означає, що кожен запит на доступ до ресурсу перевіряється незалежно від попередніх. У Asterisk це реалізується тим, що кожен SIP-запит проходить перевірку ACL, кожен виклик обробляється через відповідний контекст.</p>\n<p><strong>Open Design</strong> стверджує, що безпека системи не повинна залежати від таємності її механізмів. Asterisk є open-source системою, і її безпека базується на коректній конфігурації, а не на обфускації.</p>\n<p><strong>Separation of Privilege</strong> вимагає, щоб критичні операції потребували виконання кількох незалежних умов. В Asterisk це окремі контексти для різних груп користувачів та окремі AMI-акаунти для різних систем моніторингу.</p>\n<p><strong>Least Privilege</strong> — кожен суб'єкт отримує мінімум прав, необхідних для виконання своєї функції. Запуск Asterisk від непривілейованого системного користувача є прямою реалізацією цього принципу.</p>\n<p><strong>Least Common Mechanism</strong> вимагає мінімізувати спільно використовувані механізми між різними суб'єктами. VLAN-ізоляція телефонів від серверів є яскравим прикладом.</p>\n<p><strong>Psychological Acceptability</strong> означає, що механізми безпеки мають бути зрозумілими та не ускладнювати легітимне використання. Іменовані контексти (<code>internal</code>, <code>from-trunk</code>, <code>restricted</code>) та коментарі у конфігах роблять систему зрозумілою для адміністратора.</p>", "<p>Принцип Fail-Safe Defaults є, мабуть, найбільш часто порушуваним в реальних конфігураціях Asterisk. Розглянемо два підходи.</p>\n<p><strong>Fail-Open</strong> (небезпечний підхід): система дозволяє все, що не заборонено явно. Це інтуїтивно зручно для адміністратора — не потрібно передбачати всі легітимні сценарії. Однак цей підхід перекладає тягар захисту на blacklist: адміністратор має знати <em>всі</em> можливі загрози й заблокувати їх. На практиці це неможливо — з'являються нові атаки, нові вектори, про які адміністратор не знав.</p>\n<p><strong>Fail-Secure</strong> (правильний підхід): система забороняє все, що не дозволено явно. Адміністратор описує <em>легітимні</em> сценарії, всі інші автоматично блокуються. Це потребує більше зусиль на початковому налаштуванні, але є принципово надійнішим.</p>\n<p>У Asterisk найяскравіший приклад порушення цього принципу — директива <code>allowguest=yes</code>, яка була дефолтною у старих версіях chan_sip. Вона дозволяла анонімні вхідні дзвінки без будь-якої автентифікації. У поєднанні з відсутністю ACL це відкривало можливість для Toll Fraud без необхідності зламу паролів.</p>\n<p>Аналогічно, порядок рядків <code>permit</code>/<code>deny</code> в ACL-конфігурації є принциповим: якщо перший рядок <code>permit=0.0.0.0/0</code> (дозволити всіх), наступний <code>deny</code> не матиме ефекту для вже задіяних з'єднань. Правильна практика — завжди починати з <code>deny=0.0.0.0/0</code>.</p>", "<p><strong>Теоретична вставка: Attack Surface.</strong>  \nКонцепція «поверхні атаки» (Attack Surface) описує сукупність усіх точок, через які зловмисник може намагатися взаємодіяти зі системою. Чим менша поверхня атаки, тим складніше здійснити успішну атаку. Цей принцип є розширенням Economy of Mechanism: він стосується не лише складності механізмів захисту, але й кількості самих точок входу.</p>\n<p>Стандартна встановлена Asterisk відкриває значно більше точок входу, ніж зазвичай потрібно для конкретного розгортання. UDP-порт 5060 слухає на всіх інтерфейсах, AMI доступний через TCP 5038, HTTP-сервер ARI запущений на 8088, завантажені десятки модулів — включно з тими, що не використовуються. Кожен з цих компонентів є потенційним вектором атаки.</p>\n<p>Мінімізація поверхні атаки в Asterisk починається з <code>modules.conf</code>: директива <code>autoload=no</code> забороняє автоматичне завантаження всіх знайдених модулів, замість цього адміністратор явно вказує список необхідних. Потім обмежуємо мережеву доступність: SIP-порти — лише для потрібних підмереж, AMI — тільки loopback або конкретний моніторинг-хост, HTTP/ARI — вимикаємо або обмежуємо до HTTPS з localhost. RTP-діапазон (<code>rtpstart</code>/<code>rtpend</code> у <code>rtp.conf</code>) слід звузити до реально необхідного — замість 10000-20000 можна обмежитись 16384-32767 або ще вужче.</p>", "<p><strong>Теоретична вставка: Zero Trust Architecture.</strong>  \nКонцепція Zero Trust була сформульована аналітиком Forrester Research Джоном Кіндервагом у 2010 році і отримала широке розповсюдження після публікації Google BeyondCorp (2014) та документів NIST SP 800-207 (2020). Основна ідея: «Never trust, always verify» — жоден суб'єкт не є автоматично довіреним, незалежно від його розташування у мережі.</p>\n<p>Традиційна (периметрова) модель безпеки ділить мережу на «довірену» (внутрішня) та «недовірену» (зовнішня) зони. Усередині периметра пристрої зазвичай мають значно вищий рівень довіри. Ця модель має принципову вразливість: після компрометації одного внутрішнього пристрою зловмисник отримує «довірений» доступ до всієї внутрішньої мережі, включаючи АТС.</p>\n<p>У контексті IP-АТС Zero Trust означає: автентифікація є обов'язковою для <strong>кожного</strong> endpoint, незалежно від того, чи він знаходиться у внутрішній мережі чи за периметром. Внутрішній IP-телефон на вашому VLAN так само потребує Digest Authentication, як і зовнішній SIP-клієнт. Якщо цей телефон буде скомпрометований (наприклад, через вразливість прошивки), він не отримає автоматичного доступу до дзвінків — без валідного пароля Asterisk його не автентифікує. Крім того, навіть автентифікований endpoint має мінімальні права (обмежений контекст), що унеможливлює горизонтальний рух зловмисника.</p>", "<p>IP-АТС (IP PBX, IP Private Branch Exchange) — це програмний або апаратний комутатор, що обробляє телефонні дзвінки через IP-мережу. На відміну від традиційної PSTN-АТС, IP-АТС є повноцінним мережевим сервером, доступним через стандартні IP-протоколи, що одночасно розширює її функціональність та збільшує поверхню атаки.</p>\n<p>Масштаб загрози Toll Fraud є вражаючим: за даними Communication Fraud Control Association (CFCA), щорічні збитки від телекомунікаційного шахрайства перевищують 40 мільярдів доларів. Значна частина цих збитків — прямий наслідок незахищених або неправильно налаштованих IP-АТС.</p>\n<p>Asterisk є найпоширенішою відкритою IP-АТС у світі. Вона є основою для комерційних продуктів (FreePBX, Elastix, PIAF) і використовується від малих підприємств до телекомунікаційних провайдерів. Саме відкритість коду і широка поширеність роблять Asterisk водночас добре вивченою та добре атакованою системою.</p>", "<p>Розуміння архітектури Asterisk є необхідним для аналізу безпеки, оскільки кожен компонент є потенційним вектором атаки.</p>\n<p><strong>Channel Drivers</strong> (chan_pjsip, chan_sip, chan_dahdi) — це SIP-стек системи, перший і найбільший рубіж захисту. Через SIP-порт (5060/5061) надходить весь зовнішній трафік. chan_pjsip є сучасним driver'ом на базі бібліотеки PJSIP і рекомендується для нових розгортань; chan_sip є legacy-драйвером зі значним технічним боргом у безпеці.</p>\n<p><strong>Dialplan</strong> (extensions.conf) — це «мозок» АТС, що визначає логіку обробки дзвінків. Вразливості диалплану (Toll Fraud, DISA, command injection) є другим за значимістю вектором атаки.</p>\n<p><strong>AMI</strong> (Asterisk Manager Interface, TCP/5038) та <strong>ARI</strong> (Asterisk REST Interface, HTTP/8088) — інтерфейси керування, що надають повний контроль над системою. Їх компрометація еквівалентна компрометації всієї АТС.</p>\n<p><strong>AGI/FastAGI</strong> — механізм виконання зовнішніх скриптів у контексті дзвінка. Вразливості AGI-скриптів можуть призвести до виконання довільного коду.</p>", "<p>Принцип Least Privilege (Principle of Least Privilege, PoLP) є одним з найважливіших принципів безпеки систем. Він вимагає, щоб кожен суб'єкт (процес, користувач, сервіс, скрипт) мав рівно ті права та повноваження, які мінімально необхідні для виконання його функції, і жодних зайвих.</p>\n<p>Ефект PoLP полягає у <strong>обмеженні радіусу ураження</strong> (blast radius): якщо компонент зі мінімальними правами буде скомпрометований, зловмисник отримає обмежений доступ і не зможе безперешкодно переміщатися по системі.</p>\n<p>У Asterisk PoLP реалізується на чотирьох незалежних рівнях, які утворюють систему Defense-in-Depth. <strong>Рівень ОС</strong>: процес Asterisk запускається від системного користувача без shell-доступу — навіть якщо зловмисник виконає код через AGI, він не матиме прав root. <strong>Мережевий рівень</strong>: VLAN-ізоляція обмежує доступ між сегментами, fail2ban обмежує кількість спроб автентифікації. <strong>Рівень ACL</strong>: кожен endpoint у конфігурації Asterisk має власний список дозволених IP-адрес. <strong>Рівень диалплану</strong>: кожен endpoint потрапляє у мінімальний контекст з явно дозволеними напрямками дзвінків.</p>\n<p>Важливо розуміти, що жоден з рівнів не є достатнім сам по собі. Це і є суть Defense-in-Depth: порушення одного рубежу не призводить до компрометації всієї системи.</p>", "<p>Перший рівень захисту Asterisk — це операційна система. Найважливіший захід — запуск процесу Asterisk від спеціального системного користувача без привілеїв root і без можливості інтерактивного входу в систему (<code>-s /sbin/nologin</code>).</p>\n<p>Параметри <code>-U asterisk -G asterisk</code> при запуску або відповідні директиви <code>User=</code> / <code>Group=</code> у systemd unit-файлі забезпечують зниження привілеїв одразу після старту процесу. Це означає, що Asterisk не має доступу до файлів поза своїми робочими директоріями, не може встановлювати нові мережеві служби на привілейованих портах (крім тих, що прив'язані при старті), не може змінювати системні файли.</p>\n<p>Директиви systemd є додатковим шаром ізоляції: <code>NoNewPrivileges=true</code> забороняє будь-яке підвищення прав (execve з setuid), <code>ProtectSystem=strict</code> монтує більшість файлової системи як read-only, <code>ProtectHome=true</code> унеможливлює доступ до домашніх директорій, <code>PrivateTmp=true</code> надає Asterisk ізольовану <code>/tmp</code>, а <code>CapabilityBoundingSet=CAP_NET_BIND_SERVICE</code> залишає лише здатність прив'язуватися до портів нижче 1024 (необхідна для SIP 5060/5061).</p>", "<p>Конфігураційні файли Asterisk містять критично чутливу інформацію: паролі SIP-акаунтів, секрети AMI, параметри аутентифікації trunk-ів. Неправильні права доступу до цих файлів перетворюють їх на відкрите сховище секретів для будь-якого локального користувача.</p>\n<p>Стандартна практика: директорія <code>/etc/asterisk/</code> — права 750 (rwxr-x---), власник asterisk:asterisk. Конфігураційні файли — 640, а файли з паролями (<code>sip.conf</code>, <code>manager.conf</code>, <code>pjsip.conf</code>) — 600. Це гарантує, що лише процес Asterisk (та root) може читати секрети.</p>\n<p>Механізм <code>#include</code> дозволяє відокремити «публічну» частину конфігурації від секретів. Публічний <code>sip.conf</code> (права 640) містить загальні параметри, а приватний <code>sip_secrets.conf</code> (права 600) — паролі та ключі. Другий файл вноситься до <code>.gitignore</code>, що запобігає випадковому потраплянню секретів у систему контролю версій.</p>\n<p>Для корпоративного середовища рекомендується розглянути інтеграцію з HashiCorp Vault або аналогічними системами управління секретами, які забезпечують централізоване зберігання, ротацію та аудит доступу до секретів.</p>", "<p>Мережева сегментація є одним з найефективніших заходів захисту IP-АТС, що реалізує одразу кілька принципів безпеки: Least Common Mechanism (ізоляція між групами), Defense-in-Depth та Attack Surface Minimization.</p>\n<p>Рекомендована архітектура передбачає виділення Asterisk у окремий VLAN (наприклад, VLAN 20). IP-телефони знаходяться в VLAN 10 і мають доступ до АТС лише по портах SIP (5060/5061) та RTP (обмежений діапазон). SIP Trunk провайдера маршрутизується через VLAN 30 з ACL, що дозволяє трафік лише від відомих IP-адрес провайдера. Система моніторингу в VLAN 40 має доступ до AMI (TCP 5038) лише з конкретного моніторинг-хосту.</p>\n<p>Така архітектура означає, що навіть якщо зловмисник скомпрометував один IP-телефон, він не матиме прямого доступу до AMI, до серверів у інших VLAN або до зовнішніх SIP-trunk-ів. Кожна спроба виходу за межі свого VLAN буде заблокована на рівні мережевого обладнання, незалежно від налаштувань самої Asterisk.</p>", "<p>Принцип Complete Mediation вимагає, щоб <em>кожен</em> запит до захищеного ресурсу перевірявся незалежно. На практиці для IP-АТС це реалізується через чотири незалежні рівні IP-фільтрації, кожен з яких є окремим рубежем захисту.</p>\n<p><strong>Перший рівень</strong> — iptables/nftables на рівні ядра ОС. Блокує цілі підмережі, країни (через geolocation-бази) або відомо шкідливі IP-простори. Цей рівень діє ще до того, як пакет досягне процесу Asterisk.</p>\n<p><strong>Другий рівень</strong> — fail2ban, що динамічно аналізує логи Asterisk і додає правила блокування для IP-адрес, що здійснюють brute-force атаки. Цей рівень реагує на зловмисну поведінку в реальному часі.</p>\n<p><strong>Третій рівень</strong> — внутрішні ACL Asterisk у конфігурації (<code>permit</code>/<code>deny</code> у sip.conf або об'єкти <code>type=acl</code> у pjsip.conf). Фільтрація на рівні застосунку з урахуванням SIP-контексту.</p>\n<p><strong>Четвертий рівень</strong> — контексти диалплану, що обмежують набір доступних extension для конкретного endpoint. Навіть якщо зловмисник пройшов перші три рівні, контекст визначає, що йому дозволено робити.</p>", "<p>chan_sip — legacy SIP-драйвер Asterisk, що використовується в мільйонах розгортань по всьому світу, незважаючи на оголошення про deprecation. Розуміння конфігурації ACL у chan_sip є необхідним для аудиту існуючих систем.</p>\n<p>Директива <code>deny=0.0.0.0/0.0.0.0</code> у секції <code>[general]</code> реалізує Fail-Safe Default: забороняємо всіх, а потім явно дозволяємо потрібні підмережі через <code>permit=</code>. Важливо розуміти порядок обробки: Asterisk перевіряє правила послідовно, і перший збіг визначає результат. Тому <code>deny</code> має бути першим.</p>\n<p>Директива <code>allowguest=no</code> є абсолютно критичною: вона забороняє анонімні вхідні дзвінки без автентифікації. У старих версіях Asterisk це значення було <code>yes</code> за замовчуванням, що відкривало можливість для Toll Fraud без будь-якого злому.</p>\n<p><code>alwaysauthreject=yes</code> змушує Asterisk відповідати однаковим чином на запити з неіснуючим і з існуючим, але невірним паролем, акаунтом. Це унеможливлює username enumeration — атаку, при якій зловмисник визначає наявні акаунти за різницею у відповідях сервера.</p>\n<p><code>contactpermit</code> та <code>contactdeny</code> перевіряють IP-адресу в заголовку Contact при REGISTER-запиті. Без цього захисту зловмисник може зареєструвати внутрішній номер з зовнішньої IP-адреси.</p>", "<p>chan_pjsip — сучасний SIP-драйвер Asterisk, побудований на базі бібліотеки PJSIP. Він підтримує більш гнучку та об'єктно-орієнтовану конфігурацію порівняно з chan_sip.</p>\n<p>Ключова відмінність у конфігурації ACL: в chan_pjsip ACL визначається як окремий об'єкт типу <code>acl</code> і прив'язується до endpoint через параметри <code>acl=</code> та <code>contact_acl=</code>. Це дозволяє перевикористовувати одне ACL-визначення для кількох endpoint, а також легко змінювати його незалежно від налаштувань конкретних endpoint.</p>\n<p>Параметр <code>acl=</code> перевіряє IP-адресу SIP-запиту (джерело пакету), а <code>contact_acl=</code> перевіряє IP-адресу у заголовку Contact SIP-повідомлення. Для REGISTER-запитів ці адреси можуть відрізнятися (наприклад, при роботі через NAT-проксі), тому рекомендується налаштовувати обидва параметри.</p>\n<p>Об'єкти ACL у pjsip.conf підтримують нотацію CIDR (192.168.10.0/24), що значно зручніше порівняно з масками у chan_sip (192.168.10.0/255.255.255.0).</p>", "<p>fail2ban — це демон, що моніторить лог-файли на наявність підозрілих патернів і динамічно блокує відповідні IP-адреси на рівні брандмауера. Для Asterisk це найефективніший засіб захисту від brute-force атак на SIP Digest Authentication.</p>\n<p>Фільтр <code>asterisk.conf</code> для fail2ban визначає регулярні вирази, що відповідають записам у логах про невдалі спроби автентифікації. При виявленні <code>maxretry</code> спроб за <code>findtime</code> секунд, fail2ban автоматично додає правило iptables/nftables, яке блокує цю IP-адресу на <code>bantime</code> секунд.</p>\n<p>Значення параметрів потребують налаштування під конкретне середовище: у корпоративній мережі з фіксованими IP клієнтів можна встановити жорсткіші порогові значення (maxretry=3, bantime=86400), тоді як у публічній АТС потрібен більш ліберальний підхід.</p>\n<p>nftables rate-limiting є додатковим захистом від SIP-флуду: навіть якщо зловмисник генерує тисячі запитів за секунду, ядро ОС відкидатиме надлишкові пакети ще до того, як вони досягнуть процесу Asterisk. Це захищає доступність (A в CIA) від атак на виснаження ресурсів.</p>", "<p>Контексти є фундаментальним механізмом авторизації у Asterisk. Вони реалізують принцип Separation of Privilege: різні групи користувачів потрапляють у різні контексти, кожен з яких містить лише дозволені для цієї групи операції.</p>\n<p>Логіка роботи є такою: після успішної автентифікації SIP-запиту Asterisk визначає, до якого endpoint він належить. Для цього endpoint у конфігурації вказаний параметр <code>context</code>, що визначає іменований розділ у <code>extensions.conf</code>. Далі Asterisk шукає у цьому розділі extension, що відповідає набраному номеру. Якщо знайдено — виконує відповідні дії. Якщо не знайдено — дзвінок не проходить.</p>\n<p>Це означає, що два різних endpoint можуть набрати однаковий номер і отримати різний результат: один потрапить у зовнішню лінію (якщо його контекст включає outbound правила), інший отримає відмову (якщо його контекст обмежений). Така ізоляція є прямою реалізацією Authorization у моделі AAA.</p>", "<p>Налаштування контекстів у chan_sip є простим, але потребує уважності до деталей. Параметр <code>context=</code> у секції кожного peer/user визначає, де Asterisk шукатиме extension для дзвінків від цього абонента.</p>\n<p>Типова конфігурація передбачає щонайменше три контексти: <code>internal</code> для звичайних співробітників (доступ до внутрішніх номерів та зовнішніх ліній), <code>restricted</code> для обмежених користувачів (лише внутрішні номери — гості, лобі, публічні термінали) та <code>from-trunk</code> для SIP-провайдера (лише вхідні дзвінки, жодного доступу до вихідних).</p>\n<p>Критична помилка — використання <code>context=from-trunk</code> для внутрішніх IP-телефонів або <code>context=internal</code> для SIP-trunk-ів. Trunk зазвичай не має автентифікації (автентифікація по IP), тому потрапляння trunk-контексту у внутрішній — еквівалентно наданню анонімному зовнішньому абоненту прав внутрішнього співробітника.</p>", "<p>В chan_pjsip конфігурація є більш явною та об'єктно-орієнтованою: кожен endpoint є окремим об'єктом з усіма своїми параметрами, включаючи <code>context=</code>. Це полегшує аудит безпеки — для кожного endpoint легко визначити, з яким контекстом він асоційований.</p>\n<p>Директива <code>disallow=all</code> з наступним явним <code>allow=</code> реалізує принцип Fail-Safe Defaults для медіа-кодеків: замість того, щоб дозволяти всі підтримувані кодеки та потім забороняти небажані, ми забороняємо всі і явно дозволяємо тільки потрібні. Це також зменшує поверхню атаки за рахунок виключення потенційно вразливих або ліцензійно обтяжених кодеків.</p>\n<p>Рядок <code>identify_by=ip</code> для trunk endpoint означає, що автентифікація здійснюється виключно за IP-адресою, без Digest Auth. Це є допустимим лише для довірених провайдерів з фіксованими IP-адресами у поєднанні з жорстким ACL.</p>", "<p>Директива <code>include =></code> дозволяє включати один контекст в інший, утворюючи ієрархію прав доступу. Контекст, що включає інший, автоматично набуває всіх його extension.</p>\n<p>Типова ієрархія виглядає так: базовий контекст <code>internal_phones</code> містить правила для внутрішніх номерів. Контекст <code>restricted</code> включає лише <code>internal_phones</code> — гості можуть дзвонити лише між собою. Контекст <code>internal</code> включає <code>internal_phones</code> та <code>outbound_local</code> — співробітники можуть також дзвонити в місто. Контекст <code>internal_premium</code> включає <code>internal</code> та <code>outbound_international</code> — керівники мають доступ до міжнародних ліній.</p>\n<p>Критична помилка, яка регулярно зустрічається у реальних конфігураціях: <code>include => internal</code> у контексті <code>[from-trunk]</code>. Це означає, що будь-який зовнішній дзвінок через SIP-trunk отримає доступ до всіх внутрішніх extension, включаючи вихідні лінії. Таким чином, зловмисник, що додзвонився на вхідний номер організації, може через IVR або інші механізми отримати доступ до вихідних дзвінків за рахунок організації. Це класичний Toll Fraud через неправильну ієрархію контекстів.</p>", "<p>Диалплан є найбільш «бізнес-логічним» рівнем Asterisk, і саме тут зосереджена значна частина вразливостей, які важко виявити через традиційний мережевий аудит.</p>\n<p><strong>Toll Fraud</strong> — найпоширеніша атака. Зловмисник отримує можливість здійснювати дзвінки на дорогі номери за рахунок жертви. Це може бути наслідком слабкого пароля (brute-force), неправильних ACL або помилок у конфігурації контекстів.</p>\n<p><strong>DISA</strong> є потенційно найнебезпечнішою функцією АТС: вона надає доступ до dial tone АТС ззовні через вхідний дзвінок і введення PIN. Без належного захисту DISA еквівалентна відкритому trunk-доступу.</p>\n<p><strong>Voicemail → Outbound</strong> — специфічна вразливість: деякі конфігурації voicemail-системи дозволяють абоненту «передзвонити» на збережений номер або ввести довільний номер для дзвінка прямо з VM-меню. Якщо цей дзвінок виходить через зовнішній trunk — знову Toll Fraud.</p>\n<p><strong>AGI/System() injection</strong> — аналог SQL-ін'єкції, але для диалплану. Якщо <code>System()</code> або <code>AGI()</code> отримує аргумент, що містить дані від користувача без санітизації, зловмисник може виконати довільну системну команду.</p>", "<p>Сценарій Toll Fraud демонструє, як атака поетапно долає рівні захисту і яким принципам безпеки це відповідає.</p>\n<p><strong>Розвідка</strong> (etapa 1) — зловмисник використовує інструменти SIPVicious (<code>svmap</code>, <code>svwar</code>) для виявлення SIP-сервісів та перебору існуючих extension. На цьому етапі вже можна зупинити атаку: якщо Asterisk прив'язаний лише до внутрішньої підмережі (Attack Surface Minimization), <code>svmap</code> не виявить сервіс із зовнішньої мережі.</p>\n<p><strong>Brute-force</strong> (etapa 2) — <code>svcrack</code> перебирає паролі для виявлених extension. fail2ban має заблокувати атакуючого після 5 невдалих спроб. Якщо fail2ban не налаштований — атака продовжується.</p>\n<p><strong>Реєстрація</strong> (etapa 3) — зловмисник реєструє скомпрометований акаунт. <code>alwaysauthreject=yes</code> та <code>contactdeny</code> мають ускладнити або унеможливити реєстрацію з зовнішньої IP-адреси.</p>\n<p><strong>Генерація дзвінків</strong> (etapa 4) — зловмисник дзвонить на преміум-номери. Whitelist вихідних напрямків у диалплані та обмеження <code>GROUP_COUNT()</code> мають запобігти або обмежити збиток.</p>", "<p>Принцип Fail-Safe Defaults у диалплані реалізується через whitelist: замість спроби заблокувати всі можливі небезпечні напрямки (blacklist), ми явно описуємо дозволені.</p>\n<p>Extension-паттерни Asterisk є потужним інструментом: <code>_NXXXXXXXXX</code> відповідає 10-значному номеру, що починається з цифри 2-9 (формат NANP для США/Канади). Цей паттерн дозволяє лише певні номери і автоматично блокує все, що не відповідає формату.</p>\n<p>Розділення контекстів <code>[outbound_local]</code> та <code>[outbound_international]</code> є реалізацією Separation of Privilege: звичайні співробітники мають доступ лише до першого, менеджери — до обох. Включення міжнародного контексту відбувається явно і лише для авторизованих груп.</p>\n<p>Явна заборона преміум-номерів <code>_1900NXXXXXX</code> є резервним захистом: навіть якщо через помилку в контекстах якийсь користувач отримав можливість набирати будь-які номери, дзвінок на преміум-лінію все одно буде відхилено.</p>", "<p>Валідація введення є однією з найважливіших практик безпеки програмного забезпечення і повністю застосовується до диалплану Asterisk. Будь-які дані, що надходять від зовнішнього джерела (DTMF-введення в IVR, дані від SIP-клієнта, результати AGI-скриптів), потрібно вважати потенційно шкідливими.</p>\n<p>Функція <code>FILTER()</code> є стандартним засобом санітизації у диалплані: вона повертає лише символи зі дозволеного набору. <code>${FILTER(0-9,${USERNUM})}</code> повертає рядок, що складається виключно з цифр від 0 до 9. Будь-які інші символи (спеціальні знаки, пробіли, символи протоколів) відкидаються.</p>\n<p>Перевірка довжини є обов'язковою: мінімальна довжина запобігає передачі порожнього рядка, максимальна — запобігає атакам через надмірно довгий рядок.</p>\n<p>Найнебезпечнішою практикою є використання <code>System()</code> або <code>AGI()</code> з аргументами, що містять дані від користувача. Це дозволяє зловмиснику виконати довільні системні команди від імені процесу Asterisk. Правило: <code>System()</code> та <code>AGI()</code> повинні мати фіксовані аргументи або аргументи, що генеруються виключно внутрішньою логікою диалплану.</p>", "<p>DISA (Direct Inward System Access) — функція, що дозволяє зовнішньому абоненту отримати доступ до вихідних ліній АТС через вхідний дзвінок. Спочатку ця функція призначалась для співробітників, що перебувають у відрядженні та не мають доступу до внутрішнього телефону.</p>\n<p>З точки зору безпеки DISA є одним з найнебезпечніших механізмів АТС, оскільки вона надає доступ до trunk-ліній через публічно доступний вхідний номер. Без надійного захисту DISA фактично відкриває вихідні лінії для будь-кого, хто зможе додзвонитися на відповідний номер.</p>\n<p>Мінімальний захист DISA включає складний PIN-код (не менше 10 цифр, бажано щонайменше один раз змінений після встановлення), обмеження контексту (лише <code>restricted</code>, а не <code>internal</code> чи <code>international</code>), логування всіх дзвінків через DISA та таймаут введення PIN.</p>\n<p>Однак найкращим рішенням є заміна DISA на VPN-доступ. VPN забезпечує значно вищий рівень безпеки: автентифікація сертифікатом або двофакторна, шифрування трафіку, ізоляція від публічної мережі. Після підключення до VPN співробітник має повний доступ до внутрішньої телефонії через захищений канал.</p>", "<p>Механізм обмеження одночасних дзвінків є важливим засобом <strong>обмеження збитку</strong> (damage containment) у разі компрометації акаунта. Навіть якщо зловмисник отримав доступ до SIP-акаунта і почав генерувати вихідні дзвінки, ліміти GROUP_COUNT() унеможливлюють масштабну атаку.</p>\n<p>Функція <code>GROUP()</code> призначає поточний канал до іменованої групи. Функція <code>GROUP_COUNT()</code> повертає кількість активних каналів у цій групі. Перед встановленням кожного нового вихідного дзвінка диалплан перевіряє, чи не перевищено ліміт. Якщо перевищено — дзвінок відхиляється з відповідним повідомленням.</p>\n<p>Встановлення ліміту на рівні акаунта (3 одночасних дзвінки для внутрішнього користувача) суттєво обмежує можливий збиток: зловмисник не зможе одночасно генерувати сотні міжнародних дзвінків. Глобальне обмеження на trunk-рівні (30 одночасних вихідних) захищає від випадку, коли скомпрометовано кілька акаунтів одночасно.</p>\n<p>Параметр <code>max_contacts=2</code> у pjsip.conf обмежує кількість одночасних реєстрацій для одного endpoint — це запобігає реєстрації скомпрометованого акаунта з багатьох місць одночасно.</p>", "<p>SIP Digest Authentication — стандартний механізм автентифікації у SIP-протоколі (RFC 3261, розділ 22). Він базується на challenge-response схемі: сервер надсилає клієнту випадкове значення (nonce), клієнт обчислює хеш (MD5 або SHA-256) від комбінації username, password, nonce та інших параметрів і надсилає хеш у відповідь.</p>\n<p>Ця схема ніколи не передає пароль у відкритому вигляді по мережі. Однак вона вразлива до offline brute-force атак: зловмисник може перехопити challenge-response та намагатися підібрати пароль локально. Саме тому вимоги до складності паролів є критичними: мінімум 16 символів, комбінація різних категорій символів значно збільшує час brute-force.</p>\n<p><code>alwaysauthreject=yes</code> — це реалізація принципу Open Design: замість того, щоб приховувати факт існування акаунта (security through obscurity), ми надаємо однакові відповіді незалежно від наявності акаунта. Зловмисник не може визначити, чи існує акаунт «6001», за різницею у відповідях сервера.</p>", "<p>TLS (Transport Layer Security) для SIP-сигналізації та SRTP (Secure Real-time Transport Protocol) для медіа-трафіку є двома взаємодоповнюючими компонентами шифрування IP-телефонії, що реалізують властивість Confidentiality (CIA тріади).</p>\n<p>TLS шифрує SIP-повідомлення — INVITE, REGISTER, BYE та всі інші. Це запобігає перехопленню номерів, що набираються, параметрів виклику та, найголовніше, облікових даних SIP Digest Authentication (nonce, response). Без TLS зловмисник у тій же мережі може перехопити challenge-response та здійснити offline brute-force атаку.</p>\n<p>SRTP шифрує безпосередньо голосовий потік RTP. Без SRTP зловмисник, що отримав доступ до мережевого трафіку, може відтворити будь-який розмову. З SRTP — перехоплені пакети є непридатними для прослуховування без знання ключа сесії.</p>\n<p><code>media_encryption_optimistic=no</code> є реалізацією Fail-Safe Default: Asterisk не встановлює дзвінок, якщо клієнт не підтримує SRTP. Це краще, ніж встановити незашифрований дзвінок як «резервний варіант».</p>\n<p>Мінімальна версія TLS 1.2 (<code>method=tlsv1_2</code>) виключає використання вразливих старих версій TLS 1.0 та 1.1, що мають відомі атаки (POODLE, BEAST, CRIME).</p>", "<p>AMI — це TCP-інтерфейс на порту 5038, що надає повний програмний контроль над Asterisk: встановлення та завершення дзвінків, перегляд стану, зміна конфігурації, виконання команд CLI. Це є найпотужнішим і найнебезпечнішим компонентом системи.</p>\n<p>Найважливіший захід — прив'язка AMI виключно до loopback-інтерфейсу (<code>bindaddr=127.0.0.1</code>). Це означає, що AMI фізично недоступний з будь-якої зовнішньої мережі — навіть якщо firewall не налаштований. Будь-який сервіс, що потребує AMI-доступу (система моніторингу, call-центр, CRM), повинен знаходитися на тому ж хості або підключатися через SSH-тунель.</p>\n<p>Принцип Least Privilege у AMI: кожен AMI-користувач має мінімально необхідний набір прав <code>read</code> та <code>write</code>. Система моніторингу, що лише читає стан дзвінків, не потребує права <code>write=command</code>. CDR-система не потребує права <code>read=system</code>. Розділення прав унеможливлює ситуацію, коли компрометація одного AMI-акаунта дає повний контроль над системою.</p>", "<p>Logging та Monitoring є реалізацією компонента Accounting у AAA Framework і є критичним елементом захисту. Без логування неможливо виявити атаку, провести розслідування інциденту або довести факт несанкціонованого доступу.</p>\n<p><code>logger.conf</code> визначає, які події записуються в які файли. Окремий файл <code>security</code> для SECURITY-рівня подій є важливим: він містить лише безпекові події (невдалі автентифікації, порушення ACL, несанкціоновані запити), що спрощує моніторинг і зменшує «шум» від звичайних операційних подій.</p>\n<p>Ключові типи SECURITY-подій, на які слід реагувати: <code>InvalidPassword</code> — невдала автентифікація (ознака brute-force), <code>FailedACL</code> — відхилений запит від забороненого IP (може вказувати на сканування), <code>InvalidAccountID</code> — запит для неіснуючого акаунта (ознака enumeration), <code>RequestNotAllowed</code> — несанкціонований запит через AMI.</p>\n<p>Інтеграція з SIEM (Security Information and Event Management) — Elastic Stack, Splunk, Graylog — дозволяє кореляцію подій у реальному часі та автоматичне сповіщення при виявленні підозрілих патернів. Наприклад, аномально велика кількість вихідних дзвінків або різке збільшення CDR-записів після робочого часу можуть свідчити про компрометацію.</p>", "<p>Аналіз реальних інцидентів з безпекою IP-АТС виявляє кілька помилок, що зустрічаються найчастіше. Їх розуміння важливе не лише для уникнення власних помилок, але й для проведення аудиту існуючих систем.</p>\n<p><code>allowguest=yes</code> — мабуть, найпоширеніша помилка. Вона пояснюється тим, що ця директива є дефолтом у старих версіях Asterisk і часто залишається в конфігурації при оновленні. Наслідок — можливість анонімних вхідних та вихідних дзвінків без автентифікації.</p>\n<p>Слабкий пароль AMI — критична помилка, що часто зустрічається у системах, де AMI налаштований для інтеграції з CRM або call-center. Пароль типу «admin» або «asterisk» відкриває повний контроль над системою для будь-кого, хто знає порт 5038.</p>\n<p>Asterisk від root — помилка, що робить всю систему вразливою при компрометації будь-якого компонента. Виконання AGI-скрипта з command injection призводить до RCE (Remote Code Execution) з правами root.</p>", "<p>Чек-ліст є практичним інструментом для систематичного аудиту безпеки Asterisk. Він структурований за рівнями захисту, що відображає принцип Defense-in-Depth.</p>\n<p><strong>Рівень ОС та файлової системи</strong> перевіряється першим: це базові заходи, що забезпечують ізоляцію процесу від системи. Без цього рівня всі інші заходи стають менш ефективними.</p>\n<p><strong>Мережевий рівень</strong> включає як зовнішній захист (firewall, VLAN), так і динамічний захист від brute-force (fail2ban). Особлива увага — до AMI: порт 5038 не повинен бути доступний з будь-якої мережі, крім loopback.</p>\n<p><strong>Рівень конфігурації Asterisk</strong> — це безпосередні налаштування самої системи. <code>autoload=no</code> у modules.conf є стартовою точкою: ми явно контролюємо, які модулі завантажені, а отже, яка функціональність доступна і яка поверхня атаки відкрита.</p>", "<p>Продовження чек-листу охоплює рівень диалплану, шифрування та моніторингу.</p>\n<p><strong>Рівень диалплану</strong> є найбільш специфічним для кожного розгортання і потребує найретельнішого аудиту. Whitelist вихідних напрямків, заборона преміум-номерів, обмеження одночасних дзвінків та валідація введення — це заходи, що безпосередньо запобігають Toll Fraud і command injection.</p>\n<p><strong>Автентифікація та шифрування</strong> реалізують властивість Confidentiality та Integrity CIA тріади. Без TLS та SRTP уся автентифікація SIP є вразливою до перехоплення у мережі, оскільки challenge-response можна перехопити та атакувати offline.</p>\n<p><strong>Моніторинг</strong> є реалізацією Accounting у AAA і є необхідною умовою виявлення інцидентів. Регулярний перегляд security-логів та алерти при аномальних патернах є мінімальним необхідним рівнем.</p>", "<p>Проведення аудиту безпеки IP-АТС потребує спеціалізованих інструментів. Важливо розуміти, що ці самі інструменти використовуються зловмисниками — тобто аудит дозволяє оцінити захист з точки зору реального атакуючого.</p>\n<p><strong>SIPVicious</strong> — це набір Python-скриптів для тестування на проникнення SIP-систем. <code>svmap</code> виявляє SIP-сервіси у мережі, <code>svwar</code> перебирає extension (User Agent Scanning), <code>svcrack</code> здійснює брутфорс паролів. Їх використання без дозволу на чужих системах є незаконним.</p>\n<p><strong>sngrep</strong> — текстовий аналізатор SIP-трафіку у терміналі, що відображає SIP-діалоги у зручному форматі. Незамінний для аналізу проблем з автентифікацією або дзвінками в реальному часі.</p>\n<p><strong>Workflow аудиту</strong> відображає принцип Complete Mediation: ми перевіряємо систему на кожному рівні незалежно. Відкриті порти, SIP-доступність, конфігураційні помилки, логи інцидентів — кожен рівень може виявити вразливості, невидимі на інших рівнях.</p>", "<p>Підсумковий слайд демонструє ключову ідею лекції: кожне технічне рішення щодо безпеки Asterisk є реалізацією конкретного теоретичного принципу інформаційної безпеки. Розуміння цього зв'язку є принципово важливим: воно дозволяє не просто застосовувати готові рецепти, але й самостійно вирішувати нові проблеми безпеки, спираючись на фундаментальні принципи.</p>\n<p><strong>CIA Тріада</strong> є відправною точкою аналізу: для кожної загрози визначаємо, яку властивість вона порушує, і обираємо відповідний контрзахід. <strong>AAA Framework</strong> структурує повний цикл контролю доступу. <strong>Принципи Saltzer & Schroeder</strong> є практичними правилами проектування: Economy of Mechanism, Fail-Safe Defaults, Least Privilege та інші — це не абстракції, а конкретні інструкції для прийняття архітектурних рішень.</p>\n<p><strong>Ключовий висновок:</strong> безпека IP-АТС не є набором окремих «трюків» або конфігураційних рецептів. Це систематичне застосування загальних принципів інформаційної безпеки до специфічного домену — IP-телефонії. Адміністратор, який розуміє ці принципи, здатний захистити будь-яку IP-АТС — і Asterisk, і FreeSWITCH, і комерційні системи — навіть з мінімальним попереднім досвідом.</p>", "<p>Для поглибленого вивчення теми рекомендується ознайомитися з кількома категоріями джерел.</p>\n<p><strong>Офіційна документація</strong> Asterisk на wiki.asterisk.org є найбільш актуальним джерелом щодо конфігурації та найкращих практик. Розділ «Asterisk Security Best Practices» є обов'язковим для читання кожному адміністратору системи.</p>\n<p><strong>RFC</strong> є нормативними документами, що визначають протоколи. RFC 3261 (SIP) є базовим і досить детально описує механізми автентифікації. RFC 3711 (SRTP) описує шифрування медіа-трафіку.</p>\n<p><strong>Saltzer & Schroeder (1975)</strong> — незважаючи на вік, ця стаття залишається актуальною та є обов'язковим читанням для кожного фахівця з інформаційної безпеки. Вона доступна у відкритому доступі.</p>\n<p><strong>«Hacking VoIP»</strong> Химаншу Двіведі — практичний посібник з атак на VoIP-системи, що дозволяє зрозуміти атакуючу сторону. Знання методів атак є необхідним для побудови ефективного захисту.</p>", "<p>Завершальний слайд супроводжується п'ятьма контрольними запитаннями, що охоплюють ключові теми лекції. Рекомендується попросити студентів відповісти усно: це дозволяє перевірити рівень засвоєння матеріалу та виявити теми, що потребують додаткового пояснення.</p>\n<p><strong>Запитання 1</strong> (<code>allowguest=yes</code>) перевіряє розуміння Fail-Safe Defaults і AAA Authentication.</p>\n<p><strong>Запитання 2</strong> (ACL в sip.conf vs iptables) перевіряє розуміння Defense-in-Depth та різних рівнів фільтрації.</p>\n<p><strong>Запитання 3</strong> (include in from-trunk) перевіряє розуміння принципу Separation of Privilege та механізму контекстів.</p>\n<p><strong>Запитання 4</strong> (Toll Fraud) перевіряє здатність застосувати всі рівні захисту до конкретного сценарію атаки.</p>\n<p><strong>Запитання 5</strong> (FILTER) перевіряє розуміння валідації введення як реалізації принципів Complete Mediation та Fail-Safe Defaults.</p>", "<p>Цей слайд містить розширений список запитань для самоперевірки студентів і може бути використаний як основа для підсумкового тестування або письмового завдання.</p>\n<p><strong>Теоретичні запитання</strong> (1-5) перевіряють розуміння концептуальних принципів: CIA тріади, AAA Framework, принципів Saltzer & Schroeder, Fail-Safe Defaults та Zero Trust. Відповіді на ці запитання вимагають не лише знання означень, але й здатності пояснити, як абстрактні принципи реалізуються у конкретних конфігураціях Asterisk.</p>\n<p><strong>Практичні запитання</strong> (6-10) перевіряють здатність застосовувати знання до реальних сценаріїв. Запитання 7 (один контекст для всіх) є особливо важливим: студент має пояснити не лише що є помилкою, але й чому саме ця конфігурація є вразливою — тобто який саме принцип порушується і який конкретний сценарій атаки стає можливим.</p>\n<p>---</p>\n<p><em>Кінець файлу нотаток</em>  \n<em>Відповідає презентації: <code>lecture7_asterisk_security.html</code> та <code>lecture7_asterisk_security.md</code></em>  \n<em>Загальна кількість слайдів: 40</em></p>"]</script>
+
 <script>
+// ===== NOTES DATA =====
+const NOTES = JSON.parse(document.getElementById('notes-data').textContent);
+
+// ===== SLIDE ENGINE =====
 const slides = Array.from(document.querySelectorAll('.slide'));
 const total  = slides.length;
 let cur = 0;
 
+// Inject "📝 Нотатки" button into every slide
+slides.forEach((sl, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'note-btn';
+  btn.textContent = '📝 Нотатки';
+  btn.title = 'Відкрити коментар до слайду (N)';
+  btn.onclick = e => { e.stopPropagation(); openModal(i); };
+  sl.appendChild(btn);
+});
+
 function show(n) {
-  slides[cur].classList.remove('active');
-  slides[cur].classList.add('prev');
-  setTimeout(() => slides[cur < n ? cur : n + (n < cur ? 1 : 0)].classList.remove('prev'), 400);
+  const old = cur;
+  slides[old].classList.remove('active');
+  slides[old].classList.add('prev');
   cur = n;
   slides[cur].classList.remove('prev');
   slides[cur].classList.add('active');
+  setTimeout(() => slides[old].classList.remove('prev'), 420);
   document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
   document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
 }
@@ -1343,11 +1444,38 @@ function go(dir) {
   if (next !== cur) show(next);
 }
 
+// ===== STAGE SCALING (1920×1080 fixed canvas) =====
+const deck = document.getElementById('deck');
+function scaleStage() {
+  const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+  deck.style.transform = 'scale(' + scale + ')';
+}
+scaleStage();
+window.addEventListener('resize', scaleStage);
+
+// ===== NOTES MODAL =====
+function openModal(idx) {
+  const overlay = document.getElementById('modal-overlay');
+  document.getElementById('modal-title').textContent =
+    '📝 Нотатки — Слайд ' + (idx + 1) + ' / ' + total;
+  document.getElementById('modal-body').innerHTML = NOTES[idx] || '<p><em>Нотатків немає.</em></p>';
+  overlay.classList.add('open');
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+// ===== KEYBOARD =====
 document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(null); return; }
+  if (document.getElementById('modal-overlay').classList.contains('open')) return;
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); go(-1); }
   if (e.key === 'Home') show(0);
   if (e.key === 'End')  show(total - 1);
+  if (e.key === 'n' || e.key === 'N') openModal(cur);
   if (e.key === 'f' || e.key === 'F') {
     document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
   }
