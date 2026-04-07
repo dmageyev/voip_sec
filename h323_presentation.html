@@ -13,8 +13,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 .deck { width: 1920px; height: 1080px; position: absolute; top: 0; left: 0; transform-origin: top left; }
 .slide {
   position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-  padding: 60px 90px;
+  display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;
+  padding: 48px 80px;
   opacity: 0; pointer-events: none;
   transition: opacity .4s ease, transform .4s ease;
   transform: translateX(60px);
@@ -22,7 +22,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 }
 .slide.active  { opacity: 1; pointer-events: all; transform: translateX(0); }
 .slide.prev    { opacity: 0; transform: translateX(-60px); }
-.slide.center  { align-items: center; text-align: center; }
+.slide.center  { justify-content: center; align-items: center; text-align: center; }
 
 /* ===== BACKGROUNDS ===== */
 .bg-dark   { background: radial-gradient(circle at 60% 40%, #003566 0%, #001d3d 55%, #000814 100%); }
@@ -32,13 +32,13 @@ html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI
 .bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
 
 /* ===== TYPOGRAPHY ===== */
-h1 { font-size: 3.2rem; color: #00b4d8; line-height: 1.15; }
-h2 { font-size: 1.9rem; color: #48cae4;
+h1 { font-size: 4.8rem; color: #00b4d8; line-height: 1.15; }
+h2 { font-size: 2.8rem; color: #48cae4;
      border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .7em; }
-h3 { font-size: 1.05rem; color: #fff; margin-bottom: .4em; }
-p, li { font-size: 1rem; line-height: 1.55; }
+h3 { font-size: 1.7rem; color: #fff; margin-bottom: .4em; }
+p, li { font-size: 1.4rem; line-height: 1.55; }
 ul { margin-left: 1.3em; }
-li { margin-bottom: .28em; }
+li { margin-bottom: .35em; }
 code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .9em; }
 strong { color: #90e0ef; }
 
@@ -51,45 +51,45 @@ strong { color: #90e0ef; }
 .card {
   background: rgba(255,255,255,.07);
   border: 1px solid rgba(0,180,216,.35);
-  border-radius: .5em; padding: .8em 1em;
+  border-radius: .5em; padding: .7em 1em;
 }
-.card h3 { color: #00b4d8; font-size: .92em; }
+.card h3 { color: #00b4d8; font-size: .9em; }
 
 /* ===== CALLOUT BOXES ===== */
 .hbox {
   background: rgba(0,180,216,.13);
   border-left: 4px solid #00b4d8;
-  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: .9rem;
+  padding: .55em 1em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: 1.2rem;
 }
 .wbox {
   background: rgba(247,127,0,.13);
   border-left: 4px solid #f77f00;
-  padding: .5em .9em; border-radius: 0 .4em .4em 0; margin: .5em 0;
-  font-size: .9rem;
+  padding: .55em 1em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: 1.2rem;
 }
 
 /* ===== DIAGRAMS / PREFORMATTED ===== */
 pre.sip {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: .75rem;
+  font-size: .95rem;
   background: #0d1117; border: 1px solid #00b4d8;
   border-radius: .4em; padding: .7em 1em;
   line-height: 1.45; white-space: pre; overflow: auto;
-  max-height: 450px;
+  max-height: 560px;
 }
 pre.diag {
   font-family: 'Consolas', 'Courier New', monospace;
-  font-size: .72rem;
+  font-size: .93rem;
   background: #0d1117; border: 1px solid #00b4d8;
-  border-radius: .4em; padding: .7em 1.2em;
-  line-height: 1.65; white-space: pre; width: 100%;
+  border-radius: .4em; padding: .65em 1.2em;
+  line-height: 1.6; white-space: pre; width: 100%;
 }
 
 /* ===== TABLES ===== */
-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
-th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .65em; text-align: left; }
-td { padding: .3em .65em; border-bottom: 1px solid rgba(255,255,255,.09); }
+table { width: 100%; border-collapse: collapse; font-size: 1.1rem; }
+th { background: rgba(0,180,216,.22); color: #48cae4; padding: .4em .7em; text-align: left; }
+td { padding: .35em .7em; border-bottom: 1px solid rgba(255,255,255,.09); }
 tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 
 /* ===== BADGE ===== */
@@ -130,12 +130,12 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
 <!-- ==================== SLIDE 1 – Title ==================== -->
 <section class="slide bg-dark center active" id="s0">
   <div>
-    <h1 style="font-size:3.8rem; margin-bottom:.4em;">Протокол H.323</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:1.6rem; margin-bottom:1.5em;">
+    <h1 style="font-size:5.5rem; margin-bottom:.4em;">Протокол H.323</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:2.2rem; margin-bottom:1.5em;">
       Мультимедійні комунікації в IP-мережах
     </h3>
-    <p style="color:#aaa; font-size:1rem;">Курс «Безпека VoIP» · Напрям кібербезпека</p>
-    <p style="color:#444; font-size:.88rem; margin-top:2.5em;">
+    <p style="color:#aaa; font-size:1.5rem;">Курс «Безпека VoIP» · Напрям кібербезпека</p>
+    <p style="color:#444; font-size:1.2rem; margin-top:2.5em;">
       Кафедра інформаційних технологій та кібербезпеки
     </p>
   </div>
@@ -165,6 +165,9 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
       <li>Загрози та атаки на H.323</li>
       <li>H.323 vs SIP · Сучасне застосування</li>
     </ul>
+  </div>
+  <div class="hbox" style="margin-top:.8em;">
+    H.323 — перший зрілий стандарт для мультимедійних комунікацій в IP-мережах. Розуміння його архітектури є основою для аналізу безпеки VoIP-інфраструктур.
   </div>
 </section>
 
@@ -215,6 +218,9 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
     <tr><td>2000–2010-ті</td><td>SIP поступово витісняє H.323 у нових інсталяціях</td></tr>
     <tr><td>Сьогодні</td><td>Legacy-системи, відеозали Cisco/Polycom, гібридні мережі</td></tr>
   </table>
+  <div class="hbox" style="margin-top:.7em;">
+    За 13 років (v1–v7) H.323 еволюціонував від базової LAN-відеосистеми до повноцінного корпоративного стандарту. Кожна версія закривала прогалини безпеки (H.235) та розширювала функціональність (H.460, H.239). Сьогодні v7 залишається останньою офіційною специфікацією ITU-T.
+  </div>
 </section>
 
 <!-- ==================== SLIDE 5 – Protocol Stack ==================== -->
@@ -282,6 +288,9 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
     <li><strong>Gateway (GW)</strong> — міжмережевий шлюз (H.323 ↔ PSTN/H.320/SIP)</li>
     <li><strong>MCU</strong> — багатоточкова конференція (Multipoint Control Unit)</li>
   </ul>
+  <div class="hbox" style="margin-top:.6em;">
+    Архітектура H.323 є <strong>централізованою</strong>: Gatekeeper відіграє ключову роль у контролі доступу та адресації. Це відрізняє її від SIP, де відсутній обов'язковий центральний компонент. Така централізація спрощує управління, але створює єдину точку відмови.
+  </div>
 </section>
 
 <!-- ==================== SLIDE 7 – Zone Concept ==================== -->
@@ -380,7 +389,7 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
   <div class="two-col">
     <div>
       <h3>Фази H.245</h3>
-      <ol style="margin-left:1.2em; font-size:.92rem;">
+      <ol style="margin-left:1.2em; font-size:1.35rem;">
         <li style="margin-bottom:.3em;"><strong>Master/Slave Determination</strong> — визначення ролей (хто «Master»)</li>
         <li style="margin-bottom:.3em;"><strong>Capabilities Exchange</strong> — обмін підтримуваними кодеками та можливостями</li>
         <li style="margin-bottom:.3em;"><strong>Open Logical Channel (OLC)</strong> — відкриття RTP-каналу (IP:порт для медіа)</li>
@@ -448,7 +457,10 @@ tr:nth-child(even) td { background: rgba(255,255,255,.04); }
       │                                        │
       │── RAS: DRQ ──────►│                    │  ⑤ сповіщення про кінець
       │◄─ RAS: DCF ───────│                    │</pre>
-  <div class="two-col" style="margin-top:.4em;">
+  <div class="hbox" style="margin-top:.4em; margin-bottom:.45em;">
+    Перед встановленням виклику GK виконує <strong>Admission Control (ARQ/ACF)</strong> — перевірку прав та доступної смуги. Без ACF термінал не повинен ініціювати H.225 Setup. Після завершення виклику DRQ повідомляє GK для оновлення статистики та звільнення ресурсів.
+  </div>
+  <div class="two-col">
     <div class="card">
       <h3>Direct Mode (Direct Call Signaling)</h3>
       <p>H.225 Setup надсилається безпосередньо від A до B. GK лише перевіряє допуск через RAS. <em>Менший контроль, менше навантаження на GK.</em></p>
@@ -819,6 +831,9 @@ Terminal A              Gatekeeper
     <tr><td>Спадкове обладнання</td><td><span class="ok">Широке</span></td><td>Менше</td></tr>
     <tr><td>Сучасне застосування</td><td>Legacy / відеозали</td><td><span class="ok">Домінуючий стандарт</span></td></tr>
   </table>
+  <div class="hbox" style="margin-top:.6em;">
+    <strong>Ключовий висновок:</strong> H.323 перевершує SIP у розвинених відеоконференціях (H.239, MCU, H.243), але поступається за простотою розгортання, NAT traversal та налагодження. Вибір між ними визначається вимогами до відмовостійкості та наявністю спадкового обладнання.
+  </div>
 </section>
 
 <!-- ==================== SLIDE 23 – H.323 in Modern Networks ==================== -->
@@ -855,6 +870,9 @@ Terminal A              Gatekeeper
         </ul>
       </div>
     </div>
+  </div>
+  <div class="wbox" style="margin-top:.6em;">
+    З точки зору кібербезпеки, спадкові H.323-вузли — критична зона ризику: застаріле ПЗ рідко отримує патчі, а бінарне кодування ASN.1 ускладнює контроль. Гібридні середовища (H.323+SIP) збільшують поверхню атаки та потребують окремого SBC на стику.
   </div>
 </section>
 
@@ -1042,17 +1060,17 @@ Terminal A              Gatekeeper
 <!-- ==================== SLIDE 30 – Q&A ==================== -->
 <section class="slide bg-end center">
   <div>
-    <h1 style="font-size:3.5rem; color:#00b4d8;">Дякую за увагу!</h1>
-    <h3 style="color:#90e0ef; font-weight:300; font-size:1.6rem; margin: 1em 0;">
+    <h1 style="font-size:5rem; color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:2.2rem; margin: 1em 0;">
       Запитання?
     </h3>
-    <p style="color:#666; margin-top:2.5em; font-size:.85rem;">
+    <p style="color:#666; margin-top:2.5em; font-size:1.2rem;">
       Стандарти: ITU-T H.323 v7 · H.225 · H.245 · H.235 · H.239 · H.450 · H.460
     </p>
-    <p style="color:#444; font-size:.78rem; margin-top:.5em;">
+    <p style="color:#444; font-size:1rem; margin-top:.5em;">
       RFC: 3550 (RTP) · 3711 (SRTP) · 8445 (ICE) · 8489 (STUN)
     </p>
-    <p style="color:#333; margin-top:.8em; font-size:.78rem;">
+    <p style="color:#333; margin-top:.8em; font-size:1rem;">
       Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
     </p>
   </div>
