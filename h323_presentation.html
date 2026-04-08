@@ -1,0 +1,1296 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920">
+<title>Протокол H.323</title>
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', Arial, sans-serif; background: #000; color: #e0e0e0; }
+
+/* ===== SLIDESHOW CONTAINER ===== */
+.deck { width: 1920px; height: 1080px; position: absolute; top: 0; left: 0; transform-origin: top left; }
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;
+  padding: 48px 80px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .4s ease, transform .4s ease;
+  transform: translateX(60px);
+  overflow: hidden;
+}
+.slide.active  { opacity: 1; pointer-events: all; transform: translateX(0); }
+.slide.prev    { opacity: 0; transform: translateX(-60px); }
+.slide.center  { justify-content: center; align-items: center; text-align: center; }
+
+/* ===== BACKGROUNDS ===== */
+.bg-dark   { background: radial-gradient(circle at 60% 40%, #003566 0%, #001d3d 55%, #000814 100%); }
+.bg-mid    { background: linear-gradient(135deg, #001d3d 0%, #003566 100%); }
+.bg-sec    { background: linear-gradient(135deg, #1a0000 0%, #3d0000 100%); }
+.bg-plain  { background: linear-gradient(180deg, #0a0f1e 0%, #0d1527 100%); }
+.bg-end    { background: radial-gradient(circle at 50% 50%, #001845 0%, #000814 100%); }
+
+/* ===== TYPOGRAPHY ===== */
+h1 { font-size: 5.5rem; color: #00b4d8; line-height: 1.15; }
+h2 { font-size: 3.4rem; color: #48cae4;
+     border-bottom: 2px solid #00b4d8; padding-bottom: .3em; margin-bottom: .6em; }
+h3 { font-size: 2.2rem; color: #fff; margin-bottom: .35em; }
+p, li { font-size: 1.8rem; line-height: 1.5; }
+ul { margin-left: 1.3em; }
+li { margin-bottom: .3em; }
+code { font-family: 'Consolas', 'Courier New', monospace; color: #90e0ef; font-size: .88em; }
+strong { color: #90e0ef; }
+
+/* ===== LAYOUT HELPERS ===== */
+.two-col   { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5em; width: 100%; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em; width: 100%; }
+.w100 { width: 100%; }
+
+/* ===== CARDS ===== */
+.card {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(0,180,216,.35);
+  border-radius: .5em; padding: .7em 1em;
+}
+.card h3 { color: #00b4d8; font-size: .9em; }
+
+/* ===== CALLOUT BOXES ===== */
+.hbox {
+  background: rgba(0,180,216,.13);
+  border-left: 4px solid #00b4d8;
+  padding: .55em 1em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: 1.55rem;
+}
+.wbox {
+  background: rgba(247,127,0,.13);
+  border-left: 4px solid #f77f00;
+  padding: .55em 1em; border-radius: 0 .4em .4em 0; margin: .5em 0;
+  font-size: 1.55rem;
+}
+
+/* ===== DIAGRAMS / PREFORMATTED ===== */
+pre.sip {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 1.1rem;
+  background: #0d1117; border: 1px solid #00b4d8;
+  border-radius: .4em; padding: .7em 1em;
+  line-height: 1.45; white-space: pre; overflow: auto;
+  max-height: 580px;
+}
+pre.diag {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 1.08rem;
+  background: #0d1117; border: 1px solid #00b4d8;
+  border-radius: .4em; padding: .65em 1.2em;
+  line-height: 1.6; white-space: pre; width: 100%;
+}
+
+/* ===== TABLES ===== */
+table { width: 100%; border-collapse: collapse; font-size: 1.35rem; }
+th { background: rgba(0,180,216,.22); color: #48cae4; padding: .38em .7em; text-align: left; }
+td { padding: .3em .7em; border-bottom: 1px solid rgba(255,255,255,.09); }
+tr:nth-child(even) td { background: rgba(255,255,255,.04); }
+
+/* ===== BADGE ===== */
+.badge { display: inline-block; background: #00b4d8; color: #000;
+  border-radius: .25em; padding: .05em .4em; font-size: .72em; font-weight: bold; }
+.m  { color: #00b4d8; font-weight: bold; }
+.ok { color: #52b788; }
+.er { color: #f77f00; }
+
+/* ===== NAVIGATION ===== */
+#nav {
+  position: fixed; bottom: 1.4vh; right: 2vw; z-index: 100;
+  display: flex; align-items: center; gap: .6em;
+}
+#nav button {
+  background: rgba(0,180,216,.18); border: 1px solid #00b4d8; color: #00b4d8;
+  border-radius: .35em; padding: .4em .9em; font-size: .85rem; cursor: pointer;
+  transition: background .2s;
+}
+#nav button:hover { background: rgba(0,180,216,.4); }
+#counter { color: #555; font-size: .78rem; min-width: 4em; text-align: center; }
+
+/* ===== PROGRESS BAR ===== */
+#prog { position: fixed; bottom: 0; left: 0; height: 3px; background: #00b4d8;
+        transition: width .35s ease; z-index: 200; }
+
+/* ===== KEYBOARD HINT ===== */
+#hint { position: fixed; top: 1vh; right: 1.5vw; font-size: .62rem; color: #333; z-index: 100; }
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="hint">← → | F — full screen</div>
+
+<div class="deck" id="deck">
+
+<!-- ==================== SLIDE 1 – Title ==================== -->
+<section class="slide bg-dark center active" id="s0">
+  <div>
+    <h1 style="font-size:6.5rem; margin-bottom:.4em;">Протокол H.323</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:2.8rem; margin-bottom:1.5em;">
+      Мультимедійні комунікації в IP-мережах
+    </h3>
+    <p style="color:#aaa; font-size:1.9rem;">Курс «Безпека VoIP» · Напрям кібербезпека</p>
+    <p style="color:#444; font-size:1.5rem; margin-top:2.5em;">
+      Кафедра інформаційних технологій та кібербезпеки
+    </p>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 2 – Agenda ==================== -->
+<section class="slide bg-plain">
+  <h2>📋 План лекції</h2>
+  <div class="two-col">
+    <ul>
+      <li>Що таке H.323? Передісторія та стандарт ITU-T</li>
+      <li>Місце H.323 у стеку протоколів</li>
+      <li>Архітектура H.323-мережі</li>
+      <li>Компоненти: Terminal, Gateway, Gatekeeper, MCU</li>
+      <li>Концепція зони H.323</li>
+      <li>Протоколи стека: H.225, H.245, RAS</li>
+      <li>H.225 — сигналізація та Q.931</li>
+      <li>RAS — реєстрація та контроль доступу</li>
+    </ul>
+    <ul>
+      <li>H.245 — узгодження медіа-можливостей</li>
+      <li>Call Flow: прямий та через Gatekeeper</li>
+      <li>Аудіо- та відеокодеки H.323</li>
+      <li>H.239 — подвійний потік (презентація)</li>
+      <li>H.460 — NAT traversal</li>
+      <li>H.235 — безпека в H.323</li>
+      <li>Загрози та атаки на H.323</li>
+      <li>H.323 vs SIP · Сучасне застосування</li>
+    </ul>
+  </div>
+  <div class="hbox" style="margin-top:.8em;">
+    H.323 — перший зрілий стандарт для мультимедійних комунікацій в IP-мережах. Розуміння його архітектури є основою для аналізу безпеки VoIP-інфраструктур.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 3 – What is H.323 ==================== -->
+<section class="slide bg-plain">
+  <h2>📡 Що таке H.323?</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>H.323</strong> — стандарт ITU-T для мультимедійних комунікацій (голос, відео, дані) через пакетні мережі без гарантії якості обслуговування (наприклад, IP/Ethernet).
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Ключові факти</h3>
+      <ul>
+        <li>Перша версія: <strong>1996 рік</strong> (ITU-T H.323 v1)</li>
+        <li>Поточна редакція: <strong>H.323 v7 (2009)</strong></li>
+        <li>Бінарний протокол на базі <strong>ASN.1</strong></li>
+        <li>Пов'язаний стандарт: <strong>H.320</strong> (ISDN), <strong>H.324</strong> (PSTN)</li>
+        <li>Широко розповсюджений у 2000-х роках</li>
+        <li>Система відеоконференцій Cisco, Polycom, Tandberg</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Сфери застосування</h3>
+      <ul>
+        <li>Корпоративні IP-АТС та відеоконференції</li>
+        <li>Шлюзи VoIP ↔ PSTN</li>
+        <li>Мережі операторів зв'язку (кінець 1990-х — 2010-х)</li>
+        <li>Системи дистанційного навчання (H.323 + H.239)</li>
+        <li>Відеоспостереження та телемедицина</li>
+        <li>Сумісність зі спадковим обладнанням</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 4 – History ==================== -->
+<section class="slide bg-plain">
+  <h2>📅 Еволюція H.323</h2>
+  <table>
+    <tr><th>Версія / Рік</th><th>Ключові нововведення</th></tr>
+    <tr><td><strong>H.323 v1 (1996)</strong></td><td>Перша специфікація: відеоконференції через LAN</td></tr>
+    <tr><td><strong>H.323 v2 (1998)</strong></td><td>H.235 (безпека), H.450 (додаткові послуги), Fast Connect</td></tr>
+    <tr><td><strong>H.323 v3 (1999)</strong></td><td>H.460 (розширення), підтримка IPv6, покращений RAS</td></tr>
+    <tr><td><strong>H.323 v4 (2000)</strong></td><td>H.239 (dual stream), підтримка QoS, масштабованість</td></tr>
+    <tr><td><strong>H.323 v5 (2003)</strong></td><td>Вдосконалення безпеки, H.460.17/18/19 (NAT traversal)</td></tr>
+    <tr><td><strong>H.323 v6 (2006)</strong></td><td>Покращення взаємодії, H.460.22 (TLS signaling)</td></tr>
+    <tr><td><strong>H.323 v7 (2009)</strong></td><td>Актуальна редакція: H.460.24 (IPv4/IPv6 NAT)</td></tr>
+    <tr><td>2000–2010-ті</td><td>SIP поступово витісняє H.323 у нових інсталяціях</td></tr>
+    <tr><td>Сьогодні</td><td>Legacy-системи, відеозали Cisco/Polycom, гібридні мережі</td></tr>
+  </table>
+  <div class="hbox" style="margin-top:.7em;">
+    За 13 років (v1–v7) H.323 еволюціонував від базової LAN-відеосистеми до повноцінного корпоративного стандарту. Кожна версія закривала прогалини безпеки (H.235) та розширювала функціональність (H.460, H.239). Сьогодні v7 залишається останньою офіційною специфікацією ITU-T.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 5 – Protocol Stack ==================== -->
+<section class="slide bg-plain">
+  <h2>📚 Стек протоколів H.323</h2>
+  <div class="two-col">
+    <div>
+      <pre class="diag">
+┌─────────────────────────────────────────┐
+│          Застосунок (аудіо/відео/дані)  │
+├──────────────┬──────────────────────────┤
+│  H.225 RAS   │  H.225 Call Signaling    │
+│  (UDP 1719)  │  (TCP 1720)              │
+├──────────────┤                          │
+│  H.245       │  Q.931 (ISDN-like)       │
+│  Control     │                          │
+│  (TCP дин.)  │                          │
+├──────────────┴──────────────────────────┤
+│   RTP / RTCP  (UDP, dynamic ports)      │
+├─────────────────────────────────────────┤
+│          UDP / TCP                      │
+├─────────────────────────────────────────┤
+│          IP (IPv4 / IPv6)               │
+└─────────────────────────────────────────┘</pre>
+    </div>
+    <div>
+      <h3>Компоненти стека</h3>
+      <ul>
+        <li><strong>H.225 RAS</strong> — реєстрація, допуск, статус (UDP 1719)</li>
+        <li><strong>H.225 Call Signaling</strong> — сигналізація Q.931 (TCP 1720)</li>
+        <li><strong>H.245</strong> — узгодження медіа-можливостей (TCP, динамічний порт)</li>
+        <li><strong>RTP/RTCP</strong> — транспорт медіа (UDP, динамічні порти)</li>
+        <li><strong>H.235</strong> — безпека (інтегрована в H.225/H.245)</li>
+        <li><strong>T.120</strong> — протокол обміну даними (whiteboard, sharing)</li>
+      </ul>
+      <div class="hbox" style="margin-top:.6em;">
+        Основна відмінність від SIP: H.323 використовує <strong>бінарне кодування ASN.1 (PER)</strong>, а не текстовий формат.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 6 – ASN.1 Encoding Theory ==================== -->
+<section class="slide bg-plain">
+  <h2>🔢 ASN.1 та PER — бінарне кодування H.323</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    H.323 використовує <strong>ASN.1 (Abstract Syntax Notation One)</strong> — мову опису структур даних, та <strong>PER (Packed Encoding Rules)</strong> — правила їх компактного бінарного кодування. Це принципово відрізняє H.323 від текстових протоколів.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Чому ASN.1/PER?</h3>
+      <ul>
+        <li><strong>Компактність:</strong> PER кодує без тегів і роздільників — мінімальний розмір пакету</li>
+        <li><strong>Строга типізація:</strong> кожне поле має фіксований тип та обмеження</li>
+        <li><strong>Стандартизована схема:</strong> автогенерація коду для будь-якої платформи</li>
+        <li><strong>ALIGNED vs UNALIGNED PER:</strong> H.323 використовує ALIGNED (вирівнювання по байту)</li>
+      </ul>
+      <div class="wbox" style="margin-top:.6em;">
+        <strong>Наслідок для безпеки:</strong> складний бінарний парсер = більша поверхня атаки. Помилки в парсингу ASN.1 — основна причина CVE у H.323-реалізаціях.
+      </div>
+    </div>
+    <div>
+      <h3>ASN.1 vs текстовий SIP</h3>
+      <table>
+        <tr><th>Критерій</th><th>H.323 (ASN.1/PER)</th><th>SIP (текст)</th></tr>
+        <tr><td>Розмір повідомлення</td><td>~100–200 байт</td><td>~1–5 KB</td></tr>
+        <tr><td>Читабельність</td><td>❌ Бінарний</td><td>✅ Текстовий</td></tr>
+        <tr><td>Парсинг</td><td>Складний (стан. машина)</td><td>Простий (regex/split)</td></tr>
+        <tr><td>IDS-аналіз</td><td>Потребує декодера</td><td>Інспекція рядків</td></tr>
+        <tr><td>Fuzzing вразливості</td><td>Часті (CVE-2004-0054)</td><td>Рідші</td></tr>
+        <tr><td>Wireshark decode</td><td>Вбудований ASN.1</td><td>Нативний</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 7 – Architecture ==================== -->
+<section class="slide bg-plain">
+  <h2>🏗️ Архітектура H.323-мережі</h2>
+  <pre class="diag">
+┌─────────────┐   H.225/H.245   ┌──────────────────┐   H.225/H.245   ┌─────────────┐
+│  H.323      │◄───────────────►│   Gatekeeper     │◄───────────────►│  H.323      │
+│  Terminal   │                 │  (зона H.323)    │                 │  Terminal   │
+│  (TE)       │                 └────────┬─────────┘                 │  (TE)       │
+└──────┬──────┘                          │ RAS                       └──────┬──────┘
+       │ RTP/RTCP                        │                                  │ RTP/RTCP
+       │                    ┌────────────┴──────────┐                       │
+       └────────────────────►   H.323 Gateway       ◄───────────────────────┘
+                            │  (VoIP ↔ PSTN)        │
+                            └────────────┬──────────┘
+                                         │
+                            ┌────────────▼──────────┐
+                            │   MCU (Multipoint     │
+                            │   Control Unit)       │
+                            └───────────────────────┘</pre>
+  <ul style="margin-top:.4em;">
+    <li><strong>Terminal (TE)</strong> — кінцевий пристрій (IP-телефон, відеосистема, softphone)</li>
+    <li><strong>Gatekeeper (GK)</strong> — центральний реєстратор зони, контроль доступу та маршрутизація</li>
+    <li><strong>Gateway (GW)</strong> — міжмережевий шлюз (H.323 ↔ PSTN/H.320/SIP)</li>
+    <li><strong>MCU</strong> — багатоточкова конференція (Multipoint Control Unit)</li>
+  </ul>
+  <div class="hbox" style="margin-top:.6em;">
+    Архітектура H.323 є <strong>централізованою</strong>: Gatekeeper відіграє ключову роль у контролі доступу та адресації. Це відрізняє її від SIP, де відсутній обов'язковий центральний компонент. Така централізація спрощує управління, але створює єдину точку відмови.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 7 – Zone Concept ==================== -->
+<section class="slide bg-plain">
+  <h2>🗺️ Концепція зони H.323</h2>
+  <div class="two-col">
+    <div>
+      <h3>Зона H.323</h3>
+      <ul>
+        <li>Набір H.323-пристроїв, керованих одним <strong>Gatekeeper</strong></li>
+        <li>Gatekeeper може бути <strong>обов'язковим</strong> (зареєстровані термінали) або <strong>необов'язковим</strong></li>
+        <li>Кожен термінал реєструється в GK через <strong>RAS (UDP 1719)</strong></li>
+        <li>GK призначає <strong>псевдонім → IP-адресу</strong> (alias translation)</li>
+        <li>Кілька зон = <strong>міжзонова маршрутизація</strong> через ієрархію GK</li>
+      </ul>
+      <div class="hbox" style="margin-top:.6em;">
+        Зона є аналогом <em>SIP-домену</em>. Gatekeeper — аналогом <em>SIP Registrar + Proxy</em>.
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <h3>Функції Gatekeeper</h3>
+        <ul>
+          <li><strong>Address Translation</strong> — E.164 → IP</li>
+          <li><strong>Admissions Control</strong> — ARQ/ACF/ARJ</li>
+          <li><strong>Bandwidth Control</strong> — BRQ/BCF</li>
+          <li><strong>Zone Management</strong> — реєстрація/відкликання</li>
+          <li>Маршрутизація сигналізації (Routed Mode)</li>
+          <li>Авторизація та тарифікація (CDR)</li>
+          <li>Балансування навантаження між MCU</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 8 – RAS Protocol ==================== -->
+<section class="slide bg-plain">
+  <h2>📡 RAS — Registration, Admission and Status</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>RAS (H.225.0)</strong> — протокол між Terminal/Gateway та Gatekeeper. Транспорт: <strong>UDP, порт 1719</strong>. Повідомлення кодуються ASN.1 (PER).
+  </div>
+  <table>
+    <tr><th>Повідомлення</th><th>Опис</th><th>Відповідь</th></tr>
+    <tr><td><span class="m">GRQ / GCF / GRJ</span></td><td>Gatekeeper Request / Confirm / Reject — пошук GK</td><td>GCF або GRJ</td></tr>
+    <tr><td><span class="m">RRQ / RCF / RRJ</span></td><td>Registration Request / Confirm / Reject — реєстрація</td><td>RCF або RRJ</td></tr>
+    <tr><td><span class="m">URQ / UCF</span></td><td>Unregistration Request / Confirm — відкликання реєстрації</td><td>UCF</td></tr>
+    <tr><td><span class="m">ARQ / ACF / ARJ</span></td><td>Admission Request / Confirm / Reject — допуск до виклику</td><td>ACF або ARJ</td></tr>
+    <tr><td><span class="m">BRQ / BCF / BRJ</span></td><td>Bandwidth Request / Confirm / Reject — зміна смуги</td><td>BCF або BRJ</td></tr>
+    <tr><td><span class="m">DRQ / DCF</span></td><td>Disengage Request / Confirm — завершення виклику</td><td>DCF</td></tr>
+    <tr><td><span class="m">IRQ / IRR</span></td><td>Info Request / Response — статус сесії</td><td>IRR</td></tr>
+    <tr><td><span class="m">LRQ / LCF / LRJ</span></td><td>Location Request / Confirm / Reject — локалізація</td><td>LCF або LRJ</td></tr>
+  </table>
+</section>
+
+<!-- ==================== SLIDE 9 – H.225 Call Signaling ==================== -->
+<section class="slide bg-plain">
+  <h2>📞 H.225 — Сигналізація викликів (Q.931)</h2>
+  <div class="two-col">
+    <div>
+      <h3>Характеристики H.225</h3>
+      <ul>
+        <li>Базується на <strong>Q.931</strong> (ISDN-сигналізація)</li>
+        <li>Транспорт: <strong>TCP, порт 1720</strong></li>
+        <li>Встановлення та завершення викликів</li>
+        <li>Перенесення <strong>H.245 адреси</strong> (IP:порт для управління)</li>
+        <li>Підтримка <strong>Fast Connect</strong> (спрощений handshake)</li>
+        <li>Кодування: <strong>ASN.1 / PER</strong> (бінарне)</li>
+      </ul>
+      <div class="hbox" style="margin-top:.6em;">
+        <strong>Fast Connect (Tunneling)</strong> — H.245 повідомлення передаються всередині H.225, що скорочує кількість round-trip до 1–2.
+      </div>
+    </div>
+    <div>
+      <h3>Основні повідомлення Q.931</h3>
+      <table>
+        <tr><th>Повідомлення</th><th>Призначення</th></tr>
+        <tr><td><span class="m">Setup</span></td><td>Ініціація виклику (аналог SIP INVITE)</td></tr>
+        <tr><td><span class="m">Call Proceeding</span></td><td>Виклик обробляється</td></tr>
+        <tr><td><span class="m">Alerting</span></td><td>Дзвінок у одержувача (аналог SIP 180)</td></tr>
+        <tr><td><span class="m">Connect</span></td><td>Виклик прийнято (аналог SIP 200 OK)</td></tr>
+        <tr><td><span class="m">Release Complete</span></td><td>Завершення виклику (аналог SIP BYE)</td></tr>
+        <tr><td><span class="m">Facility</span></td><td>Додаткові послуги, перенаправлення</td></tr>
+        <tr><td><span class="m">Status / Status Enquiry</span></td><td>Опитування стану з'єднання</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 10 – H.245 ==================== -->
+<section class="slide bg-plain">
+  <h2>🎛️ H.245 — Протокол управління медіа</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>H.245</strong> — Control Protocol для узгодження медіа-можливостей та відкриття логічних каналів (RTP-потоків). Транспорт: <strong>TCP, динамічний порт</strong>, адреса передається в H.225 Setup/Connect.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Фази H.245</h3>
+      <ol style="margin-left:1.2em; font-size:1.35rem;">
+        <li style="margin-bottom:.3em;"><strong>Master/Slave Determination</strong> — визначення ролей (хто «Master»)</li>
+        <li style="margin-bottom:.3em;"><strong>Capabilities Exchange</strong> — обмін підтримуваними кодеками та можливостями</li>
+        <li style="margin-bottom:.3em;"><strong>Open Logical Channel (OLC)</strong> — відкриття RTP-каналу (IP:порт для медіа)</li>
+        <li style="margin-bottom:.3em;"><strong>Close Logical Channel (CLC)</strong> — закриття медіа-каналу</li>
+      </ol>
+    </div>
+    <div>
+      <h3>Ключові повідомлення H.245</h3>
+      <table>
+        <tr><th>Повідомлення</th><th>Призначення</th></tr>
+        <tr><td><span class="m">TerminalCapabilitySet</span></td><td>Список підтримуваних кодеків</td></tr>
+        <tr><td><span class="m">MasterSlaveDetermination</span></td><td>Вибір Master/Slave</td></tr>
+        <tr><td><span class="m">OpenLogicalChannel</span></td><td>Відкриття RTP-потоку</td></tr>
+        <tr><td><span class="m">CloseLogicalChannel</span></td><td>Закриття RTP-потоку</td></tr>
+        <tr><td><span class="m">FlowControlCommand</span></td><td>Керування пропускною здатністю</td></tr>
+        <tr><td><span class="m">EndSessionCommand</span></td><td>Завершення H.245-сесії</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 11 – H.323 Port Reference ==================== -->
+<section class="slide bg-plain">
+  <h2>🔌 H.323 — Таблиця портів та вимоги до firewall</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    H.323 використовує <strong>множину TCP/UDP-портів</strong> — як фіксовані, так і динамічно узгоджені. Це ускладнює налаштування firewall та є причиною появи H.460 як NAT traversal рішення.
+  </div>
+  <table style="margin-bottom:.6em;">
+    <tr><th>Порт / Діапазон</th><th>Протокол</th><th>Призначення</th><th>Примітки</th></tr>
+    <tr><td><strong>UDP 1719</strong></td><td>H.225 RAS</td><td>Реєстрація, допуск, статус</td><td>GK Discovery (multicast 224.0.1.41, ITU-T H.323)</td></tr>
+    <tr><td><strong>TCP 1720</strong></td><td>H.225 Call Sig.</td><td>Встановлення/завершення виклику</td><td>Q.931 signaling; обов'язковий</td></tr>
+    <tr><td><strong>TCP 1300</strong></td><td>H.225 TLS</td><td>Шифрована сигналізація (H.460.22)</td><td>Опціонально</td></tr>
+    <tr><td><strong>TCP дин.</strong></td><td>H.245</td><td>Узгодження медіа-можливостей</td><td>Порт передається в H.225 Setup</td></tr>
+    <tr><td><strong>UDP 49152–65535</strong></td><td>RTP / RTCP</td><td>Аудіо/відео медіа-потоки</td><td>Порт узгоджується в H.245 OLC</td></tr>
+    <tr><td><strong>TCP 1718</strong></td><td>Gatekeeper</td><td>GK Discovery (unicast альтернатива)</td><td>Рідко використовується</td></tr>
+  </table>
+  <div class="two-col">
+    <div class="wbox">
+      <strong>Проблема для firewall:</strong> динамічні порти H.245 і RTP не можна заздалегідь дозволити. Потрібен ALG (Application Layer Gateway) або H.460.18/19, або SBC для NAT/firewall traversal.
+    </div>
+    <div class="hbox">
+      <strong>Мінімальний набір портів для firewall:</strong> TCP 1720 вхідний + UDP 1719 двосторонній + дозволити встановлені TCP-з'єднання (stateful). Для повного функціонування — або ALG, або H.460.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 12 – Basic Call Flow ==================== -->
+<section class="slide bg-plain">
+  <h2>📞 H.323 Call Flow — прямий виклик (без GK)</h2>
+  <pre class="diag">
+  Terminal A (caller)                         Terminal B (callee)
+        │                                             │
+        │──── H.225 Setup ──────────────────────────►│  TCP:1720  ① ініціація виклику
+        │◄─── H.225 Call Proceeding ─────────────────│
+        │◄─── H.225 Alerting ────────────────────────│  🔔 дзвінок у B
+        │                                             │
+        │         [H.245 TCP з'єднання встановлено]   │
+        │──── H.245 MasterSlaveDetermination ────────►│  ② визначення ролей
+        │◄─── H.245 MSD Ack ─────────────────────────│
+        │──── H.245 TerminalCapabilitySet ───────────►│  ③ обмін можливостями
+        │◄─── H.245 TerminalCapabilitySet ───────────│
+        │──── H.245 OpenLogicalChannel (audio) ──────►│  ④ відкриття RTP-каналу
+        │◄─── H.245 OLC Ack ─────────────────────────│
+        │                                             │
+        │◄─── H.225 Connect ─────────────────────────│  ✅ B підняв трубку
+        │◄══════════════ RTP Media ══════════════════►│  🎤 аудіо/відео
+        │                                             │
+        │──── H.245 EndSessionCommand ───────────────►│  ⑤ завершення
+        │──── H.225 Release Complete ────────────────►│</pre>
+  <div class="hbox" style="margin-top:.4em;">
+    Медіа (RTP) передається безпосередньо між терміналами. <strong>H.245 є окремим TCP-з'єднанням</strong>, яке в цьому сценарії встановлюється до H.225 Connect, як показано на діаграмі.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 12 – Call Flow with GK ==================== -->
+<section class="slide bg-plain">
+  <h2>📞 H.323 Call Flow — через Gatekeeper</h2>
+  <pre class="diag">
+  Terminal A          Gatekeeper           Terminal B
+      │                   │                    │
+      │── RAS: ARQ ──────►│                    │  ① запит допуску
+      │◄─ RAS: ACF ───────│                    │  ② GK дозволяє
+      │                   │                    │
+      │── H.225 Setup ────────────────────────►│  ③ виклик (Direct Mode)
+      │              (або через GK — Routed)   │
+      │◄─ H.225 Alerting ──────────────────────│
+      │                                        │
+      │◄═══════════ H.245 (TCP) ══════════════►│  ④ узгодження медіа
+      │◄═══════════ RTP Media ════════════════►│  🎤 аудіо/відео
+      │                                        │
+      │── RAS: DRQ ──────►│                    │  ⑤ сповіщення про кінець
+      │◄─ RAS: DCF ───────│                    │</pre>
+  <div class="hbox" style="margin-top:.4em; margin-bottom:.45em;">
+    Перед встановленням виклику GK виконує <strong>Admission Control (ARQ/ACF)</strong> — перевірку прав та доступної смуги. Без ACF термінал не повинен ініціювати H.225 Setup. Після завершення виклику DRQ повідомляє GK для оновлення статистики та звільнення ресурсів.
+  </div>
+  <div class="two-col">
+    <div class="card">
+      <h3>Direct Mode (Direct Call Signaling)</h3>
+      <p>H.225 Setup надсилається безпосередньо від A до B. GK лише перевіряє допуск через RAS. <em>Менший контроль, менше навантаження на GK.</em></p>
+    </div>
+    <div class="card">
+      <h3>Routed Mode (GK-Routed Signaling)</h3>
+      <p>Вся H.225-сигналізація проходить через GK. GK має повний контроль, може вести CDR, застосовувати політики. <em>Аналог SIP Proxy.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 13 – Codecs ==================== -->
+<section class="slide bg-plain">
+  <h2>🎼 Кодеки в H.323</h2>
+  <div class="two-col">
+    <div>
+      <h3>Аудіо-кодеки (H.32x)</h3>
+      <table>
+        <tr><th>Кодек</th><th>Бітрейт</th><th>Стандарт</th></tr>
+        <tr><td><strong>G.711 µ/A</strong></td><td>64 кбіт/с</td><td>Обов'язковий</td></tr>
+        <tr><td>G.722</td><td>48–64 кбіт/с</td><td>HD Voice 16 кГц</td></tr>
+        <tr><td>G.723.1</td><td>5.3/6.3 кбіт/с</td><td>Вузька смуга</td></tr>
+        <tr><td>G.728</td><td>16 кбіт/с</td><td>LD-CELP</td></tr>
+        <tr><td>G.729A</td><td>8 кбіт/с</td><td>Корп. телефонія</td></tr>
+        <tr><td>G.722.1</td><td>24/32 кбіт/с</td><td>Siren (Polycom)</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Відео-кодеки (H.26x)</h3>
+      <table>
+        <tr><th>Кодек</th><th>Роздільна здатність</th><th>Стандарт</th></tr>
+        <tr><td><strong>H.261</strong></td><td>CIF / QCIF</td><td>Обов'язковий</td></tr>
+        <tr><td>H.263</td><td>до 1080p</td><td>Широко підтримується</td></tr>
+        <tr><td>H.264</td><td>до 1080p / 4K</td><td>Сучасний стандарт</td></tr>
+        <tr><td>H.265 (HEVC)</td><td>до 4K/8K</td><td>Новітні системи</td></tr>
+      </table>
+      <div class="hbox" style="margin-top:.5em;">
+        <strong>G.711</strong> та <strong>H.261</strong> — мінімально обов'язкові кодеки за стандартом H.323 для гарантії сумісності.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 14 – H.239 Dual Stream ==================== -->
+<section class="slide bg-plain">
+  <h2>🖥️ H.239 — Подвійний потік (Dual Stream)</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>H.239</strong> — розширення H.323, що дозволяє одночасно передавати два відеопотоки: <em>відео зустрічі</em> (camera) та <em>контент</em> (презентація, робочий стіл, документи).
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Принцип роботи</h3>
+      <ul>
+        <li>Визначає два окремих <strong>логічних RTP-канали</strong></li>
+        <li><strong>Live Channel</strong> — відео з камери (people video)</li>
+        <li><strong>Presentation Channel</strong> — контент (slides, screen)</li>
+        <li>Узгоджується через <strong>H.245 ExtendedVideoCapability</strong></li>
+        <li>Застосовується у системах Polycom, Cisco Tandberg, LifeSize</li>
+      </ul>
+    </div>
+    <div>
+      <pre class="diag">
+┌──────────────────────────────────┐
+│  Terminal A                      │
+│  ┌──────────┐  ┌───────────────┐ │
+│  │  Camera  │  │  PC / Screen  │ │
+│  └────┬─────┘  └──────┬────────┘ │
+│       │ RTP ch1        │ RTP ch2  │
+└───────┼────────────────┼──────────┘
+        │   H.323 MCU    │
+        ▼                ▼
+┌──────────────────────────────────┐
+│  Terminal B (відображення)       │
+│  ┌──────────┐  ┌───────────────┐ │
+│  │  People  │  │  Content View │ │
+│  │  Video   │  │  (Presentation│ │
+│  └──────────┘  └───────────────┘ │
+└──────────────────────────────────┘</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 15 – RTP/RTCP Theory ==================== -->
+<section class="slide bg-plain">
+  <h2>📡 RTP/RTCP — Транспорт медіа в H.323</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>RTP (Real-time Transport Protocol, RFC 3550)</strong> — протокол доставки аудіо/відео в реальному часі. Порти узгоджуються в H.245 <em>OpenLogicalChannel</em> і не є фіксованими, що є ключовою відмінністю від сигналізації.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Структура RTP</h3>
+      <ul>
+        <li><strong>SSRC</strong> — унікальний ідентифікатор джерела медіа</li>
+        <li><strong>PT (Payload Type)</strong> — тип кодека (G.711=0/8, G.729=18, H.264=динамічний)</li>
+        <li><strong>Sequence Number</strong> — порядковий номер для реасемблювання</li>
+        <li><strong>Timestamp</strong> — час семплювання (синхронізація відео+аудіо)</li>
+        <li><strong>CSRC</strong> — список джерел при мікшуванні MCU</li>
+      </ul>
+      <div class="hbox" style="margin-top:.5em;">
+        <strong>RTP = UDP + {seq, ts, ssrc, payload}</strong>. Без гарантії доставки — втрати пакетів = артефакти звуку.
+      </div>
+    </div>
+    <div>
+      <h3>RTCP — управління якістю</h3>
+      <ul>
+        <li><strong>SR (Sender Report)</strong> — статистика відправника: bytes, packets, NTP timestamp</li>
+        <li><strong>RR (Receiver Report)</strong> — якість отримання: втрати, jitter, RTT</li>
+        <li><strong>SDES</strong> — опис джерела (CNAME, NAME)</li>
+        <li><strong>BYE</strong> — завершення сесії</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        <strong>Безпека RTP:</strong> без H.235.6/SRTP RTP-потоки передаються у відкритому вигляді. Будь-хто у мережі може прослухати дзвінок або впровадити фальшивий RTP (injection).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 16 – H.460 NAT Traversal ==================== -->
+<section class="slide bg-plain">
+  <h2>🌐 H.460 — NAT Traversal у H.323</h2>
+  <div class="three-col">
+    <div class="card">
+      <h3>H.460.17</h3>
+      <ul>
+        <li>RAS через TCP (замість UDP)</li>
+        <li>Допомагає при NAT, що блокує UDP</li>
+        <li>Тунелювання RAS через H.225 TCP</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>H.460.18</h3>
+      <ul>
+        <li>Keepalive пакети для підтримки NAT-сесії</li>
+        <li>Нотифікація GK про IP/порт термінала</li>
+        <li>Сигналізація через вхідне з'єднання</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>H.460.19</h3>
+      <ul>
+        <li>NAT traversal для <strong>медіа (RTP)</strong></li>
+        <li>Мультиплексування RTP/RTCP на одному порту</li>
+        <li>Сумісний з H.460.18</li>
+      </ul>
+    </div>
+  </div>
+  <div class="two-col" style="margin-top:.7em;">
+    <div class="card">
+      <h3>H.460.24</h3>
+      <ul>
+        <li>Підтримка <strong>IPv4/IPv6 dual-stack</strong></li>
+        <li>NAT traversal для змішаних мереж</li>
+      </ul>
+    </div>
+    <div class="hbox">
+      На практиці H.460.18/19 широко підтримується Cisco, Polycom та Tandberg. Для складних NAT часто застосовується <strong>TURN-подібний релей</strong> або <strong>SBC</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 17 – H.323 Fast Connect ==================== -->
+<section class="slide bg-plain">
+  <h2>⚡ H.323 Fast Connect — оптимізація встановлення виклику</h2>
+  <div class="hbox" style="margin-bottom:.6em;">
+    <strong>Fast Connect (H.323 Annex E)</strong> — механізм скорочення затримки встановлення виклику. Замість окремого H.245 TCP-з'єднання, параметри медіа-каналів передаються <em>всередині</em> H.225 Setup/Connect.
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Стандартний режим (без Fast Connect)</h3>
+      <pre class="diag">
+A ──── H.225 Setup ──────────────► B
+A ◄─── H.225 Alerting/Connect ──── B
+  [відкриття H.245 TCP]
+A ──── H.245 MSD ────────────────► B
+A ◄─── H.245 MSD Ack ─────────────B
+A ──── H.245 CapabilitySet ──────► B
+A ◄─── H.245 CapabilitySet ───────B
+A ──── H.245 OLC (audio) ────────► B
+A ◄─── H.245 OLC Ack ─────────────B
+  [лише тепер починається медіа]
+Затримка: 4–6 round-trips ≈ 200–600 мс (LAN)</pre>
+    </div>
+    <div>
+      <h3>Fast Connect (H.245 tunneled in H.225)</h3>
+      <pre class="diag">
+A ──── H.225 Setup ──────────────► B
+        (містить FastStart:
+         OLC для audio/video)
+A ◄─── H.225 Connect ─────────────B
+        (містить FastStart ACK:
+         підтверджені канали)
+  [медіа починається ОДРАЗУ]
+Затримка: 1 round-trip ≈ 50–100 мс (LAN)</pre>
+      <div class="wbox" style="margin-top:.4em;">
+        <strong>Безпека:</strong> при Fast Connect H.245 не виконує повний обмін можливостями — можливий downgrade до слабших кодеків. Рекомендується валідувати FastStart параметри на SBC.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 18 – H.235 Security ==================== -->
+<section class="slide bg-sec">
+  <h2>🔒 H.235 — Безпека в H.323</h2>
+  <div class="hbox" style="margin-bottom:.8em;">
+    <strong>H.235</strong> — стандарт безпеки для H.323: аутентифікація, цілісність та конфіденційність сигналізації і медіа. Входить до стека H.323 починаючи з версії 2 (1998).
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Профілі H.235</h3>
+      <table>
+        <tr><th>Профіль</th><th>Опис</th></tr>
+        <tr><td><strong>H.235.1</strong></td><td>Базова безпека на основі симетричних ключів</td></tr>
+        <tr><td><strong>H.235.2</strong></td><td>Аутентифікація на базі сертифікатів (PKI)</td></tr>
+        <tr><td><strong>H.235.3</strong></td><td>Гібридна безпека (симетрична + PKI)</td></tr>
+        <tr><td><strong>H.235.5</strong></td><td>Шифрування медіа (framework)</td></tr>
+        <tr><td><strong>H.235.6</strong></td><td>Шифрування голосу: AES-128</td></tr>
+        <tr><td><strong>H.235.8</strong></td><td>MIKEY для обміну ключами SRTP</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3>Механізми H.235</h3>
+      <ul>
+        <li><strong>MD5 / SHA-1 / SHA-256</strong> — хешування для автентифікації</li>
+        <li><strong>HMAC-SHA1</strong> — цілісність повідомлень H.225/H.245</li>
+        <li><strong>DH обмін ключами</strong> — Perfect Forward Secrecy</li>
+        <li><strong>RSA / ECDSA</strong> — цифровий підпис (сертифікати)</li>
+        <li><strong>AES-128/256-CBC</strong> — шифрування медіа</li>
+        <li><strong>TLS</strong> — захист H.225 (H.460.22)</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        H.235 реалізовано значно складніше, ніж TLS у SIP. Взаємодія між різними вендорами часто проблематична.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 17 – Security Threats ==================== -->
+<section class="slide bg-sec">
+  <h2>⚠️ Загрози та атаки на H.323</h2>
+  <div class="two-col">
+    <div>
+      <h3>Специфічні загрози H.323</h3>
+      <ul>
+        <li><strong>Gatekeeper Spoofing</strong> — підробка GK для перехоплення трафіку</li>
+        <li><strong>RAS Flooding</strong> — DoS-атака через лавину ARQ-запитів</li>
+        <li><strong>Malformed ASN.1</strong> — переповнення буфера через некоректні пакети</li>
+        <li><strong>Call Hijacking</strong> — перехоплення виклику через фальшивий Connect</li>
+        <li><strong>H.245 Downgrade</strong> — примушення до слабких кодеків/алгоритмів</li>
+        <li><strong>RTP Injection</strong> — підміна медіа-потоку</li>
+        <li><strong>Zone Bypass</strong> — обхід контролю GK через прямі виклики</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Загальні VoIP-загрози</h3>
+      <ul>
+        <li><strong>Eavesdropping</strong> — прослуховування незашифрованого RTP</li>
+        <li><strong>Toll Fraud</strong> — несанкціоновані виклики</li>
+        <li><strong>Replay Attack</strong> — відтворення перехоплених повідомлень</li>
+        <li><strong>Man-in-the-Middle</strong> — атака посередника</li>
+        <li><strong>Registration Hijacking</strong> — перехоплення реєстрації в GK</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        CVE-2004-0054, CVE-2007-5575 — відомі вразливості в реалізаціях H.323 (Cisco, OpenH323). Бінарний ASN.1 складніше аналізувати, ніж текстовий SIP.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 20 – STRIDE Threat Model ==================== -->
+<section class="slide bg-sec">
+  <h2>🎯 STRIDE-модель загроз для H.323-інфраструктури</h2>
+  <div class="hbox" style="margin-bottom:.6em;">
+    Застосування методології <strong>STRIDE</strong> (Microsoft) до H.323 дозволяє систематично ідентифікувати загрози та визначити пріоритети захисних заходів.
+  </div>
+  <table>
+    <tr><th>STRIDE</th><th>Загроза</th><th>Вектор атаки в H.323</th><th>Контрзахід</th></tr>
+    <tr><td><strong class="m">S</strong>poofing</td><td>Підробка ідентичності</td><td>Фальшивий Gatekeeper (GRQ), Registration Hijacking</td><td>H.235.2 PKI, ACL для GK IP</td></tr>
+    <tr><td><strong class="m">T</strong>ampering</td><td>Модифікація даних</td><td>RTP Injection, H.245 Downgrade, ASN.1 маніпуляції</td><td>H.235.6 (SRTP), TLS, HMAC-SHA1</td></tr>
+    <tr><td><strong class="m">R</strong>epudiation</td><td>Відмова від дій</td><td>Виклики без CDR, відсутність audit trail у GK</td><td>GK з RADIUS/CDR, логування RAS</td></tr>
+    <tr><td><strong class="m">I</strong>nformation Disc.</td><td>Розкриття інформації</td><td>Прослух незашифрованого RTP, метадані викликів</td><td>H.235.6 шифрування медіа, TLS</td></tr>
+    <tr><td><strong class="m">D</strong>oS</td><td>Відмова в обслуговуванні</td><td>RAS Flood (ARQ), Malformed ASN.1, SYN-flood TCP 1720</td><td>Rate limiting, SBC, IPS сигнатури</td></tr>
+    <tr><td><strong class="m">E</strong>levation of Priv.</td><td>Підвищення привілеїв</td><td>Toll Fraud через Zone Bypass, GK Routed обхід</td><td>ACL, обов'язковий ARQ, моніторинг CDR</td></tr>
+  </table>
+  <div class="wbox" style="margin-top:.5em;">
+    H.323 найбільш вразливий до <strong>S</strong>poofing (через відсутність обов'язкового H.235) та <strong>D</strong>oS (складний ASN.1 парсинг). SBC на периметрі є найефективнішим єдиним контрзаходом.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 21 – H.235 Authentication ==================== -->
+<section class="slide bg-plain">
+  <h2>🔑 H.235 — Аутентифікація терміналів</h2>
+  <div class="two-col">
+    <div>
+      <h3>Password-Based (H.235.1)</h3>
+      <pre class="diag">
+Terminal A              Gatekeeper
+    │                       │
+    │── RRQ ───────────────►│
+    │   (без аутентифікації) │
+    │◄─ RRJ (authChallenge) ─│  nonce + alg
+    │                       │
+    │── RRQ ───────────────►│
+    │   cryptoToken:        │
+    │   HMAC-SHA1(pwd,nonce)│
+    │◄─ RCF ────────────────│  ✅ зареєстровано</pre>
+      <div class="hbox" style="margin-top:.4em;">
+        Аналогічно до <strong>SIP Digest Auth</strong>, але з бінарним кодуванням та нестандартизованим форматом між вендорами.
+      </div>
+    </div>
+    <div>
+      <h3>Certificate-Based (H.235.2)</h3>
+      <ul>
+        <li>Термінал має <strong>X.509-сертифікат</strong></li>
+        <li>GK перевіряє сертифікат через PKI</li>
+        <li><strong>TLS-з'єднання</strong> для H.225 (порт 1300)</li>
+        <li>Взаємна автентифікація (mTLS)</li>
+        <li>Більш безпечний, але складний у розгортанні</li>
+      </ul>
+      <div class="card" style="margin-top:.5em;">
+        <h3>Практичні рекомендації</h3>
+        <ul>
+          <li>Використовувати <strong>H.235.6 + AES-128</strong> для медіа</li>
+          <li>TLS для H.225 (H.460.22)</li>
+          <li>Сегментація мережі (VLAN)</li>
+          <li>SBC на периметрі</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 19 – H.323 Gateway ==================== -->
+<section class="slide bg-plain">
+  <h2>🔀 H.323 Gateway — міжмережева взаємодія</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>H.323 Gateway</strong> — пристрій, що здійснює перетворення протоколів між H.323 та іншими телефонними мережами. Є обов'язковим компонентом для підключення до PSTN.
+  </div>
+  <div class="three-col">
+    <div class="card">
+      <h3>H.323 ↔ PSTN/ISDN</h3>
+      <ul>
+        <li>Перетворення H.225/H.245 ↔ ISDN Q.931</li>
+        <li>Транскодування кодеків (G.711 ↔ G.729)</li>
+        <li>E.164 ↔ IP-адреса</li>
+        <li>Інтерфейси: E1/T1, BRI, PRI</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>H.323 ↔ SIP</h3>
+      <ul>
+        <li>B2BUA або proxy між двома стеками</li>
+        <li>Відображення: INVITE ↔ Setup</li>
+        <li>SDP ↔ H.245 capabilities</li>
+        <li>Приклади: Cisco IOS, OpenH323</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>H.323 ↔ H.320 (ISDN)</h3>
+      <ul>
+        <li>Взаємодія з відеосистемами ISDN</li>
+        <li>Конвертація H.261 ↔ H.261</li>
+        <li>BRI/PRI інтерфейси</li>
+        <li>Застаріло, але ще присутнє</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wbox" style="margin-top:.6em;">
+    <strong>Безпека Gateway:</strong> шлюз є критичною точкою — потребує суворої автентифікації, захисту від toll fraud та моніторингу аномальних патернів дзвінків.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 20 – MCU ==================== -->
+<section class="slide bg-plain">
+  <h2>👥 MCU — Multipoint Control Unit</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>MCU (H.231/H.243)</strong> — компонент H.323 для проведення багатоточкових конференцій. Складається з <strong>MC</strong> (Multipoint Controller) та <strong>MP</strong> (Multipoint Processor).
+  </div>
+  <div class="two-col">
+    <div>
+      <h3>Компоненти MCU</h3>
+      <div class="card" style="margin-bottom:.5em;">
+        <h3>MC (Multipoint Controller)</h3>
+        <ul>
+          <li>Управляє конференцією (H.245)</li>
+          <li>Узгоджує можливості всіх учасників</li>
+          <li>Визначає спільний «lowest common denominator»</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>MP (Multipoint Processor)</h3>
+        <ul>
+          <li>Обробляє медіа (мікшування аудіо)</li>
+          <li>Перемикання відео (Voice-Activated Switching)</li>
+          <li>Транскодування між форматами</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h3>Режими конференції</h3>
+      <table>
+        <tr><th>Режим</th><th>Опис</th></tr>
+        <tr><td><strong>Centralized</strong></td><td>Весь медіа через MCU (типовий)</td></tr>
+        <tr><td><strong>Decentralized</strong></td><td>Медіа між учасниками напряму (multicast)</td></tr>
+        <tr><td><strong>Hybrid</strong></td><td>Комбінація Centralized + Decentralized</td></tr>
+      </table>
+      <div class="hbox" style="margin-top:.5em;">
+        Сучасні MCU: <strong>Cisco Meeting Server</strong>, <strong>Pexip</strong>, <strong>Acano</strong>. Підтримують H.323 + SIP + WebRTC одночасно.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 21 – H.450 Supplementary Services ==================== -->
+<section class="slide bg-plain">
+  <h2>📋 H.450 — Додаткові послуги H.323</h2>
+  <div class="hbox" style="margin-bottom:.7em;">
+    <strong>H.450.x</strong> — серія стандартів для реалізації телефонних сервісів, аналогічних послугам PSTN/ISDN у мережах H.323.
+  </div>
+  <div class="two-col">
+    <div>
+      <table>
+        <tr><th>Стандарт</th><th>Послуга</th></tr>
+        <tr><td><strong>H.450.1</strong></td><td>Загальна структура (framework)</td></tr>
+        <tr><td><strong>H.450.2</strong></td><td>Передача виклику (Call Transfer)</td></tr>
+        <tr><td><strong>H.450.3</strong></td><td>Перенаправлення виклику (Call Diversion)</td></tr>
+        <tr><td><strong>H.450.4</strong></td><td>Утримання виклику (Call Hold)</td></tr>
+        <tr><td><strong>H.450.5</strong></td><td>Очікування виклику (Call Park / Pickup)</td></tr>
+        <tr><td><strong>H.450.6</strong></td><td>Очікування зайнятого (Call Waiting)</td></tr>
+        <tr><td><strong>H.450.7</strong></td><td>Повідомлення в голосовій пошті (MWI)</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th>Стандарт</th><th>Послуга</th></tr>
+        <tr><td><strong>H.450.8</strong></td><td>Ідентифікація імені (Name Identification)</td></tr>
+        <tr><td><strong>H.450.9</strong></td><td>Завершення виклику на зайнятого (CCBS)</td></tr>
+        <tr><td><strong>H.450.10</strong></td><td>Виклик за пропозицією (Call Offer)</td></tr>
+        <tr><td><strong>H.450.11</strong></td><td>Внутрішній виклик (Call Intrusion)</td></tr>
+        <tr><td><strong>H.450.12</strong></td><td>Загальний порядок операцій</td></tr>
+      </table>
+      <div class="wbox" style="margin-top:.5em;">
+        H.450 реалізовано нерівномірно у різних вендорів. SIP-аналоги: REFER (transfer), SUBSCRIBE/NOTIFY (MWI), UPDATE (hold).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 22 – H.323 vs SIP ==================== -->
+<section class="slide bg-mid">
+  <h2>⚖️ H.323 vs SIP — порівняння</h2>
+  <table>
+    <tr><th>Характеристика</th><th>H.323</th><th>SIP</th></tr>
+    <tr><td>Організація-розробник</td><td>ITU-T</td><td>IETF</td></tr>
+    <tr><td>Рік появи</td><td>1996</td><td>1999 / 2002</td></tr>
+    <tr><td>Кодування</td><td><span class="er">ASN.1 / PER (бінарне)</span></td><td><span class="ok">Текстове (HTTP-подібне)</span></td></tr>
+    <tr><td>Сигналізація</td><td>H.225 + H.245 (2 з'єднання)</td><td><span class="ok">Один протокол (RFC 3261)</span></td></tr>
+    <tr><td>Порт сигналізації</td><td>TCP 1720 + RAS UDP 1719</td><td>UDP/TCP 5060, TLS 5061</td></tr>
+    <tr><td>NAT traversal</td><td><span class="er">H.460 (складний)</span></td><td><span class="ok">ICE/STUN/TURN (стандартний)</span></td></tr>
+    <tr><td>Безпека</td><td>H.235 (складна реалізація)</td><td><span class="ok">TLS + SRTP (простіше)</span></td></tr>
+    <tr><td>Відеоконференції</td><td><span class="ok">Потужна (H.239, H.243)</span></td><td>Обмежена (SDP bundle)</td></tr>
+    <tr><td>Розширюваність</td><td>Складна (H.460)</td><td><span class="ok">Проста (нові методи, заголовки)</span></td></tr>
+    <tr><td>Відлагодження</td><td><span class="er">Складне (бінарний формат)</span></td><td><span class="ok">Просте (Wireshark, sngrep)</span></td></tr>
+    <tr><td>Спадкове обладнання</td><td><span class="ok">Широке</span></td><td>Менше</td></tr>
+    <tr><td>Сучасне застосування</td><td>Legacy / відеозали</td><td><span class="ok">Домінуючий стандарт</span></td></tr>
+  </table>
+  <div class="hbox" style="margin-top:.6em;">
+    <strong>Ключовий висновок:</strong> H.323 перевершує SIP у розвинених відеоконференціях (H.239, MCU, H.243), але поступається за простотою розгортання, NAT traversal та налагодження. Вибір між ними визначається вимогами до відмовостійкості та наявністю спадкового обладнання.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 23 – H.323 in Modern Networks ==================== -->
+<section class="slide bg-plain">
+  <h2>🚀 H.323 у сучасних мережах</h2>
+  <div class="two-col">
+    <div>
+      <h3>Де H.323 ще використовується</h3>
+      <ul>
+        <li><strong>Відеозали Cisco / Polycom / Tandberg</strong> — спадкове обладнання</li>
+        <li>Корпоративні IP-PBX зі старою інфраструктурою</li>
+        <li>Телемедицина (стандарти ITU-T для відеоконсультацій)</li>
+        <li>Дистанційна освіта (H.323 + H.239)</li>
+        <li>Урядові та оборонні системи зв'язку</li>
+        <li>Мережі оператора класу (carrier-grade GW)</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Сучасний стан</h3>
+      <div class="card" style="margin-bottom:.5em;">
+        <h3>Міграція до SIP/WebRTC</h3>
+        <ul>
+          <li>Cisco замінює H.323 на SIP у нових продуктах</li>
+          <li>Microsoft Teams / Lync (SIP-based) підтримують H.323 через спеціальний коннектор</li>
+          <li>Polycom → SIP-firmware update</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Гібридні рішення</h3>
+        <ul>
+          <li>H.323/SIP Interop Gateway (Cisco CME, CUBE)</li>
+          <li>WebRTC ↔ H.323 шлюзи (Pexip, Cisco CMS)</li>
+          <li>Microsoft Teams: H.323/SIP connector</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="wbox" style="margin-top:.6em;">
+    З точки зору кібербезпеки, спадкові H.323-вузли — критична зона ризику: застаріле ПЗ рідко отримує патчі, а бінарне кодування ASN.1 ускладнює контроль. Гібридні середовища (H.323+SIP) збільшують поверхню атаки та потребують окремого SBC на стику.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 24 – Security Best Practices ==================== -->
+<section class="slide bg-sec">
+  <h2>🛡️ Захист H.323-інфраструктури</h2>
+  <div class="two-col">
+    <div>
+      <h3>Мережеві заходи</h3>
+      <ul>
+        <li><strong>Firewall</strong> — обмежити TCP 1720, UDP 1719, TCP 1300 (TLS)</li>
+        <li><strong>SBC (Session Border Controller)</strong> — топологічне приховування, нормалізація ASN.1</li>
+        <li><strong>VLAN</strong> — ізоляція голосового трафіку від даних</li>
+        <li><strong>IDS/IPS</strong> — сигнатури для H.323-атак (Snort rules)</li>
+        <li><strong>Rate limiting</strong> — ARQ/RRQ flood захист</li>
+        <li><strong>ACL</strong> — білі списки IP для реєстрації в GK</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Протокольні заходи</h3>
+      <ul>
+        <li><strong>H.235.6</strong> — шифрування медіа (AES-128)</li>
+        <li><strong>TLS для H.225</strong> (H.460.22, порт 1300)</li>
+        <li><strong>H.235.2</strong> — PKI-аутентифікація терміналів</li>
+        <li><strong>GK-Routed mode</strong> — централізований контроль</li>
+        <li>Моніторинг CDR на аномалії (toll fraud)</li>
+        <li>Регулярне оновлення прошивки обладнання</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        H.323 протоколи складніші для аналізу IDS через бінарне кодування ASN.1. Рекомендується глибока перевірка пакетів (DPI) через SBC.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 25 – Troubleshooting H.323 ==================== -->
+<section class="slide bg-plain">
+  <h2>🔧 Діагностика H.323-мереж</h2>
+  <div class="two-col">
+    <div>
+      <h3>Інструменти</h3>
+      <ul>
+        <li><strong>Wireshark</strong> — декодування H.225, H.245, RAS (вбудований декодер)</li>
+        <li><strong>H323plus / OpenH323</strong> — відкрита реалізація для тестування</li>
+        <li><strong>Ekiga</strong> — H.323 softphone для тестів</li>
+        <li><strong>Cisco CDPi / Packet Tracer</strong> — симуляція H.323 в Cisco IOS</li>
+        <li><strong>Netstat / tcpdump</strong> — моніторинг TCP 1720, UDP 1719</li>
+        <li><strong>GnuGK (Gatekeeper)</strong> — open-source GK з детальним логуванням</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Типові проблеми</h3>
+      <table>
+        <tr><th>Проблема</th><th>Причина / Рішення</th></tr>
+        <tr><td>RRJ (Registration Reject)</td><td>Неправильний пароль H.235 або GK недоступний</td></tr>
+        <tr><td>ARJ (Admission Reject)</td><td>Недостатня смуга або заборонений виклик</td></tr>
+        <tr><td>Одностороннє аудіо</td><td>NAT, H.460 не налаштований</td></tr>
+        <tr><td>H.245 не встановлюється</td><td>Firewall блокує динамічний TCP-порт</td></tr>
+        <tr><td>Несумісність кодеків</td><td>Відсутній спільний кодек (G.711 обов'язковий)</td></tr>
+        <tr><td>Затримка відео</td><td>Відсутній QoS / DSCP маркування</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 26 – H.323 in Cybersecurity Context ==================== -->
+<section class="slide bg-sec">
+  <h2>🎯 H.323 у контексті кібербезпеки</h2>
+  <div class="two-col">
+    <div>
+      <h3>Відомі CVE та вразливості</h3>
+      <ul>
+        <li><strong>CVE-2004-0054</strong> — переповнення буфера в ASN.1 парсері Cisco IOS (CVSS 10.0)</li>
+        <li><strong>CVE-2003-0819</strong> — DoS у Microsoft NetMeeting (H.323)</li>
+        <li><strong>CVE-2007-5570</strong> — обхід аутентифікації GK</li>
+        <li><strong>CVE-2012-0393</strong> — вразливість у Cisco H.323 реалізації</li>
+        <li>Fuzzing ASN.1 — стабільне джерело нових вразливостей</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Пентест H.323-інфраструктури</h3>
+      <ul>
+        <li><strong>Reconnaissance</strong>: сканування TCP 1720, UDP 1719 (nmap -sU -p 1719)</li>
+        <li><strong>GRQ flooding</strong>: пошук GK у мережі через broadcast GRQ</li>
+        <li><strong>RAS fuzzing</strong>: інструменти Boofuzz, ASN.1-фаззери</li>
+        <li><strong>Call interception</strong>: MITM при відсутності H.235</li>
+        <li><strong>Wireshark decode</strong>: аналіз RTP при незашифрованих потоках</li>
+      </ul>
+      <div class="wbox" style="margin-top:.5em;">
+        Бінарний формат ASN.1 ускладнює виявлення атак традиційними IDS. Спеціалізовані H.323-декодери є у Wireshark та Snort (preprocessor h323).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 27 – Open Source Tools ==================== -->
+<section class="slide bg-plain">
+  <h2>🛠️ Open Source екосистема H.323</h2>
+  <div class="three-col">
+    <div class="card">
+      <h3>Стеки та бібліотеки</h3>
+      <ul>
+        <li><strong>OpenH323 / H323plus</strong> — C++ бібліотека</li>
+        <li><strong>OPAL</strong> — Open Phone Abstraction Library (SIP + H.323)</li>
+        <li><strong>PTLib</strong> — portable tools library</li>
+        <li><strong>ooh323c</strong> — C-бібліотека для Asterisk</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Сервери та PBX</h3>
+      <ul>
+        <li><strong>GnuGK</strong> — GNU Gatekeeper</li>
+        <li><strong>Asterisk + chan_ooh323</strong> — IP PBX з H.323</li>
+        <li><strong>FreeSWITCH + mod_h26x</strong> — media server</li>
+        <li><strong>Kamailio</strong> — SIP/H.323 interworking</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Клієнти та тести</h3>
+      <ul>
+        <li><strong>Ekiga</strong> — SIP + H.323 softphone (Linux)</li>
+        <li><strong>Linphone</strong> — опціональна H.323-підтримка</li>
+        <li><strong>H323Plus tools</strong> — simph323, simpleph323</li>
+        <li><strong>Wireshark</strong> — вбудований H.323 dissector</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hbox" style="margin-top:.7em;">
+    <strong>GnuGK</strong> (gnugk.org) — найпоширеніший open-source Gatekeeper. Підтримує H.235, H.460.18/19, RADIUS, CDR. Використовується для навчання та тестування H.323.
+  </div>
+</section>
+
+<!-- ==================== SLIDE 28 – Comparison Summary ==================== -->
+<section class="slide bg-plain">
+  <h2>📊 Порівняння H.323 з іншими протоколами</h2>
+  <table>
+    <tr><th>Критерій</th><th>H.323</th><th>SIP</th><th>MGCP</th><th>WebRTC</th></tr>
+    <tr><td>Рівень протоколу</td><td>Застосунків</td><td>Застосунків</td><td>Застосунків</td><td>Застосунків</td></tr>
+    <tr><td>Керування GK/MGC</td><td>Gatekeeper</td><td>Proxy/Registrar</td><td>Call Agent</td><td>Signaling server</td></tr>
+    <tr><td>Медіа</td><td>RTP/RTCP</td><td>RTP/RTCP/SRTP</td><td>RTP/RTCP</td><td>SRTP (обов'язк.)</td></tr>
+    <tr><td>Відеоконференції</td><td>✅ Розвинені</td><td>⚠️ Базові</td><td>❌ Аудіо тільки</td><td>✅ Сучасні</td></tr>
+    <tr><td>NAT traversal</td><td>⚠️ H.460</td><td>✅ ICE/STUN</td><td>❌ Потребує ALG</td><td>✅ ICE вбудований</td></tr>
+    <tr><td>Безпека за замовч.</td><td>⚠️ H.235 опціонально</td><td>⚠️ TLS/SRTP опц.</td><td>❌ Мінімальна</td><td>✅ DTLS-SRTP обов.</td></tr>
+    <tr><td>Складність</td><td>Висока</td><td>Середня</td><td>Низька</td><td>Середня</td></tr>
+    <tr><td>Браузерна підтримка</td><td>❌</td><td>⚠️ WebSocket</td><td>❌</td><td>✅ Нативна</td></tr>
+  </table>
+</section>
+
+<!-- ==================== SLIDE 29 – Summary ==================== -->
+<section class="slide bg-dark">
+  <h2>📌 Підсумки</h2>
+  <div class="two-col">
+    <div>
+      <ul>
+        <li>H.323 — стандарт ITU-T (1996), перший масовий протокол VoIP/відеоконференцій</li>
+        <li><strong>Gatekeeper</strong> — центральний компонент зони, аналог SIP Registrar + Proxy</li>
+        <li>Три ключових підпротоколи: <strong>RAS + H.225 + H.245</strong></li>
+        <li>Бінарний ASN.1 — складніший для аналізу та відлагодження, ніж SIP</li>
+        <li><strong>H.235</strong> — безпека: аутентифікація, шифрування медіа (AES)</li>
+        <li><strong>H.460.18/19</strong> — NAT traversal для сигналізації та медіа</li>
+        <li><strong>H.239</strong> — dual stream для відеоконференцій з контентом</li>
+        <li>SIP поступово витісняє H.323 у нових інсталяціях</li>
+      </ul>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:.7em; justify-content:center;">
+      <div class="hbox">
+        <strong>Ключові стандарти для вивчення:</strong><br>
+        H.323 v7 · H.225 (Q.931) · H.245<br>
+        H.235 (безпека) · H.239 · H.450<br>
+        H.460.18/19 (NAT traversal)
+      </div>
+      <div class="hbox">
+        <strong>Практичні інструменти:</strong><br>
+        GnuGK · Asterisk + ooh323<br>
+        Ekiga · Wireshark H.323 dissector<br>
+        OpenH323 / H323plus
+      </div>
+      <div class="wbox">
+        <strong>Безпека:</strong> H.235 + TLS (H.460.22) + SBC на периметрі. Бінарний формат вимагає спеціалізованих засобів захисту та аналізу.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SLIDE 30 – Q&A ==================== -->
+<section class="slide bg-end center">
+  <div>
+    <h1 style="font-size:6rem; color:#00b4d8;">Дякую за увагу!</h1>
+    <h3 style="color:#90e0ef; font-weight:300; font-size:2.8rem; margin: 1em 0;">
+      Запитання?
+    </h3>
+    <p style="color:#666; margin-top:2.5em; font-size:1.5rem;">
+      Стандарти: ITU-T H.323 v7 · H.225 · H.245 · H.235 · H.239 · H.450 · H.460
+    </p>
+    <p style="color:#444; font-size:1.3rem; margin-top:.5em;">
+      RFC: 3550 (RTP) · 3711 (SRTP) · 8445 (ICE) · 8489 (STUN)
+    </p>
+    <p style="color:#333; margin-top:.8em; font-size:1.2rem;">
+      Навігація: ← → (стрілки клавіатури)&nbsp;&nbsp;|&nbsp;&nbsp;F — повний екран
+    </p>
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<!-- NAV CONTROLS -->
+<div id="nav">
+  <button onclick="move(-1)">&#8592;</button>
+  <span id="counter"></span>
+  <button onclick="move(1)">&#8594;</button>
+</div>
+
+<script>
+(function () {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let cur = 0;
+
+  function goto(n) {
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('prev');
+    cur = (n + total) % total;
+    slides[cur].classList.remove('prev');
+    slides[cur].classList.add('active');
+    // remove prev class after transition
+    const prev = slides[(cur - 1 + total) % total];
+    setTimeout(() => prev.classList.remove('prev'), 420);
+    document.getElementById('counter').textContent = (cur + 1) + ' / ' + total;
+    document.getElementById('prog').style.width = ((cur + 1) / total * 100) + '%';
+  }
+
+  function move(dir) { goto(cur + dir); }
+  window.move = move;
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { move(1); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { move(-1); e.preventDefault(); }
+    else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+  });
+
+  // touch swipe
+  let sx = 0;
+  document.addEventListener('touchstart', function (e) { sx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function (e) {
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) move(dx < 0 ? 1 : -1);
+  });
+
+  goto(0);
+
+  // Scale deck to fill viewport at 1920×1080
+  function scaleSlides() {
+    var scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    var deck = document.getElementById('deck');
+    deck.style.transform = 'scale(' + scale + ')';
+    deck.style.left = Math.round((window.innerWidth - 1920 * scale) / 2) + 'px';
+    deck.style.top = Math.round((window.innerHeight - 1080 * scale) / 2) + 'px';
+  }
+  window.addEventListener('resize', scaleSlides);
+  scaleSlides();
+})();
+</script>
+</body>
+</html>
