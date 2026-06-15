@@ -10,7 +10,7 @@
       <text>Перехід до IP</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яка ключова зміна відбулася під час переходу від PSTN до сучасних інфокомунікаційних систем?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яка ключова зміна відбулася під час переходу від PSTN до сучасних інфокомунікаційних систем?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -19,25 +19,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Мережі перейшли від IP до TDM&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Мережі перейшли від IP до TDM&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Системи перейшли від комутації каналів до IP-орієнтованих інтегрованих мереж&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Системи перейшли від комутації каналів до IP-орієнтованих інтегрованих мереж&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Голосовий трафік перестав передаватися пакетами&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Голосовий трафік перестав передаватися пакетами&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Усі сервіси стали ізольованими фізично&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Усі сервіси стали ізольованими фізично&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -48,7 +48,7 @@
       <text>Конвергентна мережа</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що означає принцип побудови конвергентної мережі, згаданий у плані курсу?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що означає принцип побудови конвергентної мережі, згаданий у плані курсу?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -57,25 +57,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Окремий стек для голосу, відео і повідомлень&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Окремий стек для голосу, відео і повідомлень&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Один IP-стек для всіх типів трафіку&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Один IP-стек для всіх типів трафіку&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Використання лише аналогових каналів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Використання лише аналогових каналів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Повна відмова від маршрутизації&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Повна відмова від маршрутизації&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -86,7 +86,7 @@
       <text>Призначення IMS</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для чого в курсі розглядається архітектура IMS?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для чого в курсі розглядається архітектура IMS?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -95,25 +95,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Як фреймворк доставки мультимедійних послуг&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Як фреймворк доставки мультимедійних послуг&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Як стандарт стиснення аудіо&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Як стандарт стиснення аудіо&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Як систему білінгу PSTN&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Як систему білінгу PSTN&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Як аналог міжмережевого екрана&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Як аналог міжмережевого екрана&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -124,7 +124,7 @@
       <text>Рівні IMS</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які рівні або домени прямо згадані в описі архітектури IMS?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які рівні або домени прямо згадані в описі архітектури IMS?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -133,25 +133,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Control&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Control&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Access&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Access&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Transport&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Transport&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Storage&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Storage&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -162,7 +162,7 @@
       <text>Єдина інфраструктура</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які сервіси, за планом курсу, інтегруються в сучасних мультисервісних системах?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які сервіси, за планом курсу, інтегруються в сучасних мультисервісних системах?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -171,25 +171,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;VoIP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;VoIP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Відеоконференцзв’язок&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Відеоконференцзв’язок&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Обмін повідомленнями&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Обмін повідомленнями&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Спільна робота над документами&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Спільна робота над документами&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -200,7 +200,7 @@
       <text>Поверхня атаки</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що відбувається з поверхнею атаки, коли голос, відео та повідомлення інтегруються в одну інфраструктуру?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що відбувається з поверхнею атаки, коли голос, відео та повідомлення інтегруються в одну інфраструктуру?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -209,25 +209,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Вона зникає&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Вона зникає&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Вона значно розширюється&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Вона значно розширюється&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Вона залежить лише від кодека&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Вона залежить лише від кодека&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Вона обмежується медіасерверами&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Вона обмежується медіасерверами&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -238,7 +238,7 @@
       <text>SIP flood</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який тип атаки описує переповнення сигнальних каналів великою кількістю SIP-запитів?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який тип атаки описує переповнення сигнальних каналів великою кількістю SIP-запитів?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -247,25 +247,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SPIT&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SPIT&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SIP flood&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SIP flood&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Wardialing&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Wardialing&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ARP spoofing&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ARP spoofing&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -276,7 +276,7 @@
       <text>SPIT</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що означає абревіатура SPIT у контексті мультимедійних сервісів?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що означає абревіатура SPIT у контексті мультимедійних сервісів?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -285,25 +285,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Secure Protocol for IP Telephony&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Secure Protocol for IP Telephony&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Spam over Internet Telephony&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Spam over Internet Telephony&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Session Protection in Tunnels&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Session Protection in Tunnels&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Spoofed Packets in Transit&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Spoofed Packets in Transit&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -314,7 +314,7 @@
       <text>Toll Fraud</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яка суть атаки Toll Fraud?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яка суть атаки Toll Fraud?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -323,25 +323,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Викрадення міжнародного трафіку та несанкціоноване використання послуг зв’язку&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Викрадення міжнародного трафіку та несанкціоноване використання послуг зв’язку&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Шифрування голосу на транспортному рівні&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Шифрування голосу на транспортному рівні&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Заміна RTP на TCP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Заміна RTP на TCP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Відмова від білінгу&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Відмова від білінгу&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -352,7 +352,7 @@
       <text>Перехоплення медіа</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які загрози безпосередньо пов’язані з перехопленням або підміною мультимедійного трафіку?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які загрози безпосередньо пов’язані з перехопленням або підміною мультимедійного трафіку?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -361,25 +361,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="50.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Eavesdropping&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Eavesdropping&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="50.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;MitM&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;MitM&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;QoS marking&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;QoS marking&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Digest authentication&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Digest authentication&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -390,7 +390,7 @@
       <text>Відкритість каналів</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Чому відкритість каналів передачі в IP-мережах робить конфіденційність критично вразливою?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Чому відкритість каналів передачі в IP-мережах робить конфіденційність критично вразливою?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -399,25 +399,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Бо IP не підтримує адресацію&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Бо IP не підтримує адресацію&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Бо зростає ризик несанкціонованого доступу та перехоплення&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Бо зростає ризик несанкціонованого доступу та перехоплення&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Бо зникає маршрутизація&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Бо зникає маршрутизація&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Бо пакети передаються лише по VPN&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Бо пакети передаються лише по VPN&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -428,7 +428,7 @@
       <text>Тренд 2025</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який сучасний тренд загроз 2024–2025 років окремо виділено в плані?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який сучасний тренд загроз 2024–2025 років окремо виділено в плані?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -437,25 +437,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Масовий перехід на X.25&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Масовий перехід на X.25&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Використання ШІ для діпфейків і автоматизованих атак&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Використання ШІ для діпфейків і автоматизованих атак&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Відмова від хмарних сервісів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Відмова від хмарних сервісів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Зникнення DDoS-атак&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Зникнення DDoS-атак&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -466,7 +466,7 @@
       <text>Еволюція spoofing</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Як, за планом курсу, еволюціонували прості методи spoofing?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Як, за планом курсу, еволюціонували прості методи spoofing?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -475,25 +475,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Зникли після впровадження SIP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Зникли після впровадження SIP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Перетворилися на складні кампанії компрометації інфраструктури та ланцюгів постачання&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Перетворилися на складні кампанії компрометації інфраструктури та ланцюгів постачання&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Стали лише локальною проблемою LAN&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Стали лише локальною проблемою LAN&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Почали використовуватись лише у відеокодеках&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Почали використовуватись лише у відеокодеках&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -504,7 +504,7 @@
       <text>Ландшафт загроз</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які класи атак прямо перераховані для мультимедійних сервісів у лекції 1?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які класи атак прямо перераховані для мультимедійних сервісів у лекції 1?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -513,25 +513,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;DoS/DDoS&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;DoS/DDoS&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SPIT&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SPIT&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Toll Fraud&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Toll Fraud&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Eavesdropping та MitM&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Eavesdropping та MitM&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -542,7 +542,7 @@
       <text>Парадигма безпеки</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Як змінилася парадигма безпеки при переході від закритих мереж до відкритих інтернет-систем?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Як змінилася парадигма безпеки при переході від закритих мереж до відкритих інтернет-систем?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -551,25 +551,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Безпека стала менш важливою&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Безпека стала менш важливою&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Захист змістився від фізично захищених контурів до захисту відкритих сервісів і протоколів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Захист змістився від фізично захищених контурів до захисту відкритих сервісів і протоколів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Головною стала лише якість зв’язку&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Головною стала лише якість зв’язку&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Проблеми безпеки залишилися незмінними&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Проблеми безпеки залишилися незмінними&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>

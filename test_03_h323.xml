@@ -10,7 +10,7 @@
       <text>Стандарт H.323</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Хто розробив протокол H.323?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Хто розробив протокол H.323?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -19,25 +19,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;IETF&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;IETF&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ITU-T&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ITU-T&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;W3C&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;W3C&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;NIST&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;NIST&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -48,7 +48,7 @@
       <text>Бінарна архітектура</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яка властивість H.323 підкреслюється в плані та презентації?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яка властивість H.323 підкреслюється в плані та презентації?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -57,25 +57,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Текстова HTTP-подібна структура&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Текстова HTTP-подібна структура&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Монолітна бінарна структура&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Монолітна бінарна структура&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Відсутність сигналізації&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Відсутність сигналізації&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Робота лише через TCP 443&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Робота лише через TCP 443&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -86,7 +86,7 @@
       <text>Компоненти H.323</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які елементи входять до класичної архітектури H.323?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які елементи входять до класичної архітектури H.323?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -95,25 +95,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Термінали&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Термінали&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Gateways&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Gateways&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Gatekeepers&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Gatekeepers&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;MCU&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;MCU&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -124,7 +124,7 @@
       <text>Роль Gatekeeper</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яку роль виконує gatekeeper у мережі H.323?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яку роль виконує gatekeeper у мережі H.323?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -133,25 +133,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Лише передає RTP-пакети&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Лише передає RTP-пакети&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Виконує інтелектуальні функції адресації, доступу і керування смугою&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Виконує інтелектуальні функції адресації, доступу і керування смугою&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Є браузерним клієнтом&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Є браузерним клієнтом&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Замінює кодек&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Замінює кодек&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -162,7 +162,7 @@
       <text>Функції Gatekeeper</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які функції gatekeeper прямо названі в описі курсу?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які функції gatekeeper прямо названі в описі курсу?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -171,25 +171,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Трансляція адрес&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Трансляція адрес&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Контроль доступу&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Контроль доступу&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Управління смугою пропускання&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Управління смугою пропускання&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Рендеринг відео в браузері&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Рендеринг відео в браузері&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -200,7 +200,7 @@
       <text>Безпека H.323</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який стандарт забезпечує аутентифікацію та цілісність даних у межах сесії H.323?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який стандарт забезпечує аутентифікацію та цілісність даних у межах сесії H.323?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -209,25 +209,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.235&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.235&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.239&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.239&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.460&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.460&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.450&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.450&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -238,7 +238,7 @@
       <text>ASN.1 PER</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який механізм кодування характерний для H.323?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який механізм кодування характерний для H.323?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -247,25 +247,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;JSON over TLS&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;JSON over TLS&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ASN.1/PER&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ASN.1/PER&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;XML-RPC&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;XML-RPC&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Base64 SIP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Base64 SIP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -276,7 +276,7 @@
       <text>Закриті мережі</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для яких середовищ H.323 історично вважався особливо стабільним?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для яких середовищ H.323 історично вважався особливо стабільним?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -285,25 +285,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для великих закритих корпоративних мереж&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для великих закритих корпоративних мереж&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Лише для мобільних браузерів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Лише для мобільних браузерів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Тільки для супутникового телебачення&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Тільки для супутникового телебачення&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для однорангового обміну файлами&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для однорангового обміну файлами&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -314,7 +314,7 @@
       <text>Актуальні сектори</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;У яких секторах H.323, за планом, зберігає актуальність через високі вимоги до комплаєнсу?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;У яких секторах H.323, за планом, зберігає актуальність через високі вимоги до комплаєнсу?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -323,25 +323,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="50.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Оборона&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Оборона&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="50.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Охорона здоров’я&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Охорона здоров’я&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Соціальні мережі&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Соціальні мережі&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Побутовий стримінг&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Побутовий стримінг&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -352,7 +352,7 @@
       <text>RAS</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що означає RAS у стеку H.323?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що означає RAS у стеку H.323?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -361,25 +361,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Routing and Security&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Routing and Security&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Registration, Admission and Status&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Registration, Admission and Status&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Real-time Audio Service&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Real-time Audio Service&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Remote Access Signaling&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Remote Access Signaling&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -390,7 +390,7 @@
       <text>Q.931</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який підпротокол у H.323 пов’язаний із сигналізацією викликів на базі Q.931?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який підпротокол у H.323 пов’язаний із сигналізацією викликів на базі Q.931?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -399,25 +399,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.225&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.225&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.245&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.245&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.239&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.239&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.460.19&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.460.19&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -428,7 +428,7 @@
       <text>H.245</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;За що в H.323 відповідає H.245?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;За що в H.323 відповідає H.245?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -437,25 +437,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;За управління медіа та узгодження можливостей&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;За управління медіа та узгодження можливостей&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;За доменні імена&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;За доменні імена&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;За шифрування RTP заголовків у VPN&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;За шифрування RTP заголовків у VPN&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;За NAT лише для IPv6&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;За NAT лише для IPv6&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -466,7 +466,7 @@
       <text>Еволюція H.323</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яка версія H.323 вказана в презентації як актуальна редакція?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яка версія H.323 вказана в презентації як актуальна редакція?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -475,25 +475,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;v3&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;v3&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;v5&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;v5&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;v7&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;v7&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;v9&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;v9&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -504,7 +504,7 @@
       <text>Fast Connect</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яку перевагу дає механізм Fast Connect у H.323?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яку перевагу дає механізм Fast Connect у H.323?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -513,25 +513,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Зменшує час встановлення виклику&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Зменшує час встановлення виклику&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Повністю замінює RTP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Повністю замінює RTP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Вимикає аутентифікацію&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Вимикає аутентифікацію&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Працює тільки без gatekeeper&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Працює тільки без gatekeeper&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -542,7 +542,7 @@
       <text>H.323 і SIP</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яка тенденція описана щодо співвідношення H.323 та SIP?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яка тенденція описана щодо співвідношення H.323 та SIP?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -551,25 +551,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.323 повністю витіснив SIP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.323 повністю витіснив SIP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SIP поступово витіснив H.323 у нових інсталяціях&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SIP поступово витіснив H.323 у нових інсталяціях&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Обидва стандарти були заборонені&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Обидва стандарти були заборонені&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.323 став основою WebRTC&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.323 став основою WebRTC&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>

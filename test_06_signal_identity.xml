@@ -10,7 +10,7 @@
       <text>TLS для SIP</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яку проблему вирішує TLS для SIP-сигналізації?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яку проблему вирішує TLS для SIP-сигналізації?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -19,25 +19,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Шифрує сигнальні повідомлення і захищає облікові дані&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Шифрує сигнальні повідомлення і захищає облікові дані&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Стискає аудіо&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Стискає аудіо&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Замінює PKI на shared secret&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Замінює PKI на shared secret&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Усуває потребу в NAT traversal&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Усуває потребу в NAT traversal&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -48,7 +48,7 @@
       <text>SIPS</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що означає використання SIPS у практичному сенсі?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що означає використання SIPS у практичному сенсі?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -57,25 +57,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SIP поверх захищеного TLS-транспорту&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SIP поверх захищеного TLS-транспорту&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SRTP без сигналізації&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SRTP без сигналізації&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SIP тільки через UDP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SIP тільки через UDP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Старий режим H.323&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Старий режим H.323&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -86,7 +86,7 @@
       <text>DTLS призначення</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Чому DTLS є важливим для WebRTC?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Чому DTLS є важливим для WebRTC?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -95,25 +95,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Адаптує модель TLS для ненадійних UDP-з’єднань&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Адаптує модель TLS для ненадійних UDP-з’єднань&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Працює лише в PSTN&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Працює лише в PSTN&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Замінює ICE і TURN&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Замінює ICE і TURN&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Відключає сертифікати&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Відключає сертифікати&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -124,7 +124,7 @@
       <text>PKI роль</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яку роль виконує PKI в мультимедійних системах?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яку роль виконує PKI в мультимедійних системах?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -133,25 +133,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Генерує та верифікує сертифікати&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Генерує та верифікує сертифікати&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Передає RTP поверх Ethernet&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Передає RTP поверх Ethernet&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Замінює всі журнали подій&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Замінює всі журнали подій&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Нормалізує SIP-заголовки&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Нормалізує SIP-заголовки&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -162,7 +162,7 @@
       <text>Самопідписані сертифікати</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яка проблема пов’язана із самопідписаними сертифікатами?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яка проблема пов’язана із самопідписаними сертифікатами?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -171,25 +171,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Питання довіри та масштабованості&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Питання довіри та масштабованості&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Неможливість використання з UDP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Неможливість використання з UDP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Відсутність відкритого ключа&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Відсутність відкритого ключа&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Неможливість шифрування&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Неможливість шифрування&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -200,7 +200,7 @@
       <text>Довірені CA</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Чому для масштабних розгортань рекомендуються довірені центри сертифікації?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Чому для масштабних розгортань рекомендуються довірені центри сертифікації?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -209,25 +209,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Щоб забезпечити керовану довіру до серверів і сервісів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Щоб забезпечити керовану довіру до серверів і сервісів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Щоб збільшити джиттер&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Щоб збільшити джиттер&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Щоб уникнути автентифікації&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Щоб уникнути автентифікації&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Щоб замінити TLS на RTP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Щоб замінити TLS на RTP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -238,7 +238,7 @@
       <text>Сигнальні ризики</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які дані захищаються завдяки безпечній сигналізації?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які дані захищаються завдяки безпечній сигналізації?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -247,25 +247,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Облікові дані користувачів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Облікові дані користувачів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Параметри встановлення виклику&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Параметри встановлення виклику&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Маршрути виклику&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Маршрути виклику&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Довіра до сервера&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Довіра до сервера&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -276,7 +276,7 @@
       <text>TLS vs DTLS</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яка ключова відмінність DTLS від класичного TLS?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яка ключова відмінність DTLS від класичного TLS?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -285,25 +285,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;DTLS пристосований до дейтаграмних з’єднань&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;DTLS пристосований до дейтаграмних з’єднань&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;DTLS не використовує криптографію&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;DTLS не використовує криптографію&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;TLS працює лише для браузерів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;TLS працює лише для браузерів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;DTLS шифрує тільки заголовки RTP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;DTLS шифрує тільки заголовки RTP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -314,7 +314,7 @@
       <text>Ідентифікація серверів</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що забезпечує перевірка сертифіката мультимедійного сервера?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що забезпечує перевірка сертифіката мультимедійного сервера?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -323,25 +323,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Підтвердження його ідентичності&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Підтвердження його ідентичності&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Підвищення бітрейту кодека&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Підвищення бітрейту кодека&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Автоматичне проходження NAT&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Автоматичне проходження NAT&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Створення джиттер-буфера&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Створення джиттер-буфера&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -352,7 +352,7 @@
       <text>WebRTC transport</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який захищений транспорт типовий для WebRTC-медіа після узгодження?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який захищений транспорт типовий для WebRTC-медіа після узгодження?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -361,25 +361,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;DTLS-SRTP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;DTLS-SRTP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;FTP-TLS&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;FTP-TLS&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SSH-RTP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SSH-RTP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;HTTP/3 RTP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;HTTP/3 RTP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -390,7 +390,7 @@
       <text>Довіра PKI</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які елементи входять до типового ланцюжка довіри PKI?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які елементи входять до типового ланцюжка довіри PKI?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -399,25 +399,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Сертифікат сервера&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Сертифікат сервера&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Відкритий ключ&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Відкритий ключ&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Центр сертифікації&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Центр сертифікації&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Перевірка підпису&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Перевірка підпису&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -428,7 +428,7 @@
       <text>Захист облікових даних</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що може статися без захисту сигнального каналу?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що може статися без захисту сигнального каналу?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -437,25 +437,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Облікові дані та параметри виклику можуть бути перехоплені&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Облікові дані та параметри виклику можуть бути перехоплені&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SRTP працюватиме швидше&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SRTP працюватиме швидше&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;NAT traversal зникне&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;NAT traversal зникне&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;SIP втратить текстову форму&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;SIP втратить текстову форму&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -466,7 +466,7 @@
       <text>TLS на транспорті</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На якому рівні, за описом лекції, TLS захищає SIP?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На якому рівні, за описом лекції, TLS захищає SIP?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -475,25 +475,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На транспортному рівні&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На транспортному рівні&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На фізичному рівні&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На фізичному рівні&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На рівні кодека&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На рівні кодека&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На рівні QoS-маркерів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На рівні QoS-маркерів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -504,7 +504,7 @@
       <text>Довіра до сертифікатів</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що є необхідною умовою безпечного використання сертифікатів у великих інсталяціях?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що є необхідною умовою безпечного використання сертифікатів у великих інсталяціях?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -513,25 +513,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Наявність довіреного ланцюжка сертифікації&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Наявність довіреного ланцюжка сертифікації&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Відмова від DTLS&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Відмова від DTLS&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Використання тільки паролів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Використання тільки паролів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Повна відсутність NAT&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Повна відсутність NAT&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -542,7 +542,7 @@
       <text>Сфера лекції 6</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які теми об’єднує лекція 6?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які теми об’єднує лекція 6?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -551,25 +551,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Захист сигнальних каналів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Захист сигнальних каналів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Управління ідентифікацією&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Управління ідентифікацією&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;PKI та сертифікати&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;PKI та сертифікати&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;TLS/DTLS&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;TLS/DTLS&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>

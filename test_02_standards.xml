@@ -10,7 +10,7 @@
       <text>X.800</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яку роль відіграє стандарт ITU-T X.800?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яку роль відіграє стандарт ITU-T X.800?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -19,25 +19,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Описує послуги та механізми безпеки відкритих систем&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Описує послуги та механізми безпеки відкритих систем&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Визначає формат RTP-пакета&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Визначає формат RTP-пакета&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Описує кодек G.711&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Описує кодек G.711&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Регламентує роботу TURN&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Регламентує роботу TURN&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -48,7 +48,7 @@
       <text>X.805</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На чому фокусується ITU-T X.805?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На чому фокусується ITU-T X.805?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -57,25 +57,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На стисканні аудіо&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На стисканні аудіо&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На багатошаровій безпеці наскрізних комунікацій&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На багатошаровій безпеці наскрізних комунікацій&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На протоколі реєстрації SIP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На протоколі реєстрації SIP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;На білінгових системах&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;На білінгових системах&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -86,7 +86,7 @@
       <text>ISO 27033</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Що охоплює серія ISO/IEC 27033?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Що охоплює серія ISO/IEC 27033?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -95,25 +95,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Концепції, проєктування та безпеку мережевих сценаріїв&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Концепції, проєктування та безпеку мережевих сценаріїв&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Лише політику паролів користувачів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Лише політику паролів користувачів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Тільки криптографію WebRTC&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Тільки криптографію WebRTC&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Тільки шифрування H.323&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Тільки шифрування H.323&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -124,7 +124,7 @@
       <text>ISO 27011</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для кого насамперед адаптовано ISO/IEC 27011?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для кого насамперед адаптовано ISO/IEC 27011?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -133,25 +133,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для телекомунікаційних організацій&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для телекомунікаційних організацій&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для виробників аудіокодеків&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для виробників аудіокодеків&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для домашніх користувачів SIP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для домашніх користувачів SIP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Для браузерних застосунків&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Для браузерних застосунків&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -162,7 +162,7 @@
       <text>SG17</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які напрями діяльності Study Group 17 (SG17) згадані в плані?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які напрями діяльності Study Group 17 (SG17) згадані в плані?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -171,25 +171,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Управління ідентифікацією&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Управління ідентифікацією&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Безпека хмарних обчислень&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Безпека хмарних обчислень&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Протидія спаму та фішингу&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Протидія спаму та фішингу&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Розробка аналогових телефонів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Розробка аналогових телефонів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -200,7 +200,7 @@
       <text>H.235.x</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яке призначення серії H.235.x?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яке призначення серії H.235.x?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -209,25 +209,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Безпека та шифрування в системах H.323&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Безпека та шифрування в системах H.323&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Кодування відео H.264&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Кодування відео H.264&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Контроль втрати пакетів у RTP&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Контроль втрати пакетів у RTP&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Маркування QoS у MPLS&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Маркування QoS у MPLS&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -238,7 +238,7 @@
       <text>SRTP RFC</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який документ IETF визначає SRTP?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який документ IETF визначає SRTP?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -247,25 +247,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 3261&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 3261&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 3711&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 3711&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 4566&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 4566&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 8445&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 8445&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -276,7 +276,7 @@
       <text>SDES RFC</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який RFC описує SDES для обміну ключами SRTP через сигнальні протоколи?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який RFC описує SDES для обміну ключами SRTP через сигнальні протоколи?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -285,25 +285,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 4568&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 4568&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 3550&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 3550&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 3264&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 3264&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 2705&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 2705&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -314,7 +314,7 @@
       <text>NIST SP 800-58</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Чому присвячено NIST SP 800-58?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Чому присвячено NIST SP 800-58?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -323,25 +323,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Рекомендаціям з безпеки для VoIP-систем&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Рекомендаціям з безпеки для VoIP-систем&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Розробці апаратних телефонів&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Розробці апаратних телефонів&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Алгоритмам стиснення зображень&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Алгоритмам стиснення зображень&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Протоколу DNSSEC&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Протоколу DNSSEC&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -352,7 +352,7 @@
       <text>Організації стандартів</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які організації прямо названі джерелами ключових стандартів у лекції 2?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які організації прямо названі джерелами ключових стандартів у лекції 2?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -361,25 +361,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ITU-T&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ITU-T&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ISO/IEC&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ISO/IEC&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;NIST&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;NIST&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="25.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;IETF&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;IETF&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -390,7 +390,7 @@
       <text>Контроли 27002</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який стандарт адаптує вимоги ISO/IEC 27002 для телеком-сектору?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який стандарт адаптує вимоги ISO/IEC 27002 для телеком-сектору?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -399,25 +399,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ISO/IEC 27011&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ISO/IEC 27011&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 3711&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 3711&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ITU-T X.805&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ITU-T X.805&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.235.2&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.235.2&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -428,7 +428,7 @@
       <text>Мережева безпека</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Яка серія стандартів надає детальне керівництво з проєктування мережевої безпеки?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Яка серія стандартів надає детальне керівництво з проєктування мережевої безпеки?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -437,25 +437,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ISO/IEC 27033&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ISO/IEC 27033&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ITU-T H.450&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ITU-T H.450&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 3261&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 3261&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;X.400&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;X.400&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -466,7 +466,7 @@
       <text>Ризики VoIP</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Які рекомендації, за описом курсу, містить NIST SP 800-58?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Які рекомендації, за описом курсу, містить NIST SP 800-58?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -475,25 +475,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Сегментація мереж&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Сегментація мереж&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Управління ризиками&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Управління ризиками&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="33.3333333" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Захист інфраструктури IP-телефонії&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Захист інфраструктури IP-телефонії&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Обов’язковий перехід на H.323&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Обов’язковий перехід на H.323&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -504,7 +504,7 @@
       <text>Багатошарова модель</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Який стандарт у таблиці прямо визначений як багатошарова архітектура мережевої безпеки?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Який стандарт у таблиці прямо визначений як багатошарова архітектура мережевої безпеки?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -513,25 +513,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ITU-T X.805&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ITU-T X.805&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;RFC 4568&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;RFC 4568&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;ISO/IEC 27011&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;ISO/IEC 27011&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;H.235.x&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;H.235.x&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
@@ -542,7 +542,7 @@
       <text>Нормативна база</text>
     </name>
     <questiontext format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Чому в курсі приділено увагу міжнародним стандартам?&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Чому в курсі приділено увагу міжнародним стандартам?&lt;/p&gt;</text>
     </questiontext>
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
@@ -551,25 +551,25 @@
     <shuffleanswers>1</shuffleanswers>
     <answernumbering>abc</answernumbering>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Щоб замінити практичний захист лише формальними вимогами&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Щоб замінити практичний захист лише формальними вимогами&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="100.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Щоб будувати безпеку інфокомунікаційних систем на узгодженій нормативній основі&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Щоб будувати безпеку інфокомунікаційних систем на узгодженій нормативній основі&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Щоб уникнути сегментації мереж&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Щоб уникнути сегментації мереж&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
     </answer>
     <answer fraction="0.0000000" format="html">
-      <text>&lt;![CDATA[&lt;p&gt;Щоб відмовитися від оцінки ризиків&lt;/p&gt;]]&gt;</text>
+      <text>&lt;p&gt;Щоб відмовитися від оцінки ризиків&lt;/p&gt;</text>
       <feedback format="html">
         <text/>
       </feedback>
