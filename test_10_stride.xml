@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/VoIP Security/10 stride</text>
+    </category>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Розшифрування STRIDE</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що означає літера S у STRIDE?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Spoofing&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Streaming&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Signing&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Segmentation&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Компоненти моделі</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;На які елементи студенти мають розкладати систему під час STRIDE-аналізу?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Процеси&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Сховища даних&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Потоки даних&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Фізичні кабелі як єдина сутність&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Spoofing приклад</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який приклад загрози для Spoofing наведено в таблиці?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Реєстрація зловмисника під чужим іменем&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Зміна вмісту RTP-пакета&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Заперечення факту дзвінка&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Переповнення SIP Proxy&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Tampering приклад</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який приклад відповідає категорії Tampering?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Зміна вмісту розмови в реальному часі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Заповнення каналу INVITE-запитами&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Викрадення ролі адміністратора&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Заперечення платного дзвінка&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Repudiation приклад</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що є прикладом Repudiation у плані?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Заперечення факту здійснення платного дзвінка&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Перехоплення RTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Брутфорс SIP-паролів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Неправильне QoS-маркування&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Information Disclosure</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який об’єкт атаки наведено для Information Disclosure?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Метадані сигналізації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Джиттер-буфер&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Кодек G.722&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Клавіатура телефону&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>DoS у STRIDE</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який приклад загрози наведено для Denial of Service?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Заповнення SIP Proxy або SBC підробленими INVITE-запитами&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Підпис логів цифровим сертифікатом&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Шифрування медіа через SRTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Розподіл ролей RBAC&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Elevation приклад</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що є прикладом Elevation of Privilege?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Отримання прав суперкористувача через вразливість ПЗ&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Затримка RTP-потоку&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Втрати пакетів у WAN&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Перехоплення QoS-тега&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Методи протидії</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які засоби протидії прямо наведені у таблиці STRIDE?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Digest Auth і TLS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SRTP (MAC-коди)&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Цифрові підписи та цілісність логів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Rate limiting і Fail2Ban&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>RBAC</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для якої категорії STRIDE у таблиці згадується принцип найменших привілеїв і RBAC?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Elevation of Privilege&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Tampering&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Spoofing&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Repudiation&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Мета STRIDE</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для чого застосовується методологія STRIDE в мультимедійній інфраструктурі?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для систематичного аналізу вразливостей&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для стиснення аудіо&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для генерування сертифікатів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для NAT traversal&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Hardening серверів</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які серверні компоненти прямо згадано як об’єкти hardening у лекції 10?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Nginx&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Redis&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Prosody&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ImageMagick як єдиний компонент&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Tampering захист</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який захист у таблиці відповідає Tampering пакета RTP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SRTP з контролем цілісності&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Lobby для модерації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ACL за IP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;QoS DiffServ&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Repudiation захист</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що допомагає протидіяти Repudiation у білінгових логах?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Цифрові підписи і контроль цілісності логів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;STUN&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;TURN&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Jitter buffer&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>STRIDE повністю</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які категорії входять до STRIDE?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Spoofing&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Tampering&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Repudiation&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Information Disclosure&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+</quiz>

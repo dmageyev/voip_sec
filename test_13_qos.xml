@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/VoIP Security/13 qos</text>
+    </category>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>QoS метрики</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які основні метрики QoS прямо названі в додатковій лекції?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Затримка&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Джиттер&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Втрата пакетів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Колір інтерфейсу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Одностороння затримка</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яке рекомендоване значення односторонньої затримки наведено для комфортної розмови?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;До 150 мс&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;До 15 мс&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;До 500 мс&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;До 1 с&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Вплив шифрування</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який додатковий внесок затримки шифрування прямо вказано в плані?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;10–30 мс&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;1–2 с&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;0 мс&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;100–200 мкс&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Вузькі канали</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому шифрування може погіршувати якість у вузьких каналах?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Збільшує розмір пакета та обчислювальне навантаження&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Вимикає RTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Забороняє використання UDP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Замінює кодек на аналоговий&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Jitter buffer</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для чого використовується джиттер-буфер?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для згладжування варіацій затримки&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для створення сертифікатів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для NAT traversal&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для підпису логів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Пріоритезація</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які механізми пріоритезації трафіку прямо згадано?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;DiffServ/CoS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ARP/NDP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;JPEG/PNG&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;FTP/TFTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>QoS і безпека</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому QoS у цьому курсі розглядається разом із безпекою?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо захисні механізми впливають на якість мультимедіа, а якість може впливати на доступність сервісу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо QoS повністю замінює шифрування&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо безпека не стосується медіа&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо QoS потрібен лише для PSTN&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Деградація якості</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що може спричинити деградацію якості в захищених мультимедійних системах?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Додаткова затримка&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Джиттер&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Втрата пакетів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Надлишковий розмір пакета&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Доступність сервісу</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яка властивість безпеки найтісніше пов’язана з QoS у реальному часі?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Доступність&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Невідмовність сертифіката&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Секретність MAC-адрес&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Авторське право на кодек&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>QoS алгоритми</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що мається на увазі під алгоритмами адаптації в контексті лекції?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Механізми підлаштування передачі до умов мережі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Лише зміна мови інтерфейсу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Відмова від шифрування&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Заміна сертифікатів кожну секунду&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Метрики розмови</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які показники безпосередньо впливають на сприйману якість розмови?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Latency&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Jitter&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Packet loss&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Пропускна здатність хост-машини без трафіку&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Захищені тунелі</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому у плані згадано пріоритезацію трафіку в захищених тунелях?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо навіть за наявності шифрування треба забезпечувати належну якість сервісу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо тунелі вимикають QoS назавжди&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо шифрування автоматично усуває затримку&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо тунелі потрібні лише для електронної пошти&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>QoS рекомендації</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яке формулювання відповідає змісту додаткової лекції?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Якість обслуговування для мультимедіа не менш важлива, ніж безпека&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;QoS важливий лише для відео, але не для голосу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Безпека завжди погіршує QoS настільки, що її не слід застосовувати&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Jitter buffer вирішує всі проблеми безпеки&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Шифрування і пакети</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який прямий ефект шифрування на пакет згадано?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Збільшення розміру пакета&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Повне зникнення заголовків&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Стискання до нуля&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Перехід на аналогову передачу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Теми лекції QoS</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які теми прямо входять до додаткової лекції QoS?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Метрики якості&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Вплив шифрування&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Jitter buffers&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;DiffServ/CoS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+</quiz>

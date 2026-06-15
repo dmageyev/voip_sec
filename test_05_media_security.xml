@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/VoIP Security/05 media_security</text>
+    </category>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>RTP транспорт</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Поверх якого транспортного протоколу зазвичай працює RTP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;UDP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SMTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ICMP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SCTP only&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Вразливість RTP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому базовий RTP вважається вразливим?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Не має вбудованих засобів захисту&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Не підтримує часові мітки&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Працює лише в PSTN&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Не може передавати аудіо&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Функції SRTP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які властивості безпеки додає SRTP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Шифрування корисного навантаження&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Перевірка цілісності&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Автентифікація повідомлень&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Захист від replay attacks&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>AES у SRTP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який криптографічний алгоритм прямо згаданий для SRTP у плані?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;AES&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;DES only&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;MD5&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ChaCha8&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>SDES</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що таке SDES у контексті SRTP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Метод опису ключів у сигнальних протоколах&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Тип RTP-джиттер буфера&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Варіант SIP Digest&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Система білінгу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>DTLS обмін</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для чого в лекції 5 згадується DTLS?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як один із механізмів обміну ключами для захищеного медіа&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як заміна RTP заголовка&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як система моніторингу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як різновид NAT traversal&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>ZRTP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чим ZRTP відрізняється від SDES?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Обмінює ключі точка-точка без участі центральних серверів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Працює лише в PSTN&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Замінює всі SIP-заголовки&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Не сумісний із голосом&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Прослуховування медіа</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яку загрозу насамперед зменшує застосування SRTP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Прослуховування та маніпуляції медіа-потоком&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Помилки DNS-резолюції&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Відсутність реєстрації SIP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Надлишкову кількість проксі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Replay-захист</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Від яких атак, за планом, захищає SRTP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Replay attacks&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SQL injection&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ARP flooding&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Cache poisoning&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Вплив шифрування</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який ефект шифрування на якість голосу розглядається в лекції?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Може збільшувати затримку та джиттер&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Повністю усуває втрати пакетів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Завжди зменшує пропускну здатність удвічі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Забороняє використання кодеків&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Додаткові витрати</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Через що шифрування може погіршувати якість мультимедіа?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Додаткові заголовки&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Обчислювальні витрати на криптографію&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Зростання затримки&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Зростання джиттера&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>RTP призначення</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яка основна роль RTP у VoIP-системі?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Передача медіаданих у реальному часі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Збереження сертифікатів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Маршрутизація SIP-реєстрації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Перевірка паролів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Контент без захисту</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що може статися з RTP-трафіком без додаткового захисту?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Його можна прослухати або змінити&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Він автоматично шифрується мережевим стеком&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Він не досягає адресата через DNS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Він стає несумісним з UDP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Обмін ключами</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які механізми обміну ключами прямо згадані в лекції 5?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SDES&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;DTLS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ZRTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;PKI for DNSSEC&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Захист контенту</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому протоколи захисту контенту винесені в окрему лекцію?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо безпечна передача медіа потребує окремих механізмів поверх RTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо RTP вже містить обов’язкову аутентифікацію&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо сигналізація і медіа завжди шифруються однаково&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо ZRTP замінює всі інші протоколи&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+</quiz>

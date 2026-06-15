@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/VoIP Security/11 cloud</text>
+    </category>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Гібридні хмари</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який підхід домінує в підприємствах у 2025 році за планом курсу?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Гібридні хмари з поєднанням локальних АТС і хмарних сервісів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Повна відмова від хмар&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Виключно аналогові вузли&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Тільки локальні H.323-мережі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>SIP Trunking</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який спосіб інтеграції згадується для підключення Teams або Zoom?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SIP Trunking&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Token Ring Bridge&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ARP relay&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ISDN PRI only&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Нові виклики</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які нові виклики безпеки прямо названі для гібридних середовищ?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Складність керування конфігураціями&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Потреба в моделі Zero Trust&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Витік даних через сторонні API&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Вразливості контейнеризованих медіасервісів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Zero Trust</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що означає Zero Trust у контексті мультимедійних сервісів?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Ніколи не довіряй, завжди перевіряй&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Довіряй усім внутрішнім вузлам&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Вимикай шифрування у приватній мережі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Застосовуй лише пароль без сертифікатів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>ШІ для аномалій</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для чого, за планом, використовується ШІ у хмарних середовищах?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для виявлення аномалій у поведінці користувачів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для заміни SIP-протоколу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для відключення журналювання&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для шифрування PSTN&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>API-ризики</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яка небезпека прямо пов’язана зі сторонніми API?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Витік даних&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Покращення QoS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Зменшення журналів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Сумісність лише з H.323&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Контейнери</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що є окремим ризиком у контейнеризованих медіасервісах?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Нові площини атаки через оркестрацію й конфігурації контейнерів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Неможливість передавати аудіо&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Автоматичне шифрування всіх логів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Відсутність мережі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Консолідація платформ</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який тренд безпеки згадується разом із ШІ у 2025 році?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Консолідація платформ безпеки&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Відмова від централізованого моніторингу&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Заборона хмарних сервісів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Перехід виключно на H.320&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Гібридний периметр</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому гібридне середовище ускладнює захист?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо поєднує різні домени довіри та конфігурації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо не використовує IP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо не має користувачів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо не підтримує журналювання&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Cloud 2025 фокус</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які теми формують зміст лекції 11?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Гібридні хмари&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Zero Trust&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;AI-аналітика&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;API та контейнерні ризики&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Локальна АТС плюс хмара</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який сценарій прямо наведено як типовий?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Локальна АТС, інтегрована з хмарними сервісами відеозв’язку&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Лише окремі аналогові телефони&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Повна відмова від SIP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Робота без мережевих політик&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Поведінковий аналіз</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що дає поведінковий аналіз у мультимедійному середовищі?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Допомагає виявляти підозрілі шаблони використання сервісів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Гарантує відсутність DDoS без інших заходів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Замінює автентифікацію&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Скасовує потребу в логах&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Сторонні залежності</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому ланцюг зовнішніх сервісів є критичним для хмарної безпеки?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Він розширює межі довіри та можливі джерела компрометації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Він усуває потребу в PKI&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Він робить всі виклики локальними&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Він зменшує конфігураційну складність&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Zero Trust практика</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які дії узгоджуються з моделлю Zero Trust?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Перевіряти ідентичність&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Мінімізувати довірені зони&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Обмежувати доступ за контекстом&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Покладатися лише на розташування в мережі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Безпека 2025</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який головний висновок лекції 11?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Безпека хмарних мультимедійних систем вимагає керування довірою, конфігураціями та залежностями&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Достатньо лише поставити кодек Opus&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Шифрування більше не потрібне&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Лише SIP proxy визначає безпеку&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+</quiz>

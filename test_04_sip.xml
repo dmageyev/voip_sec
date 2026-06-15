@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/VoIP Security/04 sip</text>
+    </category>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Походження SIP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яка організація стандартизувала SIP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ITU-T&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;IETF&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ISO&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;ETSI&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Текстова архітектура</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;На яку властивість SIP звертає увагу курс?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бінарний ASN.1 формат&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Текстова архітектура, подібна до HTTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Робота лише в MPLS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Відсутність сигналізації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Компоненти SIP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які елементи SIP-архітектури прямо згадуються в плані?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Проксі-сервери&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Сервери реєстрації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Агенти користувача&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;MCU H.323&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Digest Auth</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який базовий механізм автентифікації згадано для SIP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Kerberos only&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Digest authentication&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SRTP replay window&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;OAuth video grant&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>TLS для SIP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для чого в SIP використовується TLS?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для шифрування сигнального трафіку&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для кодування аудіо&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для NAT traversal без серверів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Для генерації RTP sequence number&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Атаки SIP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які специфічні атаки на SIP прямо названі в лекції?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;SIP flood&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Перехоплення реєстрації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="33.3333333" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Підміна заголовків&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;DHCP starvation&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>NAT-проблема</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому SIP часто створює труднощі при проходженні через NAT?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо працює тільки з аналоговими лініями&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Через гнучкість сигналізації та вбудовані адреси в повідомленнях&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо SIP не використовує адреси&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Через обов’язкове шифрування H.235&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>SBC сутність</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як у курсі описано роль Session Border Controller (SBC)?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як спеціалізований VoIP-фаєрвол&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як аудіокодек із низькою затримкою&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як альтернативу PKI&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Як заміну DNS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Функції SBC</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Які функції SBC прямо названі в описі лекції 4?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>false</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Приховування топології мережі&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;NAT traversal&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Нормалізація сигналізації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="25.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Захист від DDoS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Хмарні транки</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Чому SBC важливий під час інтеграції з хмарними сервісами та SIP-транками?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо він відключає медіа-шифрування&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо допомагає забезпечити сумісність і безпеку на межі мереж&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо замінює всі проксі-сервери браузером&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Бо потрібен лише для PSTN&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Людиночитаність</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яка перевага випливає з текстової природи SIP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Легша інтеграція з веб-технологіями та налагодження&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Відсутність потреби в адресації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Менша затримка за RTP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Неможливість атак на заголовки&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>UA</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Що означає UA в SIP-мережі?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Unified Access&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;User Agent&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;User Admission&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Universal Authenticator&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Registrar</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Яка основна функція registrar server у SIP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Зберігання та оновлення реєстрацій контактів користувачів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Передача RTP через TCP&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Шифрування SRTP ключів&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Аналіз QoS метрик&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Підміна заголовків</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який ризик несе підміна SIP-заголовків?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Неправильне відображення або маршрутизація ідентичності та виклику&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Автоматичне покращення QoS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Зменшення jitter&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Захист від replay attacks&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Гнучкість SIP</text>
+    </name>
+    <questiontext format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Який недолік згадано як зворотний бік гнучкості SIP?&lt;/p&gt;]]&gt;</text>
+    </questiontext>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <single>true</single>
+    <shuffleanswers>1</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Складність проходження через NAT і більша поверхня для помилок конфігурації&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Неможливість працювати з TLS&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Відсутність текстового формату&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+    <answer fraction="0.0000000" format="html">
+      <text>&lt;![CDATA[&lt;p&gt;Сумісність лише з H.323&lt;/p&gt;]]&gt;</text>
+      <feedback format="html">
+        <text/>
+      </feedback>
+    </answer>
+  </question>
+</quiz>
